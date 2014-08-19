@@ -23,6 +23,7 @@ object OpeneyesBuild extends Build {
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
+        "jp.sf.amateras" %% "scalatra-forms" % "0.1.0",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
