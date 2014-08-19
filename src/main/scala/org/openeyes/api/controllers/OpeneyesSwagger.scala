@@ -1,7 +1,7 @@
 package org.openeyes.api.controllers
 
 import org.scalatra.ScalatraServlet
-import org.scalatra.swagger.{Swagger, JacksonSwaggerBase, ApiInfo}
+import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
 
 
 object OpenEyesApiInfo extends ApiInfo(
