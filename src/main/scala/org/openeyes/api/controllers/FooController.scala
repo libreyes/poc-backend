@@ -1,8 +1,8 @@
 package org.openeyes.api.controllers
 
-import org.openeyes.api.stacks.OpeneyesStack
+import org.openeyes.api.stacks.ScalateStack
 
-class FooController extends OpeneyesStack {
+class FooController extends ScalateStack {
 
   get("/") {
     <html>
