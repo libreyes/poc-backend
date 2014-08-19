@@ -1,7 +1,6 @@
-package org.openeyes.api
+package org.openeyes.api.controllers
 
-import org.scalatra._
-import scalate.ScalateSupport
+import org.openeyes.api.stacks.OpeneyesStack
 
 class FooController extends OpeneyesStack {
 

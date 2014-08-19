@@ -1,4 +1,5 @@
 import org.openeyes.api._
+import org.openeyes.api.controllers.FooController
 import org.scalatra._
 import javax.servlet.ServletContext
 
