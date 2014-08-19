@@ -1,16 +1,30 @@
 package org.openeyes.api.controllers
 
-import org.openeyes.api.stacks.ScalateStack
+import org.json4s.{DefaultFormats, Formats}
+import org.openeyes.api.forms.ObservationFormSupport
+import org.openeyes.api.services.ObservationsService
+import org.scalatra.ScalatraServlet
+import org.scalatra.i18n.I18nSupport
+import org.scalatra.json._
 
-class ObservationsController extends ScalateStack {
+
+class ObservationsController extends ScalatraServlet with JacksonJsonSupport with ObservationFormSupport with I18nSupport {
+
+
+  protected implicit val jsonFormats: Formats = DefaultFormats
+
+  before() {
+    contentType = formats("json")
+  }
+
 
   get("/") {
-    <html>
-      <body>
-        <h1>Hello, world!</h1>
-        Say <a href="hello-scalate">hello to Scalate</a>.
-      </body>
-    </html>
+    val observations = ObservationsService.listAll
   }
-  
+
+  post("/", observationForm) { form: ObservationForm =>
+    val observation = ObservationsService.create(form.weight)
+    observation
+  }
+
 }
