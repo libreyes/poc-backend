@@ -2,7 +2,7 @@ package org.openeyes.api.controllers
 
 import org.openeyes.api.stacks.ScalateStack
 
-class FooController extends ScalateStack {
+class ObservationsController extends ScalateStack {
 
   get("/") {
     <html>
