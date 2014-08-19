@@ -28,11 +28,11 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
     val observations = ObservationsService.listAll
   }
 
-  val createObservation =
-    (apiOperation[Observation]("createObservation")
-  summary("Create a new Observations")
-  parameters(
-      bodyParam[Int]("weight").description("A name to search for")))
+//  val createObservation =
+//    (apiOperation[Observation]("createObservation")
+//  summary("Create a new Observations")
+//  parameters(
+//      bodyParam[Int]("weight").description("A name to search for")))
 
 
   post("/", observationForm) { form: ObservationForm =>
