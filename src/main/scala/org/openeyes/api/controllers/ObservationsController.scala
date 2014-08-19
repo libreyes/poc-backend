@@ -3,12 +3,9 @@ package org.openeyes.api.controllers
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.services.ObservationsService
-import org.scalatra.ScalatraServlet
-import org.scalatra.i18n.I18nSupport
-import org.scalatra.json._
+import org.openeyes.api.stacks.ApiStack
 
-
-class ObservationsController extends ScalatraServlet with JacksonJsonSupport with ObservationFormSupport with I18nSupport {
+class ObservationsController extends ApiStack with ObservationFormSupport {
 
 
   protected implicit val jsonFormats: Formats = DefaultFormats
