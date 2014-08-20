@@ -1,8 +1,6 @@
 package org.openeyes.api.views.observations
 
-import org.json4s.JsonAST.JValue
 import org.openeyes.api.models.Observation
-import org.json4s.JsonDSL._
 
 
 /**
@@ -11,8 +9,8 @@ import org.json4s.JsonDSL._
 class ObservationList(observations: Seq[Observation])
 
 object ObservationList {
-  import org.json4s._
   import org.json4s.JsonDSL._
+  import org.json4s._
   import org.json4s.jackson.JsonMethods._
 
 
