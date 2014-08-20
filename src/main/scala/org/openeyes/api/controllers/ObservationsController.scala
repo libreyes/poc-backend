@@ -1,5 +1,6 @@
 package org.openeyes.api.controllers
 
+import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
@@ -14,7 +15,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
   protected val applicationDescription = "The OpenEyes API. It exposes operations for listing of " +
     "Observations, and creation of Observations."
 
-  protected implicit val jsonFormats: Formats = DefaultFormats
+  protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
 
   before() {
     contentType = formats("json")
@@ -22,13 +23,14 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
 
   val listObservations =
-    (apiOperation[List[Observation]]("listObservations")
+    (apiOperation[ObservationList]("listObservations")
       summary ("List all Observations")
       notes ("Shows all known Observations"))
 
   get("/", operation(listObservations)) {
     val observations = ObservationService.listAll
-    ObservationList(observations)
+    // ObservationList(observations) // an experiment in view handling, save for later.
+    observations
   }
 
   val createObservation =
