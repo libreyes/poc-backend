@@ -23,7 +23,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
 
   val listObservations =
-    (apiOperation[ObservationList]("listObservations")
+    (apiOperation[List[Observation]]("listObservations")
       summary ("List all Observations")
       notes ("Shows all known Observations"))
 
