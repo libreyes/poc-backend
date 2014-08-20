@@ -1,14 +1,12 @@
 package org.openeyes.api.controllers
 
-import org.json4s.JsonAST.JValue
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
 import org.openeyes.api.services.ObservationService
 import org.openeyes.api.stacks.ApiStack
-import org.scalatra.swagger.{ParamType, DataType, Parameter, Swagger}
 import org.openeyes.api.views.observations.ObservationList
-import org.json4s.JsonDSL._
+import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 
 
 class ObservationsController(implicit val swagger: Swagger) extends ApiStack with ObservationFormSupport {
@@ -25,21 +23,20 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
   val listObservations =
     (apiOperation[List[Observation]]("listObservations")
-      summary("List all Observations")
-      notes("Shows all known Observations"))
+      summary ("List all Observations")
+      notes ("Shows all known Observations"))
 
   get("/", operation(listObservations)) {
     val observations = ObservationService.listAll.toSeq
-    val ast = ObservationList(observations)
-    compact(render(ast))
+    ObservationList(observations)
   }
 
   val createObservation =
     (apiOperation[Observation]("createObservation")
-      summary("Create a new Observations")
-      notes("None at present")
-      parameters(
-        Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
+      summary ("Create a new Observations")
+      notes ("None at present")
+      parameters (
+      Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
       )
 
 

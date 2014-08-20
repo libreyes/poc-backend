@@ -11,6 +11,10 @@ import org.json4s.JsonDSL._
 class ObservationList(observations: Seq[Observation])
 
 object ObservationList {
+  import org.json4s._
+  import org.json4s.JsonDSL._
+  import org.json4s.jackson.JsonMethods._
+
 
   def apply(observations: Seq[Observation]): JValue = {
     val ast = observations.map { obs =>
@@ -19,7 +23,7 @@ object ObservationList {
           ("weight" -> obs.weight.grams)
         )
     }
-    ast
+    render(ast)
   }
 
 }
