@@ -8,7 +8,7 @@ import org.openeyes.api.models.{Observation, Weight}
  */
 object ObservationService {
 
-  def listAll = {
+  def listAll: Seq[Observation] = {
     Observation.findAll().toSeq
   }
 
