@@ -6,7 +6,7 @@ import org.openeyes.api.models.{Weight, Observation}
 /**
  * Created by dave on 19/08/2014.
  */
-object ObservationsService {
+object ObservationService {
 
   def listAll = {
     Observation.findAll().toList

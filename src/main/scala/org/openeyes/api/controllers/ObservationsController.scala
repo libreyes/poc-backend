@@ -3,7 +3,7 @@ package org.openeyes.api.controllers
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
-import org.openeyes.api.services.ObservationsService
+import org.openeyes.api.services.ObservationService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
 
@@ -25,7 +25,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
       notes("Shows all known Observations"))
 
   get("/", operation(listObservations)) {
-    val observations = ObservationsService.listAll
+    val observations = ObservationService.listAll
   }
 
 //  val createObservation =
@@ -36,7 +36,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
 
   post("/", observationForm) { form: ObservationForm =>
-    val observation = ObservationsService.create(form.weight)
+    val observation = ObservationService.create(form.weight)
     observation
   }
 
