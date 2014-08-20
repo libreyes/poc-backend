@@ -1,6 +1,7 @@
 package org.openeyes.api.controllers
 
 import org.json4s.{DefaultFormats, Formats}
+import org.json4s.JsonDSL._
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
 import org.openeyes.api.services.ObservationService
@@ -26,7 +27,13 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
   get("/", operation(listObservations)) {
     val observations = ObservationService.listAll.toSeq
-    observations
+    val ast = observations.map { obs =>
+      (
+        ("id" -> obs._id.toString) ~
+          ("weight" -> obs.weight.grams)
+        )
+    }
+    compact(render(ast))
   }
 
   val createObservation =
