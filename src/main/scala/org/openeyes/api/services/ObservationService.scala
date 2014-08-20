@@ -12,11 +12,12 @@ object ObservationService {
     Observation.findAll().toSeq
   }
 
-  def create(weight: Int) = {
+  def create(weight: Int): Observation = {
     val _id = new ObjectId
     val wght = Weight(weight)
     val observation = Observation(_id, wght)
     Observation.save(observation)
+    observation
   }
 
 }
