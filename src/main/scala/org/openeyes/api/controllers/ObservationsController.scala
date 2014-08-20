@@ -6,7 +6,6 @@ import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
 import org.openeyes.api.services.ObservationService
 import org.openeyes.api.stacks.ApiStack
-import org.openeyes.api.views.observations.ObservationList
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 
 
@@ -37,8 +36,8 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
     (apiOperation[Observation]("createObservation")
       summary ("Create a new Observations")
       notes ("No notes right now")
-  parameters (
-      Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
+      parameters (
+        Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
       )
 
 
