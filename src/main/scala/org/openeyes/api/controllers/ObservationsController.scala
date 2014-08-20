@@ -2,12 +2,14 @@ package org.openeyes.api.controllers
 
 import org.json4s.JsonAST.JValue
 import org.json4s.{DefaultFormats, Formats}
-import org.json4s.JsonDSL._
 import org.openeyes.api.forms.ObservationFormSupport
 import org.openeyes.api.models.Observation
 import org.openeyes.api.services.ObservationService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{ParamType, DataType, Parameter, Swagger}
+import org.openeyes.api.views.observations.ObservationList
+import org.json4s.JsonDSL._
+
 
 class ObservationsController(implicit val swagger: Swagger) extends ApiStack with ObservationFormSupport {
 
@@ -28,7 +30,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
   get("/", operation(listObservations)) {
     val observations = ObservationService.listAll.toSeq
-    val ast = convert(observations)
+    val ast = ObservationList(observations)
     compact(render(ast))
   }
 
@@ -45,15 +47,4 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
     val observation = ObservationService.create(form.weight)
     observation
   }
-
-  def convert(observations: Seq[Observation]): JValue = {
-    val ast = observations.map { obs =>
-      (
-        ("id" -> obs._id.toString) ~
-          ("weight" -> obs.weight.grams)
-        )
-    }
-    ast
-  }
-
 }
