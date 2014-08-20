@@ -16,6 +16,7 @@ object ObservationService {
     val _id = new ObjectId
     val wght = Weight(weight)
     val observation = Observation(_id, wght)
+    Observation.save(observation)
   }
 
 }
