@@ -1,7 +1,7 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
-import org.openeyes.api.models.{Weight, Observation}
+import org.openeyes.api.models.{Observation, Weight}
 
 /**
  * Created by dave on 19/08/2014.
