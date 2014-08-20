@@ -36,8 +36,8 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
   val createObservation =
     (apiOperation[Observation]("createObservation")
       summary ("Create a new Observations")
-      notes ("None at present")
-      parameters (
+      notes ("No notes right now")
+  parameters (
       Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
       )
 
