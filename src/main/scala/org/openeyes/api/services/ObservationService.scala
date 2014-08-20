@@ -9,7 +9,7 @@ import org.openeyes.api.models.{Weight, Observation}
 object ObservationService {
 
   def listAll = {
-    Observation.findAll().toList
+    Observation.findAll().toSeq
   }
 
   def create(weight: Int) = {

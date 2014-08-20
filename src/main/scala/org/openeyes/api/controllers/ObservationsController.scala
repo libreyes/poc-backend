@@ -27,7 +27,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
       notes ("Shows all known Observations"))
 
   get("/", operation(listObservations)) {
-    val observations = ObservationService.listAll.toSeq
+    val observations = ObservationService.listAll
     ObservationList(observations)
   }
 
