@@ -17,13 +17,13 @@ case class LaserEvent(@Key("_id")
                        laser: Laser,
                        site: Site)
 
-case class TreatedEye(procedures: Option[List[Procedure]], anteriorSegment: Option[AnteriorSegment])
-case class Procedure(label: String, codeValue: String, systemId: String)
 case class AnteriorSegment(data: String)
-case class Site(name: String)
-case class Laser(name: String)
 case class Episode(events: Option[List[LaserEvent]])
+case class Laser(name: String)
 case class Patient(firstname: String, surname: String)
+case class Procedure(label: String, codeValue: String, systemId: String)
+case class Site(name: String)
+case class TreatedEye(procedures: Option[List[Procedure]], anteriorSegment: Option[AnteriorSegment])
 
 
 object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
