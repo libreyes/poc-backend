@@ -20,26 +20,12 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with
     contentType = formats("json")
   }
 
-
-  val listObservations =
-    (apiOperation[List[LaserEvent]]("listObservations")
-      summary ("List all Observations")
-      notes ("Shows all known Observations"))
-
-  get("/", operation(listObservations)) {
-    LaserEventService.create()
+  get("/") {
+    LaserEventService.findAll
   }
 
-  val createObservation =
-    (apiOperation[LaserEvent]("createObservation")
-      summary ("Create a new Observations")
-      notes ("No notes right now")
-      parameters (
-        Parameter("weight", DataType.Int, Some("The observed weight"), None, ParamType.Form, None, required = true))
-      )
 
-
-  post("/", observationForm) { form: ObservationForm =>
+  get("/create", observationForm) { form: ObservationForm =>
     LaserEventService.create()
   }
 }
