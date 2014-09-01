@@ -12,12 +12,19 @@ import org.bson.types.ObjectId
  */
 case class LaserEvent(@Key("_id")
                        _id: ObjectId,
-                       leftEye: Option[Eye],
-                       rightEye: Option[Eye])
+                       leftEye: Option[TreatedEye],
+                       rightEye: Option[TreatedEye],
+                       laser: Laser,
+                       site: Site)
 
-case class Eye(treatments: Option[List[Treatment]])
-case class Treatment(procedures: Option[List[Procedure]])
+case class TreatedEye(treatments: Option[List[Procedure]], anteriorSegment: Option[AnteriorSegment])
 case class Procedure(name: String)
+case class AnteriorSegment(data: String)
+case class Site(name: String)
+case class Laser(name: String)
+case class Episode(events: Option[List[LaserEvent]])
+case class Patient(firstname: String, surname: String)
+
 
 object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
 
