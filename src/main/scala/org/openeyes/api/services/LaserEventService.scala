@@ -14,7 +14,10 @@ object LaserEventService {
 
   def create(): LaserEvent = {
     val _id = new ObjectId
-    val procedures = List(Procedure("Eyeball washing"), Procedure("Cycloablation"), Procedure("Macular Grid"))
+    val procedures = List(
+      Procedure("Eyeball washing", "CODE", "SYSTEMID"),
+      Procedure("Cycloablation", "CODE", "SYSTEMID"),
+      Procedure("Macular Grid", "CODE", "SYSTEMID"))
     val as1 = AnteriorSegment("foo: 1")
     val site = Site("City Road")
     var laser = Laser("Moonraker")
