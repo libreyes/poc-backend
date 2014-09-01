@@ -8,7 +8,7 @@ import org.openeyes.api.models._
  */
 object LaserEventService {
 
-  def listAll: Seq[LaserEvent] = {
+  def findAll: Seq[LaserEvent] = {
     LaserEvent.findAll().toSeq
   }
 
