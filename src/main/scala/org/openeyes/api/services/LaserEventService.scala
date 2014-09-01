@@ -19,11 +19,11 @@ object LaserEventService {
       Procedure("Cycloablation", "CODE", "SYSTEMID"),
       Procedure("Macular Grid", "CODE", "SYSTEMID"))
     val as1 = AnteriorSegment("foo: 1")
-    val site = Site("City Road")
+    val site = Site("Here")
     var laser = Laser("Moonraker")
-    val leftEye = TreatedEye(Some(procedures), Some(as1))
-    val rightEye = TreatedEye(Some(procedures), Some(as1))
-    val laserEvent = LaserEvent(_id, Some(leftEye), Some(rightEye), laser, site)
+    val leftEye = TreatedEye(procedures, as1)
+    val rightEye = TreatedEye(procedures, as1)
+    val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site)
     LaserEvent.save(laserEvent)
     laserEvent
   }

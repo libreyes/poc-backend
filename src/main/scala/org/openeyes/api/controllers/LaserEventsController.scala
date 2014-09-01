@@ -2,14 +2,14 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.forms.ObservationFormSupport
-import org.openeyes.api.models.LaserEvent
+import org.openeyes.api.forms.FormValidators.LaserEventForm
+import org.openeyes.api.forms.LaserEventFormSupport
 import org.openeyes.api.services.LaserEventService
 import org.openeyes.api.stacks.ApiStack
-import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
+import org.scalatra.swagger.Swagger
 
 
-class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with ObservationFormSupport {
+class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with LaserEventFormSupport {
 
   protected val applicationDescription = "The OpenEyes API. It exposes operations for listing of " +
     "Observations, and creation of Observations."
@@ -25,7 +25,7 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with
   }
 
 
-  get("/create", observationForm) { form: ObservationForm =>
+  get("/create", laserEventForm) { form: LaserEventForm =>
     LaserEventService.create()
   }
 }
