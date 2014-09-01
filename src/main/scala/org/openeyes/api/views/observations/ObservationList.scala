@@ -1,6 +1,6 @@
 package org.openeyes.api.views.observations
 
-import org.openeyes.api.models.Observation
+import org.openeyes.api.models.LaserEvent
 
 
 /**
@@ -20,7 +20,7 @@ import org.openeyes.api.models.Observation
  * looks nothing like what we get from this code. We'd need a way to pass this type
  * to Swagger and have it work, then we're golden here.
  */
-class ObservationList(observations: Seq[Observation])
+class ObservationList(observations: Seq[LaserEvent])
 
 object ObservationList {
   import org.json4s.JsonDSL._
@@ -28,7 +28,7 @@ object ObservationList {
   import org.json4s.jackson.JsonMethods._
 
 
-  def apply(observations: Seq[Observation]): JValue = {
+  def apply(observations: Seq[LaserEvent]): JValue = {
     val ast = observations.map { obs =>
       (
         ("id" -> obs._id.toString) ~

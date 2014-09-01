@@ -3,7 +3,7 @@ package org.openeyes.api.controllers
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.ObservationFormSupport
-import org.openeyes.api.models.Observation
+import org.openeyes.api.models.LaserEvent
 import org.openeyes.api.services.ObservationService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
@@ -22,7 +22,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
 
 
   val listObservations =
-    (apiOperation[List[Observation]]("listObservations")
+    (apiOperation[List[LaserEvent]]("listObservations")
       summary ("List all Observations")
       notes ("Shows all known Observations"))
 
@@ -33,7 +33,7 @@ class ObservationsController(implicit val swagger: Swagger) extends ApiStack wit
   }
 
   val createObservation =
-    (apiOperation[Observation]("createObservation")
+    (apiOperation[LaserEvent]("createObservation")
       summary ("Create a new Observations")
       notes ("No notes right now")
       parameters (
