@@ -1,6 +1,6 @@
 import javax.servlet.ServletContext
 
-import org.openeyes.api.controllers.{ResourcesApp, OpeneyesSwagger, ObservationsController}
+import org.openeyes.api.controllers.{ResourcesApp, OpeneyesSwagger, LaserEventsController}
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
@@ -10,6 +10,6 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext) {
     context.mount (new ResourcesApp, "/api-docs")
-    context.mount(new ObservationsController, "/observations", "observations")
+    context.mount(new LaserEventsController, "/laser-events", "laser-events")
   }
 }

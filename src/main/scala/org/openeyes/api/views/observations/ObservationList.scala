@@ -31,8 +31,8 @@ object ObservationList {
   def apply(observations: Seq[LaserEvent]): JValue = {
     val ast = observations.map { obs =>
       (
-        ("id" -> obs._id.toString) ~
-          ("weight" -> obs.weight.grams)
+        ("id" -> obs._id.toString)// ~
+          // ("weight" -> obs.weight.grams)
         )
     }
     render(ast)

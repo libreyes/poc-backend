@@ -17,7 +17,7 @@ case class LaserEvent(@Key("_id")
                        laser: Laser,
                        site: Site)
 
-case class TreatedEye(treatments: Option[List[Procedure]], anteriorSegment: Option[AnteriorSegment])
+case class TreatedEye(procedures: Option[List[Procedure]], anteriorSegment: Option[AnteriorSegment])
 case class Procedure(name: String)
 case class AnteriorSegment(data: String)
 case class Site(name: String)
