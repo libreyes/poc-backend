@@ -11,10 +11,7 @@ import org.openeyes.api.models._
 object PatientService {
 
   def search(term: String) = {
-    patients.find(p => filterPatients(p, term)) match {
-      case Some(patient) => Some(patient)
-      case None => None
-    }
+    patients.filter(p => filterPatients(p, term)).toList
   }
 
   def find(id: String) = {
@@ -53,8 +50,4 @@ object PatientService {
     Patient(3, "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
       54321, "Unknown", generalPractitioner)
   )
-
-
-
-
 }
