@@ -1,8 +1,6 @@
 package org.openeyes.api.services
 
 import java.text.SimpleDateFormat
-import java.util.Date
-
 import org.openeyes.api.models._
 
 /**
@@ -21,17 +19,22 @@ object PatientService {
     }
   }
 
-  // NOTE: this is in no way production ready code and can probably be done a lot better, like for instance what happens
-  // if 2 people are found with the same name.
+  // NOTE: This filter patients method is mirroring the current search on the dev site, which searches on:
+  //       firstName + " " + surname == term
+  //       surname + ", " + firstName == term
+  //       nhsNumber.toString == term
+  //
   protected def filterPatients(patient: Patient, term: String): Boolean = {
     val formattedName = patient.firstName + " " + patient.surname
     val formattedNameWithComma = patient.surname + ", " + patient.firstName
 
-    formattedName.toLowerCase == term.toLowerCase || formattedNameWithComma.toLowerCase == term.toLowerCase || patient.nhsNumber.toString == term
+    formattedName.toLowerCase == term.toLowerCase ||
+      formattedNameWithComma.toLowerCase == term.toLowerCase ||
+      patient.nhsNumber.toString == term
   }
 
   // Below is a whole load of fake data so that we can generate some patients to display in the POC.
-
+  //
   val address = Address("1 Some Street", "", "London", "Greater London", "W1W 7JH")
 
   val contactDetail = ContactDetail("info@here.org", "+44 208 9734 6789")
