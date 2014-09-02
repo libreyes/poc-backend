@@ -20,7 +20,7 @@ object LaserEventService {
   def create(form: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
     val site = Site(form.site)
-    var laser = Laser(form.laser)
+    val laser = Laser(form.laser)
     val leftEye = TreatedEye(form.leftEye.procedures, form.leftEye.anteriorSegment)
     val rightEye = TreatedEye(form.rightEye.procedures, form.rightEye.anteriorSegment)
     val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site)
