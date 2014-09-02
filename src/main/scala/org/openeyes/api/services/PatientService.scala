@@ -11,14 +11,25 @@ import org.openeyes.api.models._
 object PatientService {
 
   def search(term: String) = {
-
-  }
-
-  def find(id: String) = {
-    patients find (_.id.toString == id) match {
+    patients.find(p => filterPatients(p, term)) match {
       case Some(patient) => Some(patient)
       case None => None
     }
+  }
+
+  def find(id: String) = {
+    patients.find(_.id.toString == id) match {
+      case Some(patient) => Some(patient)
+      case None => None
+    }
+  }
+
+  // NOTE: this is in no way production ready code!
+  implicit def filterPatients(patient: Patient, term: String): Boolean = {
+    val formattedName = patient.firstName + " " + patient.surname
+    val formattedNameWithComma = patient.surname + ", " + patient.firstName
+
+    formattedName.toLowerCase == term.toLowerCase || formattedNameWithComma.toLowerCase == term.toLowerCase || patient.nhsNumber.toString == term
   }
 
   // Below is a whole load of fake data so that we can generate some patients to display in the POC.
@@ -37,6 +48,8 @@ object PatientService {
     Patient(1, "John", "Parnell", simpleDateFormat.parse("21/12/1954"), "Male", "Unknown", contactDetail, address,
       12345, "Unknown", generalPractitioner),
     Patient(2, "Steve", "Lonie", simpleDateFormat.parse("13/06/1969"), "Male", "Unknown", contactDetail, address,
+      67890, "Unknown", generalPractitioner),
+    Patient(3, "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
       67890, "Unknown", generalPractitioner)
   )
 
