@@ -11,8 +11,7 @@ import org.scalatra.swagger.Swagger
 
 class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with LaserEventFormSupport {
 
-  protected val applicationDescription = "The OpenEyes API. It exposes operations for listing of " +
-    "Observations, and creation of Observations."
+  protected val applicationDescription = "CRUD operations for LaserEvents"
 
   protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
 
@@ -25,7 +24,9 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with
   }
 
 
-  get("/create", laserEventForm) { form: LaserEventForm =>
+  post("/", laserEventForm) { form: LaserEventForm =>
     LaserEventService.create()
   }
+
 }
+
