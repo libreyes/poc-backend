@@ -1,6 +1,5 @@
 package org.openeyes.api.services
 
-import java.text.SimpleDateFormat
 import org.openeyes.api.data.PatientsData
 import org.openeyes.api.models._
 
