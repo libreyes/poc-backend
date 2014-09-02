@@ -13,6 +13,10 @@ object LaserEventService {
     LaserEvent.findAll().toSeq
   }
 
+  def find(id: String): Option[LaserEvent] = {
+    LaserEvent.findOneById(new ObjectId(id))
+  }
+
   def create(form: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
     val site = Site(form.site)
