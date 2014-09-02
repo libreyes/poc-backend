@@ -25,7 +25,8 @@ case class ContactDetail(email: String, telephone: String)
 case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: String, surname: String, contactDetail: ContactDetail, address: Address,
                                practice: Practice)
-case class Laser(name: String)
+// NOTE: Added id to the Laser class so we can fake its persistence on the front end.
+case class Laser(id: Integer, name: String)
 // NOTE: Added id to the Patient class so we can fake its persistence on the front end.
 case class Patient(id: Integer, firstName: String, surname: String, dob: Date, gender: String, ethnicity: String,
                    contactDetail: ContactDetail, address: Address, nhsNumber: Integer, nextOfKin: String,
