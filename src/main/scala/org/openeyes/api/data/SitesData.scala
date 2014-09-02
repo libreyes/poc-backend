@@ -7,8 +7,6 @@ import org.openeyes.api.models.Site
  */
 object SitesData {
 
-  // Fake sites
-  //
   val sites = List(
     Site(1, "City Road"),
     Site(2, "Earling"),

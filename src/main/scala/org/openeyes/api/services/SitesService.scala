@@ -1,7 +1,6 @@
 package org.openeyes.api.services
 
 import org.openeyes.api.data.SitesData
-import org.openeyes.api.models.Site
 
 /**
  * Created by stu on 02/09/2014.
