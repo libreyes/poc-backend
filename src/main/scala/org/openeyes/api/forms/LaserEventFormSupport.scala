@@ -15,7 +15,6 @@ import org.scalatra.servlet.ServletBase
 trait LaserEventFormSupport extends FormSupport with LoggerStack {
   self: ServletBase with I18nSupport with JacksonJsonSupport =>
 
-
   val laserEventForm = mapping(
     "site" -> text(required),
     "laser" -> text(required),
@@ -29,6 +28,9 @@ object FormValidators {
 
   case class LaserEventForm(site: String, laser: String, leftEye: TreatedEye, rightEye: TreatedEye)
 
+  val anteriorSegmentForm =  mapping(
+    "data" -> text(required)
+  )(AnteriorSegment.apply)
 
   val procedureForm = mapping(
     "system" -> text(required),
@@ -40,8 +42,6 @@ object FormValidators {
     "procedures" -> list(
       FormValidators.procedureForm
     ),
-    "anteriorSegment" -> mapping(
-      "data" -> text(required)
-    )(AnteriorSegment.apply)
+    "anteriorSegment" -> FormValidators.anteriorSegmentForm
   )(TreatedEye.apply)
 }
