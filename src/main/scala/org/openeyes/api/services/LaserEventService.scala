@@ -15,15 +15,10 @@ object LaserEventService {
 
   def create(form: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
-    val procedures = List(
-      Procedure("Eyeball washing", "CODE", "SYSTEMID"),
-      Procedure("Cycloablation", "CODE", "SYSTEMID"),
-      Procedure("Macular Grid", "CODE", "SYSTEMID"))
-    val as1 = AnteriorSegment("foo: 1")
-    val site = Site("Here")
-    var laser = Laser("Moonraker")
-    val leftEye = TreatedEye(procedures, as1)
-    val rightEye = TreatedEye(procedures, as1)
+    val site = Site(form.site)
+    var laser = Laser(form.laser)
+    val leftEye = TreatedEye(form.leftEye.procedures, form.leftEye.anteriorSegment)
+    val rightEye = TreatedEye(form.rightEye.procedures, form.rightEye.anteriorSegment)
     val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site)
     LaserEvent.save(laserEvent)
     laserEvent
