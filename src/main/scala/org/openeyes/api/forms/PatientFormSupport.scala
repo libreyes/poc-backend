@@ -15,7 +15,7 @@ trait PatientFormSupport extends FormSupport with LoggerStack {
   case class PatientForm(searchTerm: String)
 
   val patientForm = mapping(
-    "searchTerm" -> text(required)
+    "searchTerm" -> text()
   )(PatientForm.apply)
 
 }
