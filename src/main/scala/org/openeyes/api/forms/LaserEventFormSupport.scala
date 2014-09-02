@@ -12,7 +12,7 @@ import org.scalatra.servlet.ServletBase
 /**
  * Created by dave on 19/08/2014.
  */
-trait LaserEventFormSupport extends FormSupport with LoggerStack {
+trait LaserEventFormSupport extends ClientSideValidationFormSupport with LoggerStack {
   self: ServletBase with I18nSupport with JacksonJsonSupport =>
 
   val laserEventForm = mapping(
