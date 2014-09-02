@@ -35,7 +35,7 @@ object PatientService {
 
   // Below is a whole load of fake data so that we can generate some patients to display in the POC.
 
-  val address = Address("Murray Hill", "", "Wimbledon", "Greater London", "SW4 7JH")
+  val address = Address("1 Some Street", "", "London", "Greater London", "W1W 7JH")
 
   val contactDetail = ContactDetail("info@here.org", "+44 208 9734 6789")
 
