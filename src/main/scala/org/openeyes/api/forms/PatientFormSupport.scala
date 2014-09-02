@@ -12,10 +12,10 @@ import org.scalatra.servlet.ServletBase
 trait PatientFormSupport extends FormSupport with LoggerStack {
   self: ServletBase with I18nSupport with JacksonJsonSupport =>
 
-  case class PatientForm(term: String)
+  case class PatientForm(searchTerm: String)
 
   val patientForm = mapping(
-    "term" -> text(required)
+    "searchTerm" -> text(required)
   )(PatientForm.apply)
 
 }

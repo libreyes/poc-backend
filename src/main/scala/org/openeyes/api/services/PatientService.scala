@@ -8,8 +8,8 @@ import org.openeyes.api.models._
  */
 object PatientService {
 
-  def search(term: String) = {
-    patients.filter(p => filterPatients(p, term)).toList
+  def search(searchTerm: String) = {
+    patients.filter(p => filterPatients(p, searchTerm)).toList
   }
 
   def find(id: String) = {
@@ -24,13 +24,13 @@ object PatientService {
   //       surname + ", " + firstName == term
   //       nhsNumber.toString == term
   //
-  protected def filterPatients(patient: Patient, term: String): Boolean = {
-    val formattedName = patient.firstName + " " + patient.surname
-    val formattedNameWithComma = patient.surname + ", " + patient.firstName
+  protected def filterPatients(patient: Patient, searchTerm: String): Boolean = {
+    val formattedName = (patient.firstName + " " + patient.surname).toLowerCase
+    val formattedNameWithComma = (patient.surname + ", " + patient.firstName).toLowerCase
+    val nhsNumberAsString = patient.nhsNumber.toString
+    val searchTermLower = searchTerm.toLowerCase
 
-    formattedName.toLowerCase == term.toLowerCase ||
-      formattedNameWithComma.toLowerCase == term.toLowerCase ||
-      patient.nhsNumber.toString == term
+    formattedName == searchTermLower || formattedNameWithComma == searchTermLower || nhsNumberAsString == searchTerm
   }
 
   // Below is a whole load of fake data so that we can generate some patients to display in the POC.

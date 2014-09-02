@@ -22,7 +22,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack with Pa
   }
 
   get("/", patientForm) { form: PatientForm =>
-    PatientService.search(form.term)
+    PatientService.search(form.searchTerm)
   }
 
   get("/:id") {
