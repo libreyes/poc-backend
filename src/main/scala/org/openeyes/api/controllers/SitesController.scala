@@ -31,4 +31,9 @@ class SitesController(implicit val swagger: Swagger) extends ApiStack {
       case None => NotFound("No site found for id '" + id + "'.")
     }
   }
+
+  get("/:id/lasers") {
+    val id = params("id")
+    SitesService.findLasers(id)
+  }
 }

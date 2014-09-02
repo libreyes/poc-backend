@@ -1,6 +1,6 @@
 package org.openeyes.api.services
 
-import org.openeyes.api.models.Site
+import org.openeyes.api.data.SitesData
 
 /**
  * Created by stu on 02/09/2014.
@@ -8,21 +8,17 @@ import org.openeyes.api.models.Site
 object SitesService {
 
   def find(id: String) = {
-    sites.find(s => s.id.toString == id) match {
+    SitesData.all.find(s => s.id.toString == id) match {
       case Some(site) => Some(site)
       case None => None
     }
   }
 
   def findAll = {
-    sites
+    SitesData.all
   }
 
-  // Fake sites
-  //
-  val sites = List(
-    Site(1, "City Road"),
-    Site(2, "Earling"),
-    Site(3, "Barking")
-  )
+  def findLasers(id: String) = {
+    SitesData.findLasers(id)
+  }
 }
