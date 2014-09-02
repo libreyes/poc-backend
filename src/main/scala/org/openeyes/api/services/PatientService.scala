@@ -24,7 +24,8 @@ object PatientService {
     }
   }
 
-  // NOTE: this is in no way production ready code!
+  // NOTE: this is in no way production ready code and can probably be done a lot better, like for instance what happens
+  // if 2 people are found with the same name.
   implicit def filterPatients(patient: Patient, term: String): Boolean = {
     val formattedName = patient.firstName + " " + patient.surname
     val formattedNameWithComma = patient.surname + ", " + patient.firstName
