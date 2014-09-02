@@ -18,7 +18,7 @@ object PatientService {
   }
 
   def find(id: String) = {
-    patients.find(_.id.toString == id) match {
+    patients.find(p => p.id.toString == id) match {
       case Some(patient) => Some(patient)
       case None => None
     }
@@ -26,7 +26,7 @@ object PatientService {
 
   // NOTE: this is in no way production ready code and can probably be done a lot better, like for instance what happens
   // if 2 people are found with the same name.
-  implicit def filterPatients(patient: Patient, term: String): Boolean = {
+  protected def filterPatients(patient: Patient, term: String): Boolean = {
     val formattedName = patient.firstName + " " + patient.surname
     val formattedNameWithComma = patient.surname + ", " + patient.firstName
 
@@ -51,7 +51,7 @@ object PatientService {
     Patient(2, "Steve", "Lonie", simpleDateFormat.parse("13/06/1969"), "Male", "Unknown", contactDetail, address,
       67890, "Unknown", generalPractitioner),
     Patient(3, "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
-      67890, "Unknown", generalPractitioner)
+      54321, "Unknown", generalPractitioner)
   )
 
 
