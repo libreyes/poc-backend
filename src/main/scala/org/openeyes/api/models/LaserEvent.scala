@@ -26,15 +26,17 @@ case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: String, surname: String, contactDetail: ContactDetail, address: Address,
                                practice: Practice)
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
-case class Laser(id: Integer, name: String)
+case class Laser(id: Int, name: String)
+// NOTE: Added id to the LaserOperator class so we can fake its persistence on the front end.
+case class LaserOperator(id: Int, firstName: String, surname: String)
 // NOTE: Added id to the Patient class so we can fake its persistence on the front end.
-case class Patient(id: Integer, firstName: String, surname: String, dob: Date, gender: String, ethnicity: String,
+case class Patient(id: Int, firstName: String, surname: String, dob: Date, gender: String, ethnicity: String,
                    contactDetail: ContactDetail, address: Address, nhsNumber: Integer, nextOfKin: String,
                    generalPractitioner: GeneralPractitioner)
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 case class Procedure(label: String, codeValue: String, systemId: String)
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
-case class Site(id: Integer, name: String)
+case class Site(id: Int, name: String)
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
 

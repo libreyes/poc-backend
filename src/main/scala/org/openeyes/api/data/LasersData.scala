@@ -5,7 +5,7 @@ import org.openeyes.api.models.Laser
 /**
  * Created by stu on 02/09/2014.
  */
-object Lasers {
+object LasersData {
 
   val lasers = List(
     Laser(1, "Death Star"),
