@@ -21,6 +21,7 @@ object OpeneyesBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
+      resolvers += "amateras-repo" at "http://amateras.sourceforge.jp/mvn/",
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
         "jp.sf.amateras" %% "scalatra-forms" % "0.1.0",
