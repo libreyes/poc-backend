@@ -27,8 +27,8 @@ case class GeneralPractitioner(firstName: String, surname: String, contactDetail
                                practice: Practice)
 case class Laser(name: String)
 // NOTE: Added id to the Patient class so we can fake its persistence on the front end.
-case class Patient(id: Integer, firstName: String, surname: String, dob: Date, gender: String, ethnicity: String,
-                   contactDetail: ContactDetail, address: Address, nhsNumber: Integer, nextOfKin: String,
+case class Patient(id: Int, firstName: String, surname: String, dob: Date, gender: String, ethnicity: String,
+                   contactDetail: ContactDetail, address: Address, nhsNumber: Int, nextOfKin: String,
                    generalPractitioner: GeneralPractitioner)
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 case class Procedure(label: String, codeValue: String, systemId: String)
