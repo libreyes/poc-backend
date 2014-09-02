@@ -5,6 +5,7 @@ import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.PatientFormSupport
 import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
+import org.scalatra.{NotFound, Ok}
 import org.scalatra.swagger.Swagger
 
 /**
@@ -22,6 +23,14 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack with Pa
 
   get("/", patientForm) { form: PatientForm =>
     PatientService.search(form.term)
+  }
+
+  get("/:id") {
+    val id = params("id")
+    PatientService.find(id) match {
+      case Some(patient) => Ok(patient)
+      case None => NotFound("No patient found for id '" + id + "'.")
+    }
   }
 
 }
