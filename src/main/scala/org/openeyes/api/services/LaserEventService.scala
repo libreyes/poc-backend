@@ -1,6 +1,7 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
+import org.openeyes.api.forms.FormValidators.LaserEventForm
 import org.openeyes.api.models._
 
 /**
@@ -12,7 +13,7 @@ object LaserEventService {
     LaserEvent.findAll().toSeq
   }
 
-  def create(): LaserEvent = {
+  def create(form: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
     val procedures = List(
       Procedure("Eyeball washing", "CODE", "SYSTEMID"),
