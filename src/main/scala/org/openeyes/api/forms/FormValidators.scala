@@ -8,9 +8,6 @@ import org.openeyes.api.models.{Procedure, AnteriorSegment, TreatedEye}
  */
 object FormValidators {
 
-  case class LaserEventForm(site: String, laser: String, leftEye: TreatedEye, rightEye: TreatedEye)
-  case class PatientForm(term: String)
-
   val anteriorSegmentForm = mapping(
     "data" -> text(required)
   )(AnteriorSegment.apply)

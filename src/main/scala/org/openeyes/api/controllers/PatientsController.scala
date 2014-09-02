@@ -2,7 +2,6 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.forms.FormValidators.PatientForm
 import org.openeyes.api.forms.PatientFormSupport
 import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
@@ -22,7 +21,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack with Pa
   }
 
   get("/", patientForm) { form: PatientForm =>
-    PatientService.search("")
+    PatientService.search(form.term)
   }
 
 }

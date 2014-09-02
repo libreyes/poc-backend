@@ -2,7 +2,6 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.forms.FormValidators.LaserEventForm
 import org.openeyes.api.forms.LaserEventFormSupport
 import org.openeyes.api.services.LaserEventService
 import org.openeyes.api.stacks.ApiStack
