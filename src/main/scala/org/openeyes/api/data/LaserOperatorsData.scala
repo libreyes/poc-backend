@@ -7,7 +7,7 @@ import org.openeyes.api.models.LaserOperator
  */
 object LaserOperatorsData {
 
-  val laserOperators = List(
+  val all = List(
     LaserOperator(1, "Barry", "Edmonds"),
     LaserOperator(2, "Nigel", "Fromage"),
     LaserOperator(3, "Clive", "Smith"),

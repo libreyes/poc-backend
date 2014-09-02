@@ -8,13 +8,17 @@ import org.openeyes.api.data.SitesData
 object SitesService {
 
   def find(id: String) = {
-    SitesData.sites.find(s => s.id.toString == id) match {
+    SitesData.all.find(s => s.id.toString == id) match {
       case Some(site) => Some(site)
       case None => None
     }
   }
 
   def findAll = {
-    SitesData.sites
+    SitesData.all
+  }
+
+  def findLasers(id: String) = {
+    SitesData.findLasers(id)
   }
 }

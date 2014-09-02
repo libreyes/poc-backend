@@ -9,18 +9,18 @@ import org.openeyes.api.models._
 object PatientService {
 
   def find(id: String) = {
-    PatientsData.patients.find(p => p.id.toString == id) match {
+    PatientsData.all.find(p => p.id.toString == id) match {
       case Some(patient) => Some(patient)
       case None => None
     }
   }
 
   def findAll = {
-    PatientsData.patients
+    PatientsData.all
   }
 
   def search(searchTerm: String) = {
-    PatientsData.patients.filter(p => filterPatients(p, searchTerm)).toList
+    PatientsData.all.filter(p => filterPatients(p, searchTerm)).toList
   }
 
   // NOTE: This filter patients method is mirroring the current search on the dev site, which searches on:

@@ -8,6 +8,6 @@ import org.openeyes.api.data.LaserOperatorsData
 object LaserOperatorsService {
 
   def findAll = {
-    LaserOperatorsData.laserOperators
+    LaserOperatorsData.all
   }
 }

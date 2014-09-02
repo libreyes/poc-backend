@@ -21,7 +21,7 @@ object PatientsData {
 
   val generalPractitioner = GeneralPractitioner("Dr", "Strange", contactDetail, address, practice)
 
-  val patients = List(
+  val all = List(
     Patient(1, "John", "Parnell", simpleDateFormat.parse("21/12/1954"), "Male", "Unknown", contactDetail, address,
       12345, "Unknown", generalPractitioner),
     Patient(2, "Steve", "Lonie", simpleDateFormat.parse("13/06/1969"), "Male", "Unknown", contactDetail, address,
