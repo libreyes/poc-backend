@@ -8,7 +8,7 @@ import org.openeyes.api.models.LaserEvent
  * objects. Assuming that we had val observations = FooService.listAll: Seq[Observation],
  * we can get back a rendered JSON view by simply doing:
  *
- *   ObservationList(observations)
+ * ObservationList(observations)
  *
  * This is handy, and works - we can render the output however we want, to trim
  * out (in this case) the ugly BSON object id, or get rid of the weight object
@@ -23,6 +23,7 @@ import org.openeyes.api.models.LaserEvent
 class ObservationList(observations: Seq[LaserEvent])
 
 object ObservationList {
+
   import org.json4s.JsonDSL._
   import org.json4s._
   import org.json4s.jackson.JsonMethods._
@@ -31,8 +32,8 @@ object ObservationList {
   def apply(observations: Seq[LaserEvent]): JValue = {
     val ast = observations.map { obs =>
       (
-        ("id" -> obs._id.toString)// ~
-          // ("weight" -> obs.weight.grams)
+        ("id" -> obs._id.toString) // ~
+        // ("weight" -> obs.weight.grams)
         )
     }
     render(ast)

@@ -19,8 +19,8 @@ object LaserEventService {
 
   def create(resource: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
-    val site = Site(resource.site.name)
-    val laser = Laser(resource.laser.name)
+    val site = Site(resource.site.id, resource.site.codeValue, resource.site.label, resource.site.systemId)
+    val laser = Laser(resource.laser.id, resource.laser.codeValue, resource.laser.label, resource.laser.systemId)
     val leftEye = TreatedEye(resource.leftEye.procedures, resource.leftEye.anteriorSegment)
     val rightEye = TreatedEye(resource.rightEye.procedures, resource.rightEye.anteriorSegment)
     val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site)
