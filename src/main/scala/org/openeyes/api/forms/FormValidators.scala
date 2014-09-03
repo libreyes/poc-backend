@@ -1,7 +1,7 @@
 package org.openeyes.api.forms
 
 import jp.sf.amateras.scalatra.forms._
-import org.openeyes.api.models.{Procedure, AnteriorSegment, TreatedEye}
+import org.openeyes.api.models.{AnteriorSegment, Procedure, TreatedEye}
 
 /**
  * Created by stu on 02/09/2014.

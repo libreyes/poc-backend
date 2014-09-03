@@ -17,8 +17,4 @@ object SitesService {
   def findAll = {
     Sites.all
   }
-
-  def findLasers(id: String) = {
-    Sites.findLasers(id)
-  }
 }

@@ -6,7 +6,7 @@ import org.openeyes.api.models._
 /**
  * Created by stu on 02/09/2014.
  */
-object PatientService {
+object PatientsService {
 
   def find(id: String) = {
     Patients.all.find(p => p.id.toString == id) match {

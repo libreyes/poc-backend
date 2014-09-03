@@ -8,9 +8,9 @@ import org.openeyes.api.models.Site
 object Sites {
 
   val all = List(
-    Site(1, "City Road", None),
-    Site(2, "Earling", None),
-    Site(3, "Barking", None)
+    Site("1", "CR", "City Road", "site-1"),
+    Site("2", "EG", "Ealing", "site-2"),
+    Site("3", "BG", "Barking", "site-3")
   )
 
   val lasers = List(
@@ -19,20 +19,5 @@ object Sites {
     List(Lasers.all.apply(2)),
     List(Lasers.all.apply(0), Lasers.all.apply(2))
   )
-
-  // GROSS!!!
-  def findLasers(id: String) = {
-    try {
-      val idx = id.toInt
-
-      if(idx < 4){
-        lasers.apply(id.toInt)
-      }else{
-        List()
-      }
-    } catch {
-      case e: Exception => List()
-    }
-  }
 
 }

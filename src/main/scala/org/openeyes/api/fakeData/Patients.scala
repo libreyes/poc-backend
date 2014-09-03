@@ -22,11 +22,11 @@ object Patients {
   val generalPractitioner = GeneralPractitioner("Dr", "Strange", contactDetail, address, practice)
 
   val all = List(
-    Patient(1, "John", "Parnell", simpleDateFormat.parse("21/12/1954"), "Male", "Unknown", contactDetail, address,
-      12345, "Unknown", generalPractitioner),
-    Patient(2, "Steve", "Lonie", simpleDateFormat.parse("13/06/1969"), "Male", "Unknown", contactDetail, address,
-      67890, "Unknown", generalPractitioner),
-    Patient(3, "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
-      54321, "Unknown", generalPractitioner)
+    Patient("1", "John", "Parnell", simpleDateFormat.parse("21/12/1954"), "Male", "Unknown", contactDetail, address,
+      12345, "Unknown", generalPractitioner, 123),
+    Patient("2", "Steve", "Lonie", simpleDateFormat.parse("13/06/1969"), "Male", "Unknown", contactDetail, address,
+      67890, "Unknown", generalPractitioner, 456),
+    Patient("3", "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
+      54321, "Unknown", generalPractitioner, 789)
   )
 }
