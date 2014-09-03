@@ -1,7 +1,6 @@
 package org.openeyes.api.services
 
 import org.openeyes.api.fakeData.Lasers
-import org.openeyes.api.models.Laser
 
 /**
  * Created by stu on 03/09/2014.

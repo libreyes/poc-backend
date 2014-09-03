@@ -7,6 +7,13 @@ import org.openeyes.api.fakeData.LaserOperators
  */
 object LaserOperatorService {
 
+  def find(id: String) = {
+    LaserOperators.all.find(s => s.id.toString == id) match {
+      case Some(laser) => Some(laser)
+      case None => None
+    }
+  }
+
   def findAll = {
     LaserOperators.all
   }
