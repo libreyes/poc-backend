@@ -17,13 +17,19 @@ object LaserEventService {
     LaserEvent.findOneById(new ObjectId(id))
   }
 
-  def create(form: LaserEventForm): LaserEvent = {
+  def create(resource: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
-    val site = Site(form.site)
-    val laser = Laser(form.laser)
-    val leftEye = TreatedEye(form.leftEye.procedures, form.leftEye.anteriorSegment)
-    val rightEye = TreatedEye(form.rightEye.procedures, form.rightEye.anteriorSegment)
+    val site = Site(resource.site.name)
+    val laser = Laser(resource.laser.name)
+    val leftEye = TreatedEye(resource.leftEye.procedures, resource.leftEye.anteriorSegment)
+    val rightEye = TreatedEye(resource.rightEye.procedures, resource.rightEye.anteriorSegment)
     val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site)
+    LaserEvent.save(laserEvent)
+    laserEvent
+  }
+
+  def update(id: String, resource: LaserEventForm): LaserEvent = {
+    val laserEvent = LaserEvent(new ObjectId(id), resource.leftEye, resource.rightEye, resource.laser, resource.site)
     LaserEvent.save(laserEvent)
     laserEvent
   }

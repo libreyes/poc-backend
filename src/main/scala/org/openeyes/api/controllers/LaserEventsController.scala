@@ -2,13 +2,13 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.forms.{LaserEventForm, LaserEventFormSupport}
+import org.openeyes.api.forms.LaserEventForm
 import org.openeyes.api.services.LaserEventService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
 
 
-class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with LaserEventFormSupport {
+class LaserEventsController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "CRUD operations for LaserEvents"
 
@@ -27,11 +27,13 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with
   }
 
   post("/") {
-    //LaserEventService.create(resource)
+    val resource = parsedBody.extract[LaserEventForm]
+    LaserEventService.create(resource)
   }
 
   put("/:id") {
-    //LaserEventService.create(resource)
+    val resource = parsedBody.extract[LaserEventForm]
+    LaserEventService.update(params("id"), resource)
   }
 
 }
