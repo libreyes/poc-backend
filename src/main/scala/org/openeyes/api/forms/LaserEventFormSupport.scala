@@ -8,7 +8,6 @@ import org.scalatra.json.JacksonJsonSupport
 import org.scalatra.servlet.ServletBase
 
 case class TreatedEyeForm(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
-
 case class LaserEventForm(site: String, laser: String, leftEye: TreatedEyeForm, rightEye: TreatedEyeForm)
 
 /**
@@ -17,11 +16,11 @@ case class LaserEventForm(site: String, laser: String, leftEye: TreatedEyeForm, 
 trait LaserEventFormSupport extends ClientSideValidationFormSupport with LoggerStack {
   self: ServletBase with I18nSupport with JacksonJsonSupport =>
 
-  val anteriorSegmentForm = mapping(
+  val anteriorSegmentFormMapping = mapping(
     "data" -> text(required)
   )(AnteriorSegment.apply)
 
-  val procedureForm = mapping(
+  val procedureFormMapping = mapping(
     "label" -> text(required),
     "code" -> text(required),
     "system" -> text(required)
@@ -29,12 +28,12 @@ trait LaserEventFormSupport extends ClientSideValidationFormSupport with LoggerS
 
   val treatedEyeFormMapping = mapping(
     "procedures" -> list[Procedure] (
-      procedureForm
+      procedureFormMapping
     ),
-    "anteriorSegment" -> anteriorSegmentForm
+    "anteriorSegment" -> anteriorSegmentFormMapping
   )(TreatedEyeForm.apply)
 
-  val laserEventForm = mapping(
+  val laserEventFormMapping = mapping(
     "site" -> text(required),
     "laser" -> text(required),
     "leftEye" -> treatedEyeFormMapping,

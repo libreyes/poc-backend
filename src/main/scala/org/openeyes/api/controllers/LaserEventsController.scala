@@ -26,8 +26,12 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack with
     LaserEventService.find(params("id"))
   }
 
-  post("/", laserEventForm) { form: LaserEventForm =>
-    LaserEventService.create(form)
+  post("/") {
+    //LaserEventService.create(resource)
+  }
+
+  put("/:id") {
+    //LaserEventService.create(resource)
   }
 
 }
