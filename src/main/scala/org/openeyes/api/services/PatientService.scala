@@ -1,6 +1,6 @@
 package org.openeyes.api.services
 
-import org.openeyes.api.data.PatientsData
+import org.openeyes.api.fakeData.Patients
 import org.openeyes.api.models._
 
 /**
@@ -9,18 +9,18 @@ import org.openeyes.api.models._
 object PatientService {
 
   def find(id: String) = {
-    PatientsData.all.find(p => p.id.toString == id) match {
+    Patients.all.find(p => p.id.toString == id) match {
       case Some(patient) => Some(patient)
       case None => None
     }
   }
 
   def findAll = {
-    PatientsData.all
+    Patients.all
   }
 
   def search(searchTerm: String) = {
-    PatientsData.all.filter(p => filterPatients(p, searchTerm)).toList
+    Patients.all.filter(p => filterPatients(p, searchTerm)).toList
   }
 
   // NOTE: This filter patients method is mirroring the current search on the dev site, which searches on:

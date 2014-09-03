@@ -1,4 +1,4 @@
-package org.openeyes.api.data
+package org.openeyes.api.fakeData
 
 import java.text.SimpleDateFormat
 
@@ -7,7 +7,7 @@ import org.openeyes.api.models._
 /**
  * Created by stu on 02/09/2014.
  */
-object PatientsData {
+object Patients {
 
   // Below is a whole load of fake data so that we can generate some patients to display in the POC.
   //

@@ -1,11 +1,11 @@
-package org.openeyes.api.data
+package org.openeyes.api.fakeData
 
 import org.openeyes.api.models.Site
 
 /**
  * Created by stu on 02/09/2014.
  */
-object SitesData {
+object Sites {
 
   val all = List(
     Site(1, "City Road", None),
@@ -15,9 +15,9 @@ object SitesData {
 
   val lasers = List(
     List(), // Just to push the index up
-    List(LasersData.all.apply(0), LasersData.all.apply(1), LasersData.all.apply(3)),
-    List(LasersData.all.apply(2)),
-    List(LasersData.all.apply(0), LasersData.all.apply(2))
+    List(Lasers.all.apply(0), Lasers.all.apply(1), Lasers.all.apply(3)),
+    List(Lasers.all.apply(2)),
+    List(Lasers.all.apply(0), Lasers.all.apply(2))
   )
 
   // GROSS!!!

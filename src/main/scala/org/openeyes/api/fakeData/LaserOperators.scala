@@ -1,11 +1,11 @@
-package org.openeyes.api.data
+package org.openeyes.api.fakeData
 
 import org.openeyes.api.models.LaserOperator
 
 /**
  * Created by stu on 02/09/2014.
  */
-object LaserOperatorsData {
+object LaserOperators {
 
   val all = List(
     LaserOperator(1, "Barry", "Edmonds"),
