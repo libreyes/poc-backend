@@ -48,7 +48,7 @@ class LasersController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     LaserService.find(id) match {
       case Some(laser) => Ok(laser)
-      case None => NotFound("No laser found for id '" + id + "'.")
+      case None => NotFound("{ \"error\": \"No laser found for id '" + id + "'.\" }")
     }
   }
 

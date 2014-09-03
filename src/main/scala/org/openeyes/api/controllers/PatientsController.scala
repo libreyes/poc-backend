@@ -48,7 +48,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     PatientService.find(id) match {
       case Some(patient) => Ok(patient)
-      case None => NotFound("No patient found for id '" + id + "'.")
+      case None => NotFound("{ \"error\": \"No patient found for id '" + id + "'.\" }")
     }
   }
 
