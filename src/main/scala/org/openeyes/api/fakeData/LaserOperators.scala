@@ -8,9 +8,9 @@ import org.openeyes.api.models.LaserOperator
 object LaserOperators {
 
   val all = List(
-    LaserOperator(1, "Barry", "Edmonds"),
-    LaserOperator(2, "Nigel", "Fromage"),
-    LaserOperator(3, "Clive", "Smith"),
-    LaserOperator(4, "Sidney", "Bloomberg")
+    LaserOperator("1", "Barry", "Edmonds"),
+    LaserOperator("2", "Nigel", "Fromage"),
+    LaserOperator("3", "Clive", "Smith"),
+    LaserOperator("4", "Sidney", "Bloomberg")
   )
 }

@@ -2,16 +2,15 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.forms.PatientFormSupport
 import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
-import org.scalatra.{NotFound, Ok}
 import org.scalatra.swagger.Swagger
+import org.scalatra.{NotFound, Ok}
 
 /**
  * Created by stu on 02/09/2014.
  */
-class PatientsController(implicit val swagger: Swagger) extends ApiStack with PatientFormSupport {
+class PatientsController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The patients API."
 
@@ -21,11 +20,10 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack with Pa
     contentType = formats("json")
   }
 
-  get("/", patientForm) { form: PatientForm =>
-    if(form.searchTerm != null) {
-      PatientService.search(form.searchTerm)
-    }else{
-      PatientService.findAll
+  get("/") {
+    params.get("searchTerm") match {
+      case Some(searchTerm) => PatientService.search(searchTerm)
+      case None => PatientService.findAll
     }
   }
 

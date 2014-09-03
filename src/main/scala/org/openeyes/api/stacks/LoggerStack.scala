@@ -8,5 +8,5 @@ package com.constructiveproof.remotable.stacks
 import org.slf4j.LoggerFactory
 
 trait LoggerStack {
-  val logger =  LoggerFactory.getLogger(getClass)
+  val logger = LoggerFactory.getLogger(getClass)
 }
