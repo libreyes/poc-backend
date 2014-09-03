@@ -13,11 +13,4 @@ object Sites {
     Site("3", "BG", "Barking", "site-3")
   )
 
-  val lasers = List(
-    List(), // Just to push the index up
-    List(Lasers.all.apply(0), Lasers.all.apply(1), Lasers.all.apply(3)),
-    List(Lasers.all.apply(2)),
-    List(Lasers.all.apply(0), Lasers.all.apply(2))
-  )
-
 }

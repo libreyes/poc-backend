@@ -5,7 +5,7 @@ import org.openeyes.api.fakeData.Sites
 /**
  * Created by stu on 02/09/2014.
  */
-object SitesService {
+object SiteService {
 
   def find(id: String) = {
     Sites.all.find(s => s.id.toString == id) match {

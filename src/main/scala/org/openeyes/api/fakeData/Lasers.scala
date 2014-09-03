@@ -14,13 +14,20 @@ object Lasers {
     Laser("4", "BM", "Beam", "laser-4")
   )
 
+  val lasersForSite = List(
+    List(), // Just to push the index up
+    List(Lasers.all.apply(0), Lasers.all.apply(1), Lasers.all.apply(3)),
+    List(Lasers.all.apply(2)),
+    List(Lasers.all.apply(0), Lasers.all.apply(2))
+  )
+
   // GROSS!!!
   def forSite(id: String) = {
     try {
       val idx = id.toInt
 
       if (idx < 4) {
-        all.apply(id.toInt)
+        lasersForSite.apply(id.toInt)
       } else {
         List()
       }
