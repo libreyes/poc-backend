@@ -21,7 +21,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack {
     contentType = formats("json")
   }
 
-  val listPatients = (apiOperation[List[Patient]]("listPatients")
+  val list = (apiOperation[List[Patient]]("listPatients")
     notes "Lists all known Patients"
     parameters(
       Parameter("searchTerm", DataType.String, Some("An optional search term value to filter Patients by"), None, ParamType.Query, required = false)
@@ -29,14 +29,14 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack {
     summary "List Patients"
   )
 
-  get("/", operation(listPatients)) {
+  get("/", operation(list)) {
     params.get("searchTerm") match {
       case Some(searchTerm) => PatientService.search(searchTerm)
       case None => PatientService.findAll
     }
   }
 
-  val getPatient = (apiOperation[Patient]("getPatient")
+  val get = (apiOperation[Patient]("getPatient")
     notes "Get a Patient by ID"
     parameters(
       Parameter("id", DataType.String, Some("The ID of the Patient to retrieve"), None, ParamType.Path, required = true)
@@ -44,7 +44,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack {
     summary "Get Patient"
   )
 
-  get("/:id", operation(getPatient)) {
+  get("/:id", operation(get)) {
     val id = params("id")
     PatientService.find(id) match {
       case Some(patient) => Ok(patient)
