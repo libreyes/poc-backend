@@ -22,12 +22,16 @@ object Sites {
 
   // GROSS!!!
   def findLasers(id: String) = {
-    val idx = id.toInt
+    try {
+      val idx = id.toInt
 
-    if(idx < 4){
-      lasers.apply(id.toInt)
-    }else{
-      List()
+      if(idx < 4){
+        lasers.apply(id.toInt)
+      }else{
+        List()
+      }
+    } catch {
+      case e: Exception => List()
     }
   }
 
