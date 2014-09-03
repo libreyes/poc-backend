@@ -21,7 +21,7 @@ class LasersController(implicit val swagger: Swagger) extends ApiStack {
     contentType = formats("json")
   }
 
-  val listLasers = (apiOperation[List[Laser]]("listLasers")
+  val list = (apiOperation[List[Laser]]("listLasers")
     notes "Lists all known Lasers"
     parameters(
       Parameter("siteId", DataType.String, Some("An optional Site ID to filter the Lasers by"), None, ParamType.Query, required = false)
@@ -29,14 +29,14 @@ class LasersController(implicit val swagger: Swagger) extends ApiStack {
     summary "List Lasers"
   )
 
-  get("/", operation(listLasers)) {
+  get("/", operation(list)) {
     params.get("siteId") match {
       case Some(siteId) => LaserService.search(siteId)
       case None => LaserService.findAll
     }
   }
 
-  val getLaser = (apiOperation[Laser]("getLaser")
+  val get = (apiOperation[Laser]("getLaser")
     notes "Get a Laser by ID"
     parameters(
       Parameter("id", DataType.String, Some("The ID of the Laser to retrieve"), None, ParamType.Path, required = true)
@@ -44,7 +44,7 @@ class LasersController(implicit val swagger: Swagger) extends ApiStack {
     summary "Get Laser"
   )
 
-  get("/:id", operation(getLaser)) {
+  get("/:id", operation(get)) {
     val id = params("id")
     LaserService.find(id) match {
       case Some(laser) => Ok(laser)

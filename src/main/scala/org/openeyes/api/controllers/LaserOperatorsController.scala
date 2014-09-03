@@ -13,7 +13,7 @@ import org.scalatra.{NotFound, Ok}
  */
 class LaserOperatorsController(implicit val swagger: Swagger) extends ApiStack {
 
-  protected val applicationDescription = "The Laser Operator API"
+  protected val applicationDescription = "The LaserOperator API"
 
   protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
 
@@ -21,24 +21,24 @@ class LaserOperatorsController(implicit val swagger: Swagger) extends ApiStack {
     contentType = formats("json")
   }
 
-  val listLaserOperators = (apiOperation[List[LaserOperator]]("listLaserOperators")
-    notes "Lists all known Laser Operators"
-    summary "List Laser Operators"
+  val list = (apiOperation[List[LaserOperator]]("listLaserOperators")
+    notes "Lists all known LaserOperators"
+    summary "List LaserOperators"
   )
 
-  get("/", operation(listLaserOperators)) {
+  get("/", operation(list)) {
     LaserOperatorService.findAll
   }
 
-  val getLaserOperator = (apiOperation[LaserOperator]("getLaserOperator")
-    notes "Get a Laser Operator by ID"
+  val get = (apiOperation[LaserOperator]("getLaserOperator")
+    notes "Get a LaserOperator by ID"
     parameters(
-      Parameter("id", DataType.String, Some("The ID of the Laser Operator to retrieve"), None, ParamType.Path, required = true)
+      Parameter("id", DataType.String, Some("The ID of the LaserOperator to retrieve"), None, ParamType.Path, required = true)
     )
-    summary "Get Laser Operator"
+    summary "Get LaserOperator"
   )
 
-  get("/:id", operation(getLaserOperator)) {
+  get("/:id", operation(get)) {
     val id = params("id")
     LaserOperatorService.find(id) match {
       case Some(laserOperator) => Ok(laserOperator)

@@ -21,24 +21,24 @@ class SitesController(implicit val swagger: Swagger) extends ApiStack {
     contentType = formats("json")
   }
 
-  val listSites = (apiOperation[List[Site]]("listSites")
+  val list = (apiOperation[List[Site]]("listSites")
     notes "Lists all known Sites"
     summary "List Sites"
   )
 
-  get("/", operation(listSites)) {
+  get("/", operation(list)) {
     SiteService.findAll
   }
 
-  val getSite = (apiOperation[Site]("getSite")
+  val get = (apiOperation[Site]("getSite")
     notes "Get a Site by ID"
     parameters(
       Parameter("id", DataType.String, Some("The ID of the Site to retrieve"), None, ParamType.Path, required = true)
     )
     summary "Get Site"
-    )
+  )
 
-  get("/:id", operation(getSite)) {
+  get("/:id", operation(get)) {
     val id = params("id")
     SiteService.find(id) match {
       case Some(site) => Ok(site)
