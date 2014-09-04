@@ -2,7 +2,7 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.models.Site
+import org.openeyes.api.models.{ApiError, Site}
 import org.openeyes.api.services.SiteService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{ParamType, DataType, Parameter, Swagger}
@@ -42,7 +42,7 @@ class SitesController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     SiteService.find(id) match {
       case Some(site) => Ok(site)
-      case None => NotFound("{ \"error\": \"No site found for id '" + id + "'.\" }")
+      case None => NotFound(ApiError("No site found for id '" + id + "'."))
     }
   }
 }

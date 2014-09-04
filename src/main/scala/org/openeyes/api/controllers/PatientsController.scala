@@ -2,7 +2,7 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.models.Patient
+import org.openeyes.api.models.{ApiError, Patient}
 import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{ParamType, Parameter, DataType, Swagger}
@@ -48,7 +48,7 @@ class PatientsController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     PatientService.find(id) match {
       case Some(patient) => Ok(patient)
-      case None => NotFound("{ \"error\": \"No patient found for id '" + id + "'.\" }")
+      case None => NotFound(ApiError("No patient found for id '" + id + "'."))
     }
   }
 

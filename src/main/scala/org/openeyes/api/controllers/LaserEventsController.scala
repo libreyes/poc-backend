@@ -3,7 +3,7 @@ package org.openeyes.api.controllers
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.LaserEventForm
-import org.openeyes.api.models.LaserEvent
+import org.openeyes.api.models.{ApiError, LaserEvent}
 import org.openeyes.api.services.LaserEventService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
@@ -41,7 +41,7 @@ class LaserEventsController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     LaserEventService.find(id) match {
       case Some(laserEvent) => Ok(laserEvent)
-      case None => NotFound("{ \"error\": \"No laser event found for id '" + id + "'.\" }")
+      case None => NotFound(ApiError("No laser event found for id '" + id + "'."))
     }
   }
 

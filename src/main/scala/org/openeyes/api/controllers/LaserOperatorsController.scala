@@ -2,7 +2,7 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.models.LaserOperator
+import org.openeyes.api.models.{ApiError, LaserOperator}
 import org.openeyes.api.services.LaserOperatorService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{ParamType, DataType, Parameter, Swagger}
@@ -42,7 +42,7 @@ class LaserOperatorsController(implicit val swagger: Swagger) extends ApiStack {
     val id = params("id")
     LaserOperatorService.find(id) match {
       case Some(laserOperator) => Ok(laserOperator)
-      case None => NotFound("{ \"error\": \"No laser operator found for id '" + id + "'.\" }")
+      case None => NotFound(ApiError("No laser operator found for id '" + id + "'."))
     }
   }
 }

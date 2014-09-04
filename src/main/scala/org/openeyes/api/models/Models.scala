@@ -12,14 +12,9 @@ import org.bson.types.ObjectId
 /**
  * Created by dave on 19/08/14.
  */
-case class LaserEvent(@Key("_id")
-                      _id: ObjectId,
-                      leftEye: TreatedEye,
-                      rightEye: TreatedEye,
-                      laser: Laser,
-                      site: Site)
-
 case class Address(addressLine1: String, addressLine2: String, city: String, county: String, postcode: String)
+
+case class ApiError(message: String)
 
 case class AnteriorSegment(data: String)
 
@@ -32,6 +27,8 @@ case class GeneralPractitioner(firstName: String, surname: String, contactDetail
 
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
+
+case class LaserEvent(@Key("_id") _id: ObjectId, leftEye: TreatedEye, rightEye: TreatedEye, laser: Laser, site: Site)
 
 // NOTE: Added id to the LaserOperator class so we can fake its persistence on the front end.
 case class LaserOperator(id: String, firstName: String, surname: String)
