@@ -29,4 +29,22 @@ object Patients {
     Patient("3", "Victoria", "Markland", simpleDateFormat.parse("02/11/1977"), "Female", "Unknown", contactDetail, address,
       54321, "Unknown", generalPractitioner, 789)
   )
+
+  def search(searchTerm: String) = {
+    all.filter(p => filterPatients(p, searchTerm)).toList
+  }
+
+  // NOTE: This filter patients method is mirroring the current search on the dev site, which searches on:
+  //       firstName + " " + surname == term
+  //       surname + ", " + firstName == term
+  //       nhsNumber.toString == term
+  //
+  protected def filterPatients(patient: Patient, searchTerm: String): Boolean = {
+    val formattedName = (patient.firstName + " " + patient.surname).toLowerCase
+    val formattedNameWithComma = (patient.surname + ", " + patient.firstName).toLowerCase
+    val nhsNumberAsString = patient.nhsNumber.toString
+    val searchTermLower = searchTerm.toLowerCase
+
+    formattedName == searchTermLower || formattedNameWithComma == searchTermLower || nhsNumberAsString == searchTerm
+  }
 }

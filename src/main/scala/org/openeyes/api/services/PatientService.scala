@@ -20,20 +20,8 @@ object PatientService {
   }
 
   def search(searchTerm: String) = {
-    Patients.all.filter(p => filterPatients(p, searchTerm)).toList
+    Patients.search(searchTerm)
   }
 
-  // NOTE: This filter patients method is mirroring the current search on the dev site, which searches on:
-  //       firstName + " " + surname == term
-  //       surname + ", " + firstName == term
-  //       nhsNumber.toString == term
-  //
-  protected def filterPatients(patient: Patient, searchTerm: String): Boolean = {
-    val formattedName = (patient.firstName + " " + patient.surname).toLowerCase
-    val formattedNameWithComma = (patient.surname + ", " + patient.firstName).toLowerCase
-    val nhsNumberAsString = patient.nhsNumber.toString
-    val searchTermLower = searchTerm.toLowerCase
 
-    formattedName == searchTermLower || formattedNameWithComma == searchTermLower || nhsNumberAsString == searchTerm
-  }
 }
