@@ -24,13 +24,13 @@ object LaserEventService {
     val leftEye = TreatedEye(resource.leftEye.procedures, resource.leftEye.anteriorSegment)
     val rightEye = TreatedEye(resource.rightEye.procedures, resource.rightEye.anteriorSegment)
     val laserOperator = LaserOperator(resource.laserOperator.id, resource.laserOperator.firstName, resource.laserOperator.surname)
-    val laserEvent = LaserEvent(_id, leftEye, rightEye, laser, site, laserOperator)
+    val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator)
     LaserEvent.save(laserEvent)
     laserEvent
   }
 
   def update(id: String, resource: LaserEventForm): LaserEvent = {
-    val laserEvent = LaserEvent(new ObjectId(id), resource.leftEye, resource.rightEye, resource.laser, resource.site, resource.laserOperator)
+    val laserEvent = LaserEvent(new ObjectId(id), resource.patientId, resource.leftEye, resource.rightEye, resource.laser, resource.site, resource.laserOperator)
     LaserEvent.save(laserEvent)
     laserEvent
   }
