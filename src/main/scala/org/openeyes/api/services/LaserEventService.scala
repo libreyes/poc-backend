@@ -1,5 +1,7 @@
 package org.openeyes.api.services
 
+import java.util.Calendar
+
 import org.bson.types.ObjectId
 import org.openeyes.api.forms.LaserEventForm
 import org.openeyes.api.models._
@@ -15,8 +17,10 @@ object LaserEventService {
     val laser = Laser(resource.laser.id, resource.laser.codeValue, resource.laser.label, resource.laser.systemId)
     val leftEye = TreatedEye(resource.leftEye.procedures, resource.leftEye.anteriorSegment)
     val rightEye = TreatedEye(resource.rightEye.procedures, resource.rightEye.anteriorSegment)
-    val laserOperator = LaserOperator(resource.laserOperator.id, resource.laserOperator.firstName, resource.laserOperator.surname)
-    val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator)
+    val laserOperator = LaserOperator(resource.laserOperator.id, resource.laserOperator.firstName,
+      resource.laserOperator.surname)
+    val createdAt = Calendar.getInstance().getTime()
+    val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator, createdAt)
     LaserEvent.save(laserEvent)
     laserEvent
   }
@@ -34,7 +38,9 @@ object LaserEventService {
   }
 
   def update(id: String, resource: LaserEventForm): LaserEvent = {
-    val laserEvent = LaserEvent(new ObjectId(id), resource.patientId, resource.leftEye, resource.rightEye, resource.laser, resource.site, resource.laserOperator)
+    val createdAt = Calendar.getInstance().getTime()
+    val laserEvent = LaserEvent(new ObjectId(id), resource.patientId, resource.leftEye, resource.rightEye, resource.laser,
+      resource.site, resource.laserOperator, createdAt)
     LaserEvent.save(laserEvent)
     laserEvent
   }
