@@ -30,7 +30,7 @@ case class GeneralPractitioner(firstName: Option[String], surname: Option[String
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
 
-case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye, laser: Laser, site: Site, laserOperator: LaserOperator)
+case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye, laser: Laser, site: Site, laserOperator: LaserOperator, createdAt: Date)
 
 // NOTE: Added id to the LaserOperator class so we can fake its persistence on the front end.
 case class LaserOperator(id: String, firstName: String, surname: String)
@@ -75,4 +75,7 @@ object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
   val collection = MongoConnection()("openeyes")("laser-events")
   val dao = new SalatDAO[LaserEvent, ObjectId](collection = collection) {}
 
+  def findAllForPatient(patientId: String): Seq[LaserEvent] = {
+    find(MongoDBObject("patientId" -> patientId)).toSeq
+  }
 }

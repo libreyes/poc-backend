@@ -17,7 +17,7 @@ object LaserService {
     Lasers.all
   }
 
-  def search(siteId: String) = {
+  def findAllForSite(siteId: String) = {
     Lasers.forSite(siteId)
   }
 }

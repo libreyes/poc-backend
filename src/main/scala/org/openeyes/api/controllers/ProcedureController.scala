@@ -24,7 +24,7 @@ class ProcedureController(implicit val swagger: Swagger) extends ApiStack {
   val list = (apiOperation[List[Procedure]]("listProcedure")
     notes "Lists all known Procedures"
     summary "List Procedures"
-    )
+  )
 
   get("/", operation(list)) {
     ProcedureService.findAll
@@ -33,10 +33,10 @@ class ProcedureController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[Procedure]("getProcedure")
     notes "Get a Procedure by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the Procedure to retrieve"), None, ParamType.Path, required = true)
+      Parameter("id", DataType.String, Some("The ID of the Procedure to retrieve"), None, ParamType.Path, required = true)
     )
     summary "Get Procedure"
-    )
+  )
 
   get("/:id", operation(get)) {
     val id = params("id")
