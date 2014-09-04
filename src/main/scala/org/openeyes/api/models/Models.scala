@@ -3,6 +3,7 @@ package org.openeyes.api.models
 import java.util.Date
 
 import com.mongodb.casbah.MongoConnection
+import com.mongodb.casbah.commons.MongoDBObject
 import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
@@ -49,9 +50,12 @@ case class Site(id: String, codeValue: String, label: String, systemId: String)
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
 
-object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
+object  LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("laser-events")
   val dao = new SalatDAO[LaserEvent, ObjectId](collection = collection) {}
 
+  def findAllForPatient(patientId: String): Seq[LaserEvent] = {
+    find(MongoDBObject("patientId" -> patientId)).toSeq
+  }
 }

@@ -9,14 +9,6 @@ import org.openeyes.api.models._
  */
 object LaserEventService {
 
-  def findAll: Seq[LaserEvent] = {
-    LaserEvent.findAll().toSeq
-  }
-
-  def find(id: String): Option[LaserEvent] = {
-    LaserEvent.findOneById(new ObjectId(id))
-  }
-
   def create(resource: LaserEventForm): LaserEvent = {
     val _id = new ObjectId
     val site = Site(resource.site.id, resource.site.codeValue, resource.site.label, resource.site.systemId)
@@ -27,6 +19,18 @@ object LaserEventService {
     val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator)
     LaserEvent.save(laserEvent)
     laserEvent
+  }
+
+  def find(id: String): Option[LaserEvent] = {
+    LaserEvent.findOneById(new ObjectId(id))
+  }
+
+  def findAll: Seq[LaserEvent] = {
+    LaserEvent.findAll().toSeq
+  }
+
+  def findAllForPatient(patientId: String): Seq[LaserEvent] = {
+    LaserEvent.findAllForPatient(patientId)
   }
 
   def update(id: String, resource: LaserEventForm): LaserEvent = {
