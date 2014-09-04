@@ -20,8 +20,14 @@ object OpeneyesBuild extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+//      resolvers ++= Seq(
+//        Classpaths.typesafeReleases,
+//        "amateras-repo" at "http://amateras.sourceforge.jp/mvn/",
+//        "webjars" at "http://webjars.github.com/m2"
+//      ),
       resolvers += Classpaths.typesafeReleases,
       resolvers += "amateras-repo" at "http://amateras.sourceforge.jp/mvn/",
+      resolvers += "webjars" at "http://webjars.github.com/m2",
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
         "jp.sf.amateras" %% "scalatra-forms" % "0.1.0",
@@ -32,6 +38,7 @@ object OpeneyesBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-swagger"  % ScalatraVersion,
+        "org.webjars" % "swagger-ui" % "2.0.22",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.3.v20140225" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.3.v20140225" % "container",

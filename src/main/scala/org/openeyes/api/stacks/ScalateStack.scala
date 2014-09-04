@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest
 
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
+import org.fusesource.scalate.util.IOUtil
 import org.scalatra._
 import org.scalatra.scalate.ScalateSupport
 
@@ -28,7 +29,6 @@ trait ScalateStack extends ScalatraServlet with ScalateSupport {
     super.templateAttributes ++ mutable.Map.empty // Add extra attributes here, they need bindings in the build file
   }
 
-
   notFound {
     // remove content type in case it was set through an action
     contentType = null
@@ -37,5 +37,16 @@ trait ScalateStack extends ScalatraServlet with ScalateSupport {
       contentType = "text/html"
       layoutTemplate(path)
     } orElse serveStaticResource() getOrElse resourceNotFound()
+  }
+
+  get("/swagger-ui/*") {
+    val resourcePath = "/META-INF/resources/webjars/swagger-ui/2.0.21/" + params("splat")
+    Option(getClass.getResourceAsStream(resourcePath)) match {
+      case Some(inputStream) => {
+        contentType = servletContext.getMimeType(resourcePath)
+        IOUtil.loadBytes(inputStream)
+      }
+      case None => resourceNotFound()
+    }
   }
 }
