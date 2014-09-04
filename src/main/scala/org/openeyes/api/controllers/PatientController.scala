@@ -11,7 +11,7 @@ import org.scalatra.{NotFound, Ok}
 /**
  * Created by stu on 02/09/2014.
  */
-class PatientsController(implicit val swagger: Swagger) extends ApiStack {
+class PatientController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Patient API"
 

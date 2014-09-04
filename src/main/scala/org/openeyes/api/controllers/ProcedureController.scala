@@ -11,7 +11,7 @@ import org.scalatra.{NotFound, Ok}
 /**
  * Created by stu on 04/09/2014.
  */
-class ProceduresController(implicit val swagger: Swagger) extends ApiStack {
+class ProcedureController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Procedure API."
 

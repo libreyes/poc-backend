@@ -11,7 +11,7 @@ import org.scalatra.{NotFound, Ok}
 /**
  * Created by stu on 03/09/2014.
  */
-class LasersController(implicit val swagger: Swagger) extends ApiStack {
+class LaserController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Laser API"
 

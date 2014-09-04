@@ -10,7 +10,7 @@ import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 import org.scalatra.{NotFound, Ok}
 
 
-class LaserEventsController(implicit val swagger: Swagger) extends ApiStack {
+class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The LaserEvent API"
 
