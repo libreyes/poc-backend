@@ -40,7 +40,8 @@ case class Patient(id: String, firstName: String, surname: String, dob: Date, ge
 
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 
-case class Procedure(label: String, codeValue: String, systemId: String)
+// NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
+case class Procedure(id: String, codeValue: String, label: String, systemId: String)
 
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
 case class Site(id: String, codeValue: String, label: String, systemId: String)

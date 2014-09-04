@@ -5,7 +5,7 @@ import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.models.{ApiError, Patient}
 import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
-import org.scalatra.swagger.{ParamType, Parameter, DataType, Swagger}
+import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 import org.scalatra.{NotFound, Ok}
 
 /**

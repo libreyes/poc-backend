@@ -9,7 +9,7 @@ import org.openeyes.api.models._
 object PatientService {
 
   def find(id: String) = {
-    Patients.all.find(p => p.id.toString == id) match {
+    Patients.all.find(p => p.id == id) match {
       case Some(patient) => Some(patient)
       case None => None
     }
