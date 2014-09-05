@@ -6,6 +6,6 @@ package org.openeyes.api
 object Utilities {
 
   def setTimestamp = {
-    System.currentTimeMillis / 1000
+    System.currentTimeMillis
   }
 }
