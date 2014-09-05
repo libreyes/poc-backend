@@ -1,6 +1,6 @@
 package org.openeyes.api.services
 
-import org.openeyes.api.fakeData.Patients
+import org.bson.types.ObjectId
 import org.openeyes.api.models._
 
 /**
@@ -8,20 +8,16 @@ import org.openeyes.api.models._
  */
 object PatientService {
 
-  def find(id: String) = {
-    Patients.all.find(p => p.id == id) match {
-      case Some(patient) => Some(patient)
-      case None => None
-    }
+  def find(id: String): Option[Patient] = {
+    Patient.findOneById(new ObjectId(id))
   }
 
   def findAll = {
-    Patients.all
+    Patient.findAll().toSeq
   }
 
   def search(searchTerm: String) = {
-    Patients.search(searchTerm)
+    Patient.search(searchTerm)
   }
-
 
 }
