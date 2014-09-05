@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest
 
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
-import org.fusesource.scalate.util.IOUtil
 import org.scalatra._
 import org.scalatra.scalate.ScalateSupport
 
