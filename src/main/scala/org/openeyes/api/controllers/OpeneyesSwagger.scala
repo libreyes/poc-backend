@@ -1,6 +1,6 @@
 package org.openeyes.api.controllers
 
-import hello.BuildInfo
+import openeyesApi.BuildInfo
 import org.scalatra.ScalatraServlet
 import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
 
