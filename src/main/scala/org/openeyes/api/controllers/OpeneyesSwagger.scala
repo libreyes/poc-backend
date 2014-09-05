@@ -14,4 +14,4 @@ object OpenEyesApiInfo extends ApiInfo(
 
 class ResourcesApp(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
-class OpeneyesSwagger extends Swagger(Swagger.SpecVersion, "1.0.0", OpenEyesApiInfo)
+class OpeneyesSwagger extends Swagger(Swagger.SpecVersion, "0.1.0", OpenEyesApiInfo)
