@@ -38,15 +38,4 @@ trait ScalateStack extends ScalatraServlet with ScalateSupport {
       layoutTemplate(path)
     } orElse serveStaticResource() getOrElse resourceNotFound()
   }
-
-  get("/swagger-ui/*") {
-    val resourcePath = "/META-INF/resources/webjars/swagger-ui/2.0.21/" + params("splat")
-    Option(getClass.getResourceAsStream(resourcePath)) match {
-      case Some(inputStream) => {
-        contentType = servletContext.getMimeType(resourcePath)
-        IOUtil.loadBytes(inputStream)
-      }
-      case None => resourceNotFound()
-    }
-  }
 }
