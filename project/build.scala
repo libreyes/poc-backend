@@ -4,6 +4,7 @@ import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
+import sbtbuildinfo.Plugin._
 
 object OpeneyesBuild extends Build {
   val Organization = "org.openeyes"
@@ -15,7 +16,12 @@ object OpeneyesBuild extends Build {
   lazy val project = Project (
     "openeyes",
     file("."),
-    settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = buildInfoSettings ++
+      Seq(
+        sourceGenerators in Compile <+= buildInfo,
+        buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+        buildInfoPackage := "openeyesApi"
+      ) ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,

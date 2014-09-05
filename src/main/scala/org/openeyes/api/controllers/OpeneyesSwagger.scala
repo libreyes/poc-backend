@@ -1,5 +1,6 @@
 package org.openeyes.api.controllers
 
+import hello.BuildInfo
 import org.scalatra.ScalatraServlet
 import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
 
@@ -14,4 +15,4 @@ object OpenEyesApiInfo extends ApiInfo(
 
 class ResourcesApp(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
-class OpeneyesSwagger extends Swagger(Swagger.SpecVersion, "1.0.0", OpenEyesApiInfo)
+class OpeneyesSwagger extends Swagger(Swagger.SpecVersion, BuildInfo.version, OpenEyesApiInfo)
