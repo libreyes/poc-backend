@@ -1762,8 +1762,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
         if (isFileUpload) {
           return this.handleFileUpload(map, form);
         } else {
-          // NOTE: THIS IS A HACK TO SET THE RIGHT LOCATION ORIGIN ON UAT.
-          this.model.resource.basePath = window.location.origin;
           return this.model["do"](map, opts, this.showCompleteStatus, this.showErrorStatus, this);
         }
       }
