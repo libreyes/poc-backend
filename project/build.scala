@@ -9,7 +9,7 @@ import sbtbuildinfo.Plugin._
 object OpeneyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
-  val Version = "0.1.0"
+  val Version = "0.1.2"
   val ScalaVersion = "2.11.1"
   val ScalatraVersion = "2.3.0"
 

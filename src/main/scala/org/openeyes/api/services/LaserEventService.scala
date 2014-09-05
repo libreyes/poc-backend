@@ -1,9 +1,9 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
+import org.openeyes.api.Utilities._
 import org.openeyes.api.forms.LaserEventForm
 import org.openeyes.api.models._
-import org.openeyes.api.Utilities._
 
 /**
  * Created by dave on 19/08/2014.
