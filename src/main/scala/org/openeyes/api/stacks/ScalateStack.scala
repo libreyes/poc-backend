@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest
 
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
+import org.fusesource.scalate.util.IOUtil
 import org.scalatra._
 import org.scalatra.scalate.ScalateSupport
 
@@ -27,7 +28,6 @@ trait ScalateStack extends ScalatraServlet with ScalateSupport {
   override protected def templateAttributes(implicit request: HttpServletRequest): mutable.Map[String, Any] = {
     super.templateAttributes ++ mutable.Map.empty // Add extra attributes here, they need bindings in the build file
   }
-
 
   notFound {
     // remove content type in case it was set through an action
