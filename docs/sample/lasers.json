@@ -1,0 +1,5 @@
+{"id":"1","codeValue":"LSR1","label":"Unknown","systemId":"OE_LASER"}
+{"id":"2","codeValue":"LSR2","label":"Argon","systemId":"OE_LASER"}
+{"id":"3","codeValue":"LSR3","label":"Diode","systemId":"OE_LASER"}
+{"id":"4","codeValue":"LSR4","label":"Excimer","systemId":"OE_LASER"}
+{"id":"5","codeValue":"LSR5","label":"YAG","systemId":"OE_LASER"}
