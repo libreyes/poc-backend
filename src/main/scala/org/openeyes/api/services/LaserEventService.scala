@@ -1,10 +1,9 @@
 package org.openeyes.api.services
 
-import java.util.Calendar
-
 import org.bson.types.ObjectId
 import org.openeyes.api.forms.LaserEventForm
 import org.openeyes.api.models._
+import org.openeyes.api.Utilities._
 
 /**
  * Created by dave on 19/08/2014.
@@ -19,8 +18,7 @@ object LaserEventService {
     val rightEye = TreatedEye(resource.rightEye.procedures, resource.rightEye.anteriorSegment)
     val laserOperator = LaserOperator(resource.laserOperator.id, resource.laserOperator.firstName,
       resource.laserOperator.surname)
-    val createdAt = Calendar.getInstance().getTime()
-    val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator, createdAt)
+    val laserEvent = LaserEvent(_id, resource.patientId, leftEye, rightEye, laser, site, laserOperator, setTimestamp)
     LaserEvent.save(laserEvent)
     laserEvent
   }
@@ -38,9 +36,8 @@ object LaserEventService {
   }
 
   def update(id: String, resource: LaserEventForm): LaserEvent = {
-    val createdAt = Calendar.getInstance().getTime()
     val laserEvent = LaserEvent(new ObjectId(id), resource.patientId, resource.leftEye, resource.rightEye, resource.laser,
-      resource.site, resource.laserOperator, createdAt)
+      resource.site, resource.laserOperator, setTimestamp)
     LaserEvent.save(laserEvent)
     laserEvent
   }
