@@ -1,6 +1,6 @@
 package org.openeyes.api.forms
 
-import org.openeyes.api.models.{LaserOperator, Laser, Site, TreatedEye}
+import org.openeyes.api.models.{Laser, LaserOperator, Site, TreatedEye}
 
 /**
  * Created by jamie on 03/09/2014.

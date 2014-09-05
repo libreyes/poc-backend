@@ -22,7 +22,7 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
 
   val list = (apiOperation[List[LaserEvent]]("listLaserEvents")
     notes "Lists all known LaserEvents"
-    parameters(
+    parameters (
     Parameter("patientId", DataType.String, Some("An optional Patient ID to filter the LaserEvents by"), None, ParamType.Query, required = false)
     )
     summary "List LaserEvents"
@@ -38,7 +38,7 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[LaserEvent]("getLaserEvent")
     notes "Get a LaserEvent by ID"
     parameters (
-      Parameter("id", DataType.String, Some("The ID of the LaserEvent to retrieve"), None, ParamType.Path, required = true)
+    Parameter("id", DataType.String, Some("The ID of the LaserEvent to retrieve"), None, ParamType.Path, required = true)
     )
     summary "Get LaserEvent"
     )
@@ -54,10 +54,10 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val post = (apiOperation[LaserEvent]("createLaserEvent")
     notes "Create a LaserEvent"
     parameters (
-      Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
+    Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
     )
     summary "Create LaserEvent"
-  )
+    )
 
   post("/", operation(post)) {
     val resource = parsedBody.extract[LaserEventForm]
@@ -66,12 +66,12 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
 
   val put = (apiOperation[LaserEvent]("updateLaserEvent")
     notes "Update a LaserEvent"
-    parameters (
-      Parameter("id", DataType.String, Some("The ID of the LaserEvent to update"), None, ParamType.Path, required = true),
-      Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
+    parameters(
+    Parameter("id", DataType.String, Some("The ID of the LaserEvent to update"), None, ParamType.Path, required = true),
+    Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
     )
     summary "Update LaserEvent"
-  )
+    )
 
   put("/:id", operation(put)) {
     val resource = parsedBody.extract[LaserEventForm]
