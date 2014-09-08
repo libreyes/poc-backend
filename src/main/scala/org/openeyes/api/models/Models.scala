@@ -6,6 +6,7 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import org.openeyes.api.Site
 
 
 /**
@@ -44,9 +45,6 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 
 // NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
-
-// NOTE: Added id to the Site class so we can fake its persistence on the front end.
-case class Site(id: String, codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 

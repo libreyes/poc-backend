@@ -2,7 +2,9 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.models.{ApiError, Site}
+import org.openeyes.api.Site
+import org.openeyes.api.db.DatabaseSessionSupport
+import org.openeyes.api.models.ApiError
 import org.openeyes.api.services.SiteService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
@@ -11,7 +13,7 @@ import org.scalatra.{NotFound, Ok}
 /**
  * Created by stu on 02/09/2014.
  */
-class SiteController(implicit val swagger: Swagger) extends ApiStack {
+class SiteController(implicit val swagger: Swagger) extends ApiStack with DatabaseSessionSupport {
 
   protected val applicationDescription = "The Site API."
 
