@@ -3,17 +3,12 @@ require "capistrano_colors"
 
 set :application, "openeyes"
 
-set :keep_releases, 2 # number of deployed releases to keep
+set :keep_releases, 3 # number of deployed releases to keep
 set :use_sudo, false
 default_run_options[:pty] = true
 set :deploy_via, :remote_cache
 
 namespace :deploy do
-  desc <<-DESC
-  Does a clean deploy by removing the cached-copy folder first,
-  then runs deploy.full
-  DESC
-
   desc <<-DESC
   Does a full deploy using the tasks specified.
   DESC
@@ -37,9 +32,8 @@ namespace :deploy do
   DESC
   task :remove_cached_copy do
     run("rm -rf #{deploy_to}/shared/cached-copy")
-    #run("mkdir #{deploy_to}/shared/cached-copy")
+    # run("mkdir #{deploy_to}/shared/cached-copy")
   end
-#IeChooP6uath
 
   desc <<-DESC
   Clean out release directory
