@@ -2,6 +2,7 @@ package org.openeyes.api.services
 
 import org.openeyes.api.data.Sites
 import org.openeyes.api.data.init.SlickSupport
+import org.openeyes.api.models.Site
 
 import scala.slick.driver.MySQLDriver.simple._
 import Database.threadLocalSession
@@ -13,17 +14,17 @@ import scala.slick.lifted.Query
  */
 object SiteService extends SlickSupport {
 
-  def find(id: String) = {
-//    Sites.all.find(s => s.id == id) match {
-//      case Some(site) => Some(site)
-//      case None => None
-//    }
+  def find(id: Int): Option[Site] = {
+    getConnection withSession {
+      val q = Sites.findById(id)
+      q.firstOption
+    }
   }
 
   def findAll = {
     getConnection withSession {
-        val q = Query(Sites)
-        q.list
+      val q = Query(Sites)
+      q.list
     }
   }
 }

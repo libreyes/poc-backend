@@ -39,10 +39,10 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack {
     )
 
   get("/:id", operation(get)) {
-//    val id = params("id")
-//    SiteService.find(id) match {
-//      case Some(site) => Ok(site)
-//      case None => NotFound(ApiError("No site found for id '" + id + "'."))
-//    }
+    val id = params("id").toInt
+    SiteService.find(id) match {
+      case Some(site) => Ok(site)
+      case None => NotFound(ApiError("No site found for id '" + id + "'."))
+    }
   }
 }
