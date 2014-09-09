@@ -11,8 +11,6 @@ class ScalatraBootstrap extends LifeCycle {
   DatabaseAccess.createDatasource
 
   override def init(context: ServletContext) {
-    val db = DatabaseAccess.db
-
     context.mount(new ResourcesApp, "/api-docs")
     context.mount(new LaserEventController, "/LaserEvent", "LaserEvent")
     context.mount(new LaserOperatorController, "/LaserOperator", "LaserOperator")
