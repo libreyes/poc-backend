@@ -1,7 +1,7 @@
 import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
-import org.openeyes.api.db.DatabaseInit
+import org.openeyes.api.data.DatabaseInit
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle with DatabaseInit {

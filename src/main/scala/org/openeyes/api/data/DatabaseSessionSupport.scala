@@ -1,4 +1,4 @@
-package org.openeyes.api.db
+package org.openeyes.api.data
 
 import org.scalatra.ScalatraBase
 import org.squeryl.{SessionFactory, Session}

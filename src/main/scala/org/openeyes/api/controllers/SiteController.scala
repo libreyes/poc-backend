@@ -2,9 +2,8 @@ package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
-import org.openeyes.api.Site
-import org.openeyes.api.db.DatabaseSessionSupport
-import org.openeyes.api.models.ApiError
+import org.openeyes.api.data.DatabaseSessionSupport
+import org.openeyes.api.models.{Site, ApiError}
 import org.openeyes.api.services.SiteService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
@@ -41,7 +40,7 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack with Databa
     )
 
   get("/:id", operation(get)) {
-    val id = params("id")
+    val id = params("id").toInt
     SiteService.find(id) match {
       case Some(site) => Ok(site)
       case None => NotFound(ApiError("No site found for id '" + id + "'."))

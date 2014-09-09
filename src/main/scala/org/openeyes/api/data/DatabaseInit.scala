@@ -1,4 +1,4 @@
-package org.openeyes.api.db
+package org.openeyes.api.data
 
 import java.util.Properties
 
@@ -17,7 +17,7 @@ trait DatabaseInit {
 
   def configureDb() {
     val props = new Properties
-    props.load(getClass.getResourceAsStream("/c3p0.properties"))
+    props.load(getClass.getResourceAsStream("c3p0.properties"))
     cpds.setProperties(props)
 
     SessionFactory.concreteFactory = Some(() => connection)

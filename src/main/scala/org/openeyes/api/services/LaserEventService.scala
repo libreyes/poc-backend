@@ -1,7 +1,6 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
-import org.openeyes.api.Site
 import org.openeyes.api.Utilities._
 import org.openeyes.api.forms.LaserEventForm
 import org.openeyes.api.models._

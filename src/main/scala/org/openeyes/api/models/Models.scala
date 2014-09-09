@@ -6,7 +6,10 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
-import org.openeyes.api.Site
+import org.openeyes.api.data.{ScalatraRecord, ApiSchema}
+import org.squeryl.{PersistenceStatus, KeyedEntity}
+import org.squeryl.PrimitiveTypeMode._
+import org.squeryl.annotations._
 
 
 /**
@@ -46,6 +49,11 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 // NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
 
+case class Site(id: Int,
+                @Column("short_name") val codeValue: String,
+                @Column("name") val label: String,
+                @Column("remote_id") val systemId: String) extends ScalatraRecord
+
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
 object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
@@ -77,3 +85,14 @@ object Patient extends ModelCompanion[Patient, ObjectId] {
     ).toSeq
   }
 }
+
+object Site {
+  def findAll = {
+    from(ApiSchema.sites)(s => select(s)).toList
+  }
+
+  def find(id: Int) = {
+    from(ApiSchema.sites)(s => where(s.id === id) select (s)).headOption
+  }
+}
+
