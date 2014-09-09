@@ -19,5 +19,11 @@ object Suppliers extends Table[Supplier]("SUPPLIERS") {
 
   // Every table needs a * projection with the same type as the table's type parameter
   def * = id.? ~ name ~ street ~ city ~ state ~ zip <> (Supplier, Supplier.unapply _)
+
+  val findById = for {
+    id <- Parameters[Int]
+    c <- this if c.id is id
+  } yield c
+
 }
 

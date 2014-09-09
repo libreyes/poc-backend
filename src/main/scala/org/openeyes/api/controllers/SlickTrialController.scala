@@ -77,4 +77,10 @@ class SlickTrialController(db: Database)(implicit val swagger: Swagger) extends 
     }
   }
 
+  get("/suppliers/:id") {
+    db withSession {
+      Suppliers.findById(params("id").toInt).first
+    }
+  }
+
 }
