@@ -4,8 +4,6 @@ import org.openeyes.api.models.Site
 
 import scala.slick.driver.MySQLDriver.simple._
 
-
-
 object Sites extends Table[Site]("site") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc) // This is the primary key column
   def codeValue = column[String]("short_name")
