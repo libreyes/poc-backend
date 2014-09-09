@@ -21,15 +21,10 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(new PatientController, "/Patient", "Patient")
     context.mount(new ProcedureController, "/Procedure", "Procedure")
     context.mount(new SiteController, "/Site", "Site")
-    context.mount(new SlickTrialController(db), "/db/*")
-  }
-
-  private def closeDbConnection() {
-    cpds.close
   }
 
   override def destroy(context: ServletContext) {
     super.destroy(context)
-    closeDbConnection
+    DatabaseAccess.closeDbConnection
   }
 }
