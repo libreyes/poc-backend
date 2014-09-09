@@ -46,7 +46,7 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
 
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
-case class Site(id: String, codeValue: String, label: String, systemId: String)
+case class Site(id: Option[Int], codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 

@@ -1,18 +1,17 @@
 import javax.servlet.ServletContext
 
-import com.mchange.v2.c3p0.ComboPooledDataSource
 import org.openeyes.api.controllers._
+import org.openeyes.api.data.init.DatabaseAccess
 import org.scalatra._
-import scala.slick.session.Database
 
 class ScalatraBootstrap extends LifeCycle {
 
   implicit val swagger = new OpeneyesSwagger
 
-  val cpds = new ComboPooledDataSource
+  DatabaseAccess.createDatasource
 
   override def init(context: ServletContext) {
-    val db = Database.forDataSource(cpds)
+    val db = DatabaseAccess.db
 
     context.mount(new ResourcesApp, "/api-docs")
     context.mount(new LaserEventController, "/LaserEvent", "LaserEvent")
