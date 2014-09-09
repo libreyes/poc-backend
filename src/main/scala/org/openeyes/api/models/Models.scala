@@ -6,6 +6,8 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import scalikejdbc._
+import skinny.orm.SkinnyMapper
 
 
 /**
@@ -46,7 +48,7 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
 
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
-case class Site(id: String, codeValue: String, label: String, systemId: String)
+case class Site(id: Int, codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
@@ -78,4 +80,17 @@ object Patient extends ModelCompanion[Patient, ObjectId] {
       ))
     ).toSeq
   }
+}
+
+object Site extends SkinnyMapper[Site] {
+
+  override def columnNames = Seq("id", "name", "remote_id", "short_name")
+  override lazy val defaultAlias = createAlias("s")
+
+  override def extract(rs: WrappedResultSet, n: ResultName[Site]): Site = new Site(
+    id = rs.get(n.id),
+    codeValue = rs.get(n.codeValue),
+    label = rs.get(n.label),
+    systemId = rs.get(n.systemId)
+  )
 }
