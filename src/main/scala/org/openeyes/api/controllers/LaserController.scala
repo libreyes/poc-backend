@@ -32,7 +32,7 @@ class LaserController(implicit val swagger: Swagger) extends ApiStack {
   get("/", operation(list)) {
     params.get("siteId") match {
       case Some(siteId) => LaserService.findAllForSite(siteId)
-      case None => LaserService.findAll
+      case None => LaserService.list
     }
   }
 
@@ -45,7 +45,7 @@ class LaserController(implicit val swagger: Swagger) extends ApiStack {
     )
 
   get("/:id", operation(get)) {
-    val id = params("id")
+    val id = params("id").toInt
     LaserService.find(id) match {
       case Some(laser) => Ok(laser)
       case None => NotFound(ApiError("error\": \"No laser found for id '" + id + "'."))

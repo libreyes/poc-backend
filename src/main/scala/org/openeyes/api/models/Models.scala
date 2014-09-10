@@ -25,8 +25,7 @@ case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
 
-// NOTE: Added id to the Laser class so we can fake its persistence on the front end.
-case class Laser(id: String, codeValue: String, label: String, systemId: String)
+case class Laser(id: Option[Int], codeValue: String, label: String, systemId: String)
 
 case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye,
                       laser: Laser, site: Site, laserOperator: LaserOperator, createdAt: Long)
@@ -45,7 +44,6 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 // NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
 
-// NOTE: Added id to the Site class so we can fake its persistence on the front end.
 case class Site(id: Option[Int], codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)

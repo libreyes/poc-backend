@@ -1,23 +1,30 @@
 package org.openeyes.api.services
 
+import org.openeyes.api.data.{DatabaseSupport, Lasers}
 import org.openeyes.api.fakeData.Lasers
+
+import scala.slick.driver.MySQLDriver.simple._
 
 /**
  * Created by stu on 03/09/2014.
  */
-object LaserService {
-  def find(id: String) = {
-    Lasers.all.find(s => s.id == id) match {
-      case Some(laser) => Some(laser)
-      case None => None
+object LaserService extends DatabaseSupport {
+
+  val lasers: TableQuery[Lasers] = TableQuery[Lasers]
+
+  def find(id: Int) = {
+    getConnection withSession { implicit session =>
+      lasers.filter { _.id === id }.firstOption
     }
   }
 
-  def findAll = {
-    Lasers.all
+  def list = {
+    getConnection withSession { implicit session =>
+      lasers.list
+    }
   }
 
   def findAllForSite(siteId: String) = {
-    Lasers.forSite(siteId)
+//    Lasers.forSite(siteId)
   }
 }

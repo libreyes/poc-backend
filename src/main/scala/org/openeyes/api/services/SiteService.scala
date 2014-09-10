@@ -1,6 +1,6 @@
 package org.openeyes.api.services
 
-import org.openeyes.api.data.{Support, Sites}
+import org.openeyes.api.data.{DatabaseSupport, Sites}
 import org.openeyes.api.models.Site
 
 import scala.slick.driver.MySQLDriver.simple._
@@ -8,7 +8,7 @@ import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by stu on 02/09/2014.
  */
-object SiteService extends Support {
+object SiteService extends DatabaseSupport {
 
   val sites: TableQuery[Sites] = TableQuery[Sites]
 
@@ -18,7 +18,7 @@ object SiteService extends Support {
     }
   }
 
-  def findAll = {
+  def list = {
     getConnection withSession { implicit session =>
       sites.list
     }

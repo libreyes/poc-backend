@@ -1,14 +1,14 @@
 import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
-import org.openeyes.api.data.Access
+import org.openeyes.api.data.DatabaseAccess
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
 
   implicit val swagger = new OpeneyesSwagger
 
-  Access.createDatasource
+  DatabaseAccess.createDatasource
 
   override def init(context: ServletContext) {
     context.mount(new ResourcesApp, "/api-docs")
@@ -22,6 +22,6 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def destroy(context: ServletContext) {
     super.destroy(context)
-    Access.closeDbConnection
+    DatabaseAccess.closeDbConnection
   }
 }

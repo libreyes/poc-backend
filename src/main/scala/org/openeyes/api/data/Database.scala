@@ -7,7 +7,7 @@ import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by stu on 09/09/2014.
  */
-object Access {
+object DatabaseAccess {
 
   def createDatasource: ComboPooledDataSource = {
     new ComboPooledDataSource
@@ -21,6 +21,6 @@ object Access {
   }
 }
 
-trait Support {
-  def getConnection = Access.database
+trait DatabaseSupport {
+  def getConnection = DatabaseAccess.database
 }

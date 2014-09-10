@@ -27,7 +27,7 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack {
     )
 
   get("/", operation(list)) {
-    SiteService.findAll
+    SiteService.list
   }
 
   val get = (apiOperation[Site]("getSite")
