@@ -10,7 +10,7 @@ object OpeneyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
   val Version = "0.1.4"
-  val ScalaVersion = "2.11.1"
+  val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0"
 
   lazy val project = Project (
@@ -32,7 +32,7 @@ object OpeneyesBuild extends Build {
       ),
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
-        "jp.sf.amateras" %% "scalatra-forms" % "0.1.0",
+        "com.scalapenos" %% "riak-scala-client" % "0.9.0",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
