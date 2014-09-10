@@ -11,8 +11,8 @@ import com.typesafe.config.ConfigFactory
  */
 object Couchbase {
 
-  val config =  new Configuration(ConfigFactory.load())
-  lazy val driver = ReactiveCouchbaseDriver(ActorSystem(), config)
+  private val config =  new Configuration(ConfigFactory.load())
+  private lazy val driver = ReactiveCouchbaseDriver(ActorSystem(), config)
   lazy val bucket = driver.bucket("openeyes")
 
   def shutdown = {
