@@ -6,6 +6,7 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import org.joda.time.DateTime
 import scalikejdbc._
 import skinny.orm.SkinnyMapper
 
@@ -84,13 +85,23 @@ object Patient extends ModelCompanion[Patient, ObjectId] {
 
 object Site extends SkinnyMapper[Site] {
 
-  override def columnNames = Seq("id", "name", "remote_id", "short_name")
+  override def columnNames = Seq("id", "name", "birthday", "created_at")
+
   override lazy val defaultAlias = createAlias("s")
 
   override def extract(rs: WrappedResultSet, n: ResultName[Site]): Site = new Site(
     id = rs.get(n.id),
-    codeValue = rs.get(n.codeValue),
-    label = rs.get(n.label),
-    systemId = rs.get(n.systemId)
+    codeValue = rs.get(n.shortName),
+    label = rs.get(n.name),
+    systemId = rs.get(n.remoteId)
   )
+}
+
+case class Member(id: Long, name: Option[String], createdAt: DateTime)
+object Member extends SkinnyMapper[Member] {
+  override lazy val defaultAlias = createAlias("m")
+  override def extract(rs: WrappedResultSet, n: ResultName[Member]): Member = new Member(
+    id        = rs.get(n.id),
+    name      = rs.get(n.name),
+    createdAt = rs.get(n.createdAt))
 }
