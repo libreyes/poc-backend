@@ -10,6 +10,10 @@ import scala.concurrent.Future
  */
 object SiteService {
 
+  def createOne = {
+    Sites.create
+  }
+
   def find(id: String): Future[Option[Site]] = {
     Sites.find(id)
   }

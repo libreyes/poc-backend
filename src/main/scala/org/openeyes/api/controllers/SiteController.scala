@@ -53,4 +53,8 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack with Future
     }
   }
 
+  get("/temp") {
+    SiteService.createOne
+  }
+
 }
