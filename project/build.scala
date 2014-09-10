@@ -10,7 +10,7 @@ object OpeneyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
   val Version = "0.1.4"
-  val ScalaVersion = "2.10.4"
+  val ScalaVersion = "2.11.1"
   val ScalatraVersion = "2.3.0"
 
   lazy val project = Project (
@@ -39,7 +39,7 @@ object OpeneyesBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-swagger"  % ScalatraVersion,
-        "com.typesafe.slick" %% "slick" % "1.0.1",
+        "com.typesafe.slick" %% "slick" % "2.1.0",
         "org.slf4j" % "slf4j-nop" % "1.6.4",
         "mysql" % "mysql-connector-java" % "5.1.32",
         "c3p0" % "c3p0" % "0.9.1.2",
