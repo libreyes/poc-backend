@@ -6,16 +6,21 @@ import org.openeyes.api.models.{ApiError, Site}
 import org.openeyes.api.services.SiteService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
-import org.scalatra.{NotFound, Ok}
+import org.scalatra.{FutureSupport, NotFound, Ok}
+import scala.concurrent.duration._
+
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 /**
  * Created by stu on 02/09/2014.
  */
-class SiteController(implicit val swagger: Swagger) extends ApiStack {
+class SiteController(implicit val swagger: Swagger) extends ApiStack with FutureSupport {
 
   protected val applicationDescription = "The Site API."
 
   protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
+
+  protected implicit def executor = ExecutionContext.global
 
   before() {
     contentType = formats("json")
@@ -40,9 +45,12 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    SiteService.find(id) match {
+    val future = SiteService.find(id)
+    val result = Await.result(future, 1 second) // yes, this is gross.
+    result match {
       case Some(site) => Ok(site)
       case None => NotFound(ApiError("No site found for id '" + id + "'."))
     }
   }
+
 }

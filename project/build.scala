@@ -28,13 +28,14 @@ object OpeneyesBuild extends Build {
       scalaVersion := ScalaVersion,
       resolvers ++= Seq(
         Classpaths.typesafeReleases,
-        "amateras-repo" at "http://amateras.sourceforge.jp/mvn/"
-      ),
+        "ReactiveCouchbase Releases" at "https://raw.github.com/ReactiveCouchbase/repository/master/snapshots/",
+        "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases/"),
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
-        "jp.sf.amateras" %% "scalatra-forms" % "0.1.0",
+        "com.typesafe" % "config" % "1.2.1",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
+        "org.reactivecouchbase" %% "reactivecouchbase-core" % "0.3-SNAPSHOT",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,

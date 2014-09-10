@@ -1,6 +1,7 @@
 import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
+import org.openeyes.api.persistence.Couchbase
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
@@ -15,5 +16,9 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(new PatientController, "/Patient", "Patient")
     context.mount(new ProcedureController, "/Procedure", "Procedure")
     context.mount(new SiteController, "/Site", "Site")
+  }
+
+  override def destroy(context: ServletContext) = {
+    Couchbase.shutdown
   }
 }
