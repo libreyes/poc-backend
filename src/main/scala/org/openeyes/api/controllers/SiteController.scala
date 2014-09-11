@@ -7,6 +7,10 @@ import org.openeyes.api.services.SiteService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 import org.scalatra.{NotFound, Ok}
+import scala.concurrent.duration._
+
+
+import scala.concurrent.Await
 
 /**
  * Created by stu on 02/09/2014.
@@ -40,7 +44,10 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    SiteService.find(id) match {
+    val future = SiteService.find(id)
+    val result = Await.result(future, 1 second)
+
+    result match {
       case Some(site) => Ok(site)
       case None => NotFound(ApiError("No site found for id '" + id + "'."))
     }
