@@ -8,10 +8,10 @@ import org.openeyes.api.models.Laser
 object Lasers {
 
   val all = List(
-    Laser("1", "DS", "Death Star", "laser-1"),
-    Laser("2", "MK", "Moonraker", "laser-2"),
-    Laser("3", "MR", "Mind Ray", "laser-3"),
-    Laser("4", "BM", "Beam", "laser-4")
+    Laser(1, "DS", "Death Star", "laser-1"),
+    Laser(2, "MK", "Moonraker", "laser-2"),
+    Laser(3, "MR", "Mind Ray", "laser-3"),
+    Laser(4, "BM", "Beam", "laser-4")
   )
 
   val lasersForSite = List(

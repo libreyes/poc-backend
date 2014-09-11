@@ -28,7 +28,7 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack with Databa
     )
 
   get("/", operation(list)) {
-    SiteService.findAll
+    SiteService.list
   }
 
   val get = (apiOperation[Site]("getSite")

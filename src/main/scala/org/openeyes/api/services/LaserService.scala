@@ -1,20 +1,18 @@
 package org.openeyes.api.services
 
 import org.openeyes.api.fakeData.Lasers
+import org.openeyes.api.models.Laser
 
 /**
  * Created by stu on 03/09/2014.
  */
 object LaserService {
-  def find(id: String) = {
-    Lasers.all.find(s => s.id == id) match {
-      case Some(laser) => Some(laser)
-      case None => None
-    }
+  def find(id: Int) = {
+    Laser.find(id)
   }
 
-  def findAll = {
-    Lasers.all
+  def list = {
+    Laser.list
   }
 
   def findAllForSite(siteId: String) = {

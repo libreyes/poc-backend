@@ -11,7 +11,7 @@ object SiteService {
     Site.find(id)
   }
 
-  def findAll = {
-    Site.findAll
+  def list = {
+    Site.list
   }
 }

@@ -6,7 +6,7 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
-import org.openeyes.api.data.{ScalatraRecord, ApiSchema}
+import org.openeyes.api.data.{ScalatraRecord, DatabaseSchema}
 import org.squeryl.{PersistenceStatus, KeyedEntity}
 import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.annotations._
@@ -29,8 +29,10 @@ case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
 
-// NOTE: Added id to the Laser class so we can fake its persistence on the front end.
-case class Laser(id: String, codeValue: String, label: String, systemId: String)
+case class Laser(id: Int,
+                 @Column("code_value") val codeValue: String,
+                 @Column("label") val label: String,
+                 @Column("system_id") val systemId: String) extends ScalatraRecord
 
 case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye,
                       laser: Laser, site: Site, laserOperator: LaserOperator, createdAt: Long)
@@ -86,13 +88,23 @@ object Patient extends ModelCompanion[Patient, ObjectId] {
   }
 }
 
-object Site {
-  def findAll = {
-    from(ApiSchema.sites)(s => select(s)).toList
+object Laser {
+  def list = {
+    from(DatabaseSchema.lasers)(o => select(o)).toList
   }
 
   def find(id: Int) = {
-    from(ApiSchema.sites)(s => where(s.id === id) select (s)).headOption
+    from(DatabaseSchema.lasers)(o => where(o.id === id) select (o)).headOption
+  }
+}
+
+object Site {
+  def list = {
+    from(DatabaseSchema.sites)(o => select(o)).toList
+  }
+
+  def find(id: Int) = {
+    from(DatabaseSchema.sites)(o => where(o.id === id) select (o)).headOption
   }
 }
 
