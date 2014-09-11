@@ -1,6 +1,6 @@
 package org.openeyes.api.services
 
-import org.openeyes.api.fakeData.Sites
+import org.openeyes.api.persistence.Sites
 
 /**
  * Created by stu on 02/09/2014.
