@@ -46,6 +46,8 @@ case class Procedure(id: String, codeValue: String, label: String, systemId: Str
 
 case class Site(id: Option[Int], codeValue: String, label: String, systemId: String)
 
+case class SiteLaser(id: Option[Int], siteId: Int, laserId: Int)
+
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
 object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {

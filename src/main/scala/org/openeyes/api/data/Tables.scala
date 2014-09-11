@@ -19,3 +19,12 @@ class Sites(tag: Tag) extends Table[Site](tag, "site") {
   def systemId = column[String]("remote_id")
   def * = (id.?, codeValue, label, systemId) <> (Site.tupled, Site.unapply)
 }
+
+class SiteLasers(tag: Tag) extends Table[SiteLaser](tag, "site_laser") {
+  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def siteId = column[Int]("site_id")
+  def laserId = column[Int]("laser_id")
+  def * = (id.?, siteId, laserId) <> (SiteLaser.tupled, SiteLaser.unapply)
+  def siteFK = foreignKey("site_fk", siteId, TableQuery[Sites])(site => site.id)
+  def laserFK = foreignKey("laser_fk", laserId, TableQuery[Lasers])(laser => laser.id)
+}

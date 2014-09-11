@@ -14,11 +14,11 @@ object SiteService extends DatabaseSupport {
 
   def find(id: Int): Option[Site] = {
     getConnection withSession { implicit session =>
-      sites.filter { _.id === id }.firstOption
+      sites.filter(_.id === id).firstOption
     }
   }
 
-  def list = {
+  def list: List[Site] = {
     getConnection withSession { implicit session =>
       sites.list
     }
