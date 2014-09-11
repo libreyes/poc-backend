@@ -10,7 +10,7 @@ object OpeneyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
   val Version = "0.1.4"
-  val ScalaVersion = "2.11.1"
+  val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0"
 
   lazy val project = Project (
@@ -28,10 +28,12 @@ object OpeneyesBuild extends Build {
       scalaVersion := ScalaVersion,
       resolvers ++= Seq(
         Classpaths.typesafeReleases,
+        "Typesafe repository releases" at "http://repo.typesafe.com/typesafe/releases/",
         "amateras-repo" at "http://amateras.sourceforge.jp/mvn/"
       ),
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
+        "com.websudos" %% "phantom-dsl" % "1.2.2",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
