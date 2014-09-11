@@ -1,4 +1,4 @@
-package org.openeyes.api.fakeData
+package org.openeyes.api.persistence
 
 import org.openeyes.api.models.Site
 
