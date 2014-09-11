@@ -7,6 +7,9 @@ import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
 
+import spray.json.DefaultJsonProtocol._
+
+
 
 /**
  * Created by dave on 19/08/14.
@@ -47,6 +50,9 @@ case class Procedure(id: String, codeValue: String, label: String, systemId: Str
 
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
 case class Site(id: String, codeValue: String, label: String, systemId: String)
+object Site {
+  implicit val jsonFormat = jsonFormat4(Site.apply)
+}
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
