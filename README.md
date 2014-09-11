@@ -15,6 +15,7 @@ If `browse` doesn't launch your browser, manually open [http://localhost:8080/](
 ## Dependencies ##
 
 * mongodb
+* riak
 
 ## Sample Data ##
 
