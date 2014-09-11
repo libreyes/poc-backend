@@ -33,7 +33,7 @@ class LaserOperatorController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[LaserOperator]("getLaserOperator")
     notes "Get a LaserOperator by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the LaserOperator to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the LaserOperator to retrieve").required
     )
     summary "Get LaserOperator"
     )

@@ -33,10 +33,10 @@ class ProcedureController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[Procedure]("getProcedure")
     notes "Get a Procedure by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the Procedure to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the Procedure to retrieve").required
     )
     summary "Get Procedure"
-    )
+  )
 
   get("/:id", operation(get)) {
     val id = params("id")
