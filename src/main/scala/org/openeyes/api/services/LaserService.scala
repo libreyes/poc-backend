@@ -1,7 +1,7 @@
 package org.openeyes.api.services
 
 import org.openeyes.api.fakeData.Lasers
-import org.openeyes.api.models.Laser
+import org.openeyes.api.models.{Site, Laser}
 
 /**
  * Created by stu on 03/09/2014.
@@ -15,7 +15,10 @@ object LaserService {
     Laser.list
   }
 
-  def findAllForSite(siteId: String) = {
-    Lasers.forSite(siteId)
+  def listForSite(siteId: Int) = {
+    Site.find(siteId).headOption match {
+      case Some(site) => site.lasers
+      case None => List()
+    }
   }
 }

@@ -19,5 +19,14 @@ object DatabaseSchema extends Schema {
   on(sites)(o => declare(
     o.id is(autoIncremented, primaryKey)
   ))
+
+  val siteLasers = manyToManyRelation(sites, lasers).
+    via[SiteLaser]((s, l, sl) => (sl.siteId === s.id, l.id === sl.laserId))
+
+  override def columnNameFromPropertyName(n:String) =
+    NamingConventionTransforms.snakify(n)
+
+  override def tableNameFromClassName(n:String) =
+    NamingConventionTransforms.snakify(n)
 }
 

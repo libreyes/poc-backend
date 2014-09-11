@@ -7,6 +7,7 @@ import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
 import org.openeyes.api.data.{ScalatraRecord, DatabaseSchema}
+import org.squeryl.dsl.CompositeKey2
 import org.squeryl.{PersistenceStatus, KeyedEntity}
 import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.annotations._
@@ -30,9 +31,12 @@ case class GeneralPractitioner(firstName: Option[String], surname: Option[String
                                address: Option[Address], practice: Option[Practice])
 
 case class Laser(id: Int,
-                 @Column("code_value") val codeValue: String,
-                 @Column("label") val label: String,
-                 @Column("system_id") val systemId: String) extends ScalatraRecord
+                 val codeValue: String,
+                 val label: String,
+                 val systemId: String) extends ScalatraRecord {
+
+  lazy val sites = DatabaseSchema.siteLasers.rightStateful(this)
+}
 
 case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye,
                       laser: Laser, site: Site, laserOperator: LaserOperator, createdAt: Long)
@@ -54,7 +58,16 @@ case class Procedure(id: String, codeValue: String, label: String, systemId: Str
 case class Site(id: Int,
                 @Column("short_name") val codeValue: String,
                 @Column("name") val label: String,
-                @Column("remote_id") val systemId: String) extends ScalatraRecord
+                @Column("remote_id") val systemId: String) extends ScalatraRecord {
+
+  lazy val lasers = DatabaseSchema.siteLasers.leftStateful(this)
+}
+
+case class SiteLaser(@Column("site_id") val siteId: Int,
+                     @Column("laser_id") val laserId: Int) extends KeyedEntity[CompositeKey2[Int, Int]] {
+
+  def id = compositeKey(siteId, laserId)
+}
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
