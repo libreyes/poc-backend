@@ -28,3 +28,9 @@ class SiteLasers(tag: Tag) extends Table[SiteLaser](tag, "site_laser") {
   def siteFK = foreignKey("site_fk", siteId, TableQuery[Sites])(site => site.id)
   def laserFK = foreignKey("laser_fk", laserId, TableQuery[Lasers])(laser => laser.id)
 }
+
+object Tables {
+  lazy val lasers:TableQuery[Lasers] = TableQuery[Lasers]
+  lazy val sites:TableQuery[Sites] = TableQuery[Sites]
+  lazy val siteLasers:TableQuery[SiteLasers] = TableQuery[SiteLasers]
+}
