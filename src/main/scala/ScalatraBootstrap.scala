@@ -2,10 +2,14 @@ import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
 import org.scalatra._
+import scalikejdbc._
 
 class ScalatraBootstrap extends LifeCycle {
 
   implicit val swagger = new OpeneyesSwagger
+
+  skinny.DBSettings.initialize()
+  implicit val session = AutoSession
 
   override def init(context: ServletContext) {
     context.mount(new ResourcesApp, "/api-docs")

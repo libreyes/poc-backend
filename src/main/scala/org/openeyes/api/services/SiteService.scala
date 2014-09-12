@@ -7,16 +7,12 @@ import org.openeyes.api.models.Site
  */
 object SiteService {
 
-  def find(id: String) = {
-//    Sites.all.find(s => s.id == id) match {
-//      case Some(site) => Some(site)
-//      case None => None
-//    }
+  def find(id: Int) = {
+    Site.findById(id)
   }
 
   def findAll = {
-    val sites: List[Site] = Site.findAll()
-    sites
+    Site.findAll()
   }
 
 }
