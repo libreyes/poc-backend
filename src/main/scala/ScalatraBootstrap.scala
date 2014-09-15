@@ -9,6 +9,7 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext) {
     context.mount(new ResourcesApp, "/api-docs")
+    context.mount(new DicomController, "/Dicom", "Dicom")
     context.mount(new LaserEventController, "/LaserEvent", "LaserEvent")
     context.mount(new LaserOperatorController, "/LaserOperator", "LaserOperator")
     context.mount(new LaserController, "/Laser", "Laser")
