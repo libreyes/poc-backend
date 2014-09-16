@@ -24,7 +24,7 @@ case class AnteriorSegment(data: String)
 
 case class ContactDetail(email: Option[String], telephone: Option[String])
 
-case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, updatedAt: Long, elements: List[Element])
+case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element])
 
 case class Episode(events: Option[List[LaserEvent]])
 
@@ -58,7 +58,10 @@ case class Site(id: String, codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
 
-case class VisualAcuity(comments: Option[String], readings: List[VisualAcuityReading])
+// TODO: Need to enforce at least one side
+case class VisualAcuity(leftEye: Option[VisualAcuitySide], rightEye: Option[VisualAcuitySide]) extends Element
+
+case class VisualAcuitySide(readings: List[VisualAcuityReading], comment: Option[String])
 
 case class VisualAcuityReading(value: Int, correction: String)
 
