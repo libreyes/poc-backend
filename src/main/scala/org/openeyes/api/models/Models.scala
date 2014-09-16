@@ -18,6 +18,10 @@ trait Element
 case class Address(addressLine1: Option[String], addressLine2: Option[String], city: Option[String],
                    county: Option[String], postcode: Option[String])
 
+case class Allergies(allergies: List[Allergy]) extends Element
+
+case class Allergy(name: String, comment: Option[String])
+
 case class ApiError(message: String)
 
 case class AnteriorSegment(data: String)
