@@ -39,6 +39,18 @@ case class Comorbidity(name: String)
  */
 case class History(text: String) extends Element
 
+case class InjectionAnaesthetic (leftEye: Option[InjectionAnaestheticSide], rightEye: Option[InjectionAnaestheticSide]) extends Element
+
+case class InjectionAnaestheticSide (anaestheticType: String, delivery: String, agent: String)
+
+case class InjectionComplications (leftEye: Option[InjectionComplicationsSide], rightEye: Option[InjectionComplicationsSide]) extends Element
+
+case class InjectionComplicationsSide (complications: List[String])
+
+case class Injection (leftEye: Option[InjectionSide], rightEye: Option[InjectionSide]) extends Element
+
+case class InjectionSide (preAntiseptic: String, preSkinCleanser: String, preIopLoweringTherapy: Option[String], drug: String, sequenceNumber: Int, batchNumber: String, batchExpiryDate: String, givenByUserId: String, injectionTime: String, postIopLoweringTherapy: Option[String])
+
 /**
  * Injection Management
  * @param leftEye
@@ -57,6 +69,10 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
 case class PosteriorPole(leftEye: Option[AnteriorSegmentSide], rightEye: Option[AnteriorSegmentSide]) extends Element
 
 case class PosteriorPoleSide(data: String)
+
+case class PostInjectionExam(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
+
+case class PostInjectionExamSide(countingFingers: Boolean, iop: Boolean, drops: String)
 
 /**
  * Visual Acutity
