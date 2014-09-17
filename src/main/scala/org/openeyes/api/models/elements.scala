@@ -44,7 +44,8 @@ case class History(text: String) extends Element
  */
 case class InjectionManagement(leftEye: Option[InjectionManagementSide], rightEye: Option[InjectionManagementSide]) extends Element
 
-case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagnosisSecondaryTo: String, intendedTreatment: String, risks: List[String], comment: Option[String])
+case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagnosisSecondaryTo: String, questions: List[String],
+                                   intendedTreatment: String, risks: List[String], comment: Option[String])
 
 /**
  * Posterior Pole
