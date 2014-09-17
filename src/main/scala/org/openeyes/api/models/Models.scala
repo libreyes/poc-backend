@@ -25,7 +25,6 @@ case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
 
-
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
 
@@ -53,7 +52,7 @@ case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegm
 
 case class Workflow(@Key("_id") _id: ObjectId, name: String, steps: List[WorkflowStep])
 
-case class WorkflowStep(name: String, mandatoryFieldSets: List[String], optionalFieldSets: List[String])
+case class WorkflowStep(name: String, mandatoryFieldSets: List[String], optionalFieldSets: Option[List[String]])
 
 object Encounter extends ModelCompanion[Encounter, ObjectId] {
 
