@@ -2,7 +2,6 @@ package org.openeyes.api.models
 
 import com.mongodb.casbah.MongoConnection
 import com.mongodb.casbah.commons.MongoDBObject
-import com.novus.salat.annotations.Salat
 import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
@@ -12,19 +11,11 @@ import org.bson.types.ObjectId
 /**
  * Created by dave on 19/08/14.
  */
-@Salat
-trait Element
 
 case class Address(addressLine1: Option[String], addressLine2: Option[String], city: Option[String],
                    county: Option[String], postcode: Option[String])
 
-case class Allergies(allergies: List[Allergy]) extends Element
-
-case class Allergy(name: String, comment: Option[String])
-
 case class ApiError(message: String)
-
-case class AnteriorSegment(data: String)
 
 case class ContactDetail(email: Option[String], telephone: Option[String])
 
@@ -35,7 +26,6 @@ case class Episode(events: Option[List[LaserEvent]])
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
 
-case class History(text: String) extends Element
 
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
@@ -61,13 +51,6 @@ case class Procedure(id: String, codeValue: String, label: String, systemId: Str
 case class Site(id: String, codeValue: String, label: String, systemId: String)
 
 case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
-
-// TODO: Need to enforce at least one side
-case class VisualAcuity(leftEye: Option[VisualAcuitySide], rightEye: Option[VisualAcuitySide]) extends Element
-
-case class VisualAcuitySide(readings: List[VisualAcuityReading], comment: Option[String])
-
-case class VisualAcuityReading(value: Int, correction: String)
 
 object Encounter extends ModelCompanion[Encounter, ObjectId] {
 
