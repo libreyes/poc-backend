@@ -34,6 +34,17 @@ object WorkflowQueueService {
    * @param to the queue to move it to
    */
   def move(ticket: PatientTicket, from: WorkflowQueue, to: WorkflowQueue) = {
+    // We could do this a bunch of ways. Use the add/remove functions?
+    // Of course, then we don't have any transactions, but we kind of don't anyway...
+  }
+
+
+  def add(ticket: PatientTicket, to: WorkflowQueue) = {
+
+  }
+
+  def remove(ticket: PatientTicket, from: WorkflowQueue) = {
+
   }
 
 }
