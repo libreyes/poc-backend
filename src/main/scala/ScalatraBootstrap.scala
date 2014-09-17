@@ -16,5 +16,6 @@ class ScalatraBootstrap extends LifeCycle {
     context.mount(new PatientController, "/Patient", "Patient")
     context.mount(new ProcedureController, "/Procedure", "Procedure")
     context.mount(new SiteController, "/Site", "Site")
+    context.mount(new WorkflowController, "/Workflow", "Workflow")
   }
 }
