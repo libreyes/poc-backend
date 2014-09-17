@@ -47,6 +47,10 @@ case class InjectionComplications (leftEye: Option[InjectionComplicationsSide], 
 
 case class InjectionComplicationsSide (complications: List[String])
 
+case class InjectionEyeDraw (leftEye: InjectionEyeDrawSide, rightEye: Option[InjectionEyeDrawSide]) extends Element
+
+case class InjectionEyeDrawSide (data: String, lensStatus: String)
+
 case class Injection (leftEye: Option[InjectionSide], rightEye: Option[InjectionSide]) extends Element
 
 case class InjectionSide (preAntiseptic: String, preSkinCleanser: String, preIopLoweringTherapy: Option[String], drug: String, sequenceNumber: Int, batchNumber: String, batchExpiryDate: String, givenByUserId: String, injectionTime: String, postIopLoweringTherapy: Option[String])
