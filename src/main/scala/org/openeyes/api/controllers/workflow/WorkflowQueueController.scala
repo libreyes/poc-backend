@@ -3,7 +3,7 @@ package org.openeyes.api.controllers.workflow
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.workflow.WorkflowQueueForm
-import org.openeyes.api.models.workflow.{PatientTicket, WorkflowQueue}
+import org.openeyes.api.models.workflow.WorkflowQueue
 import org.openeyes.api.services.workflow.WorkflowQueueService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
