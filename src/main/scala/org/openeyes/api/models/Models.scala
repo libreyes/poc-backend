@@ -6,6 +6,7 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import org.openeyes.api.elements.Element
 
 
 /**
@@ -21,20 +22,8 @@ case class ContactDetail(email: Option[String], telephone: Option[String])
 
 case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element])
 
-case class Episode(events: Option[List[LaserEvent]])
-
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
-
-
-// NOTE: Added id to the Laser class so we can fake its persistence on the front end.
-case class Laser(id: String, codeValue: String, label: String, systemId: String)
-
-case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: TreatedEye, rightEye: TreatedEye,
-                      laser: Laser, site: Site, laserOperator: LaserOperator, createdAt: Long)
-
-// NOTE: Added id to the LaserOperator class so we can fake its persistence on the front end.
-case class LaserOperator(id: String, firstName: String, surname: String)
 
 // NOTE: Added id to the Patient class so we can fake its persistence on the front end.
 case class Patient(@Key("_id") _id: ObjectId, id: String, firstName: String, surname: String, dob: String,
@@ -50,8 +39,6 @@ case class Procedure(id: String, codeValue: String, label: String, systemId: Str
 // NOTE: Added id to the Site class so we can fake its persistence on the front end.
 case class Site(id: String, codeValue: String, label: String, systemId: String)
 
-case class TreatedEye(procedures: List[Procedure], anteriorSegment: AnteriorSegment)
-
 object Encounter extends ModelCompanion[Encounter, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("encounters")
@@ -60,18 +47,6 @@ object Encounter extends ModelCompanion[Encounter, ObjectId] {
   def findAllForPatient(patientId: String): Seq[Encounter] = {
     find(
       MongoDBObject("patientId" -> new ObjectId(patientId))
-    ).toSeq
-  }
-}
-
-object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
-
-  val collection = MongoConnection()("openeyes")("laser-events")
-  val dao = new SalatDAO[LaserEvent, ObjectId](collection = collection) {}
-
-  def findAllForPatient(patientId: String): Seq[LaserEvent] = {
-    find(
-      MongoDBObject("patientId" -> patientId)
     ).toSeq
   }
 }

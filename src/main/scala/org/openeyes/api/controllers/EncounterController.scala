@@ -3,7 +3,8 @@ package org.openeyes.api.controllers
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{FullTypeHints, DefaultFormats}
 import org.openeyes.api.forms.EncounterForm
-import org.openeyes.api.models.{Encounter, Element}
+import org.openeyes.api.models.Encounter
+import org.openeyes.api.elements.Element
 import org.openeyes.api.services.EncounterService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger

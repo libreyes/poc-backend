@@ -1,6 +1,6 @@
 package org.openeyes.api.forms
 
-import org.openeyes.api.models.Element
+import org.openeyes.api.elements.Element
 
 /**
  * Created by jamie on 15/09/2014.
