@@ -1,7 +1,7 @@
 import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
-import org.openeyes.api.controllers.workflow.WorkflowQueueController
+import org.openeyes.api.controllers.workflow.{WorkflowController, WorkflowQueueController}
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {

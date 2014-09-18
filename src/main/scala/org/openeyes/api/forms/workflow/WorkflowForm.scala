@@ -1,6 +1,6 @@
-package org.openeyes.api.forms
+package org.openeyes.api.forms.workflow
 
-import org.openeyes.api.models.WorkflowStep
+import org.openeyes.api.models.workflow.WorkflowStep
 
 /**
  * Created by jamie on 15/09/2014.

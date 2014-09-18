@@ -1,8 +1,8 @@
-package org.openeyes.api.services
+package org.openeyes.api.services.workflow
 
 import org.bson.types.ObjectId
-import org.openeyes.api.forms.WorkflowForm
-import org.openeyes.api.models._
+import org.openeyes.api.forms.workflow.WorkflowForm
+import org.openeyes.api.models.workflow.Workflow
 
 /**
  * Created by stu on 02/09/2014.

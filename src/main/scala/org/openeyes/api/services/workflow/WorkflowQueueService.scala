@@ -2,7 +2,7 @@ package org.openeyes.api.services.workflow
 
 import org.bson.types.ObjectId
 import org.openeyes.api.forms.workflow.WorkflowQueueForm
-import org.openeyes.api.models.workflow.{PatientTicket, WorkflowQueue}
+import org.openeyes.api.models.workflow.{PatientTicket, Queue}
 
 /**
  * Created by dave on 17/09/2014.
@@ -10,21 +10,21 @@ import org.openeyes.api.models.workflow.{PatientTicket, WorkflowQueue}
 object WorkflowQueueService {
 
   def create(form: WorkflowQueueForm) = {
-    val queue = WorkflowQueue(form.tickets)
-    WorkflowQueue.save(queue)
+    val queue = Queue(new ObjectId, form.tickets)
+    Queue.save(queue)
     queue
   }
 
   def find(id: String) = {
-    WorkflowQueue.findOneById(new ObjectId(id))
+    Queue.findOneById(new ObjectId(id))
   }
 
   def findAll = {
-    WorkflowQueue.findAll().toSeq
+    Queue.findAll().toSeq
   }
 
   def findAllForRole(roleId: String) = {
-    WorkflowQueue.findAllForJobRole(roleId)
+    Queue.findAllForJobRole(roleId)
   }
 
   /**
@@ -33,17 +33,17 @@ object WorkflowQueueService {
    * @param from the queue to move it from
    * @param to the queue to move it to
    */
-  def move(ticket: PatientTicket, from: WorkflowQueue, to: WorkflowQueue) = {
+  def move(ticket: PatientTicket, from: Queue, to: Queue) = {
     // We could do this a bunch of ways. Use the add/remove functions?
     // Of course, then we don't have any transactions, but we kind of don't anyway...
   }
 
 
-  def add(ticket: PatientTicket, to: WorkflowQueue) = {
+  def add(ticket: PatientTicket, to: Queue) = {
 
   }
 
-  def remove(ticket: PatientTicket, from: WorkflowQueue) = {
+  def remove(ticket: PatientTicket, from: Queue) = {
 
   }
 
