@@ -29,9 +29,7 @@ case class AnteriorSegmentSide(data: String)
  * Comorbidities
  * @param comorbidities
  */
-case class Comorbidities(comorbidities: List[Comorbidity]) extends Element
-
-case class Comorbidity(name: String)
+case class Comorbidities(comorbidities: List[String]) extends Element
 
 /**
  * History
