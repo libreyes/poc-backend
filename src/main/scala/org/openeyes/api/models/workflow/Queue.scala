@@ -7,7 +7,7 @@ import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
 
-case class PatientTicket(name: String, id: String)
+case class PatientTicket(patientName: String, patientId: String)
 
 case class Queue(@Key("_id") _id: ObjectId, tickets: List[PatientTicket])
 
