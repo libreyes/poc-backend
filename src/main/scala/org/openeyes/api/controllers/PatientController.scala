@@ -39,7 +39,7 @@ class PatientController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[Patient]("getPatient")
     notes "Get a Patient by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the Patient to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the Patient to retrieve").required
     )
     summary "Get Patient"
     )
