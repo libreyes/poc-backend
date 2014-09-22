@@ -23,7 +23,7 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val list = (apiOperation[List[LaserEvent]]("listLaserEvents")
     notes "Lists all known LaserEvents"
     parameters (
-    Parameter("patientId", DataType.String, Some("An optional Patient ID to filter the LaserEvents by"), None, ParamType.Query, required = false)
+      queryParam[String]("patientId").description("An optional Patient ID to filter the LaserEvents by").optional
     )
     summary "List LaserEvents"
     )
@@ -38,7 +38,7 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[LaserEvent]("getLaserEvent")
     notes "Get a LaserEvent by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the LaserEvent to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the LaserEvent to retrieve").required
     )
     summary "Get LaserEvent"
     )
@@ -54,7 +54,7 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val post = (apiOperation[LaserEvent]("createLaserEvent")
     notes "Create a LaserEvent"
     parameters (
-    Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
+      bodyParam[LaserEventForm].description("The LaserEvent content").required
     )
     summary "Create LaserEvent"
     )
@@ -67,8 +67,8 @@ class LaserEventController(implicit val swagger: Swagger) extends ApiStack {
   val put = (apiOperation[LaserEvent]("updateLaserEvent")
     notes "Update a LaserEvent"
     parameters(
-    Parameter("id", DataType.String, Some("The ID of the LaserEvent to update"), None, ParamType.Path, required = true),
-    Parameter("body", DataType[LaserEventForm], Some("The LaserEvent content"), None, ParamType.Body, required = true)
+      pathParam[String]("id").description("The ID of the LaserEvent to update").required,
+      bodyParam[LaserEventForm].description("The LaserEvent content").required
     )
     summary "Update LaserEvent"
     )

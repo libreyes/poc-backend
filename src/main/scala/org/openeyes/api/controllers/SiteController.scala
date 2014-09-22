@@ -33,10 +33,10 @@ class SiteController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[Site]("getSite")
     notes "Get a Site by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the Site to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the Site to retrieve").required
     )
     summary "Get Site"
-    )
+   )
 
   get("/:id", operation(get)) {
     val id = params("id")

@@ -24,7 +24,7 @@ class LaserController(implicit val swagger: Swagger) extends ApiStack {
   val list = (apiOperation[List[Laser]]("listLasers")
     notes "Lists all known Lasers"
     parameters (
-    Parameter("siteId", DataType.String, Some("An optional Site ID to filter the Lasers by"), None, ParamType.Query, required = false)
+      queryParam[String]("siteId").description("An optional Site ID to filter the Lasers by").optional
     )
     summary "List Lasers"
     )
@@ -39,7 +39,7 @@ class LaserController(implicit val swagger: Swagger) extends ApiStack {
   val get = (apiOperation[Laser]("getLaser")
     notes "Get a Laser by ID"
     parameters (
-    Parameter("id", DataType.String, Some("The ID of the Laser to retrieve"), None, ParamType.Path, required = true)
+      pathParam[String]("id").description("The ID of the Laser to retrieve").required
     )
     summary "Get Laser"
     )
