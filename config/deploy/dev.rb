@@ -2,10 +2,10 @@ role(:app){ ["178.79.188.31"] }
 role(:web){ ["178.79.188.31"] }
 role :db, "178.79.188.31", :primary => true
 
-set :environment, :uat
+set :environment, :dev
 
 set :scm, "git"
-branch = `git tag`.split("\n").last
+branch = 'develop'
 set :branch, branch
 
 set :repository, 'https://openeyes:B3gjKuRZbeoCNhRTB4yM@gitbucket.headlondon.com/git/openeyes/openeyes-experimental-api.git'
@@ -14,4 +14,4 @@ set :user, "openeyes" # the ssh user we'll deploy as.
 
 set :tomcat_manager, "tomcat"
 set :tomcat_manager_password, "IeChooP6uath"
-set :hostname, "openeyes-api-uat.headlondon.com"
+set :hostname, "openeyes-api-dev.headlondon.com"

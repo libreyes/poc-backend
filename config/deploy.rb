@@ -65,7 +65,7 @@ namespace :deploy do
     DESC
   task :undeploy_app do
     puts "==================Undeploy war======================"#Line 24
-    run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://localhost:8080/manager/text/undeploy?path=/"
+    run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/undeploy?path=/"
   end
 
   desc <<-DESC
@@ -73,7 +73,7 @@ namespace :deploy do
     DESC
   task :deploy_app do
     puts "==================Deploy war to Tomcat======================" #Line 26
-    run "curl --upload-file #{current_path}/openeyes_2.11-0.1.4.war --user #{tomcat_manager}:#{tomcat_manager_password} http://localhost:8080/manager/text/deploy?path=/ROOT"
+    run "curl --upload-file #{current_path}/openeyes_2.11-0.1.4.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
 
   desc <<-DESC
