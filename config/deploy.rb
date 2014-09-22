@@ -25,6 +25,7 @@ namespace :deploy do
     # capistrano only knows about file operations.
     undeploy_app
     deploy_app
+    cleanup
   end
 
   task :tag do
