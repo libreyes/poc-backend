@@ -1,8 +1,8 @@
 package org.openeyes.api.forms.workflow
 
-import org.openeyes.api.models.workflow.WorkflowStep
+import org.openeyes.api.models.workflow.Step
 
 /**
  * Created by jamie on 15/09/2014.
  */
-case class WorkflowForm(name: String, steps: List[WorkflowStep])
+case class WorkflowForm(name: String, steps: List[Step])

@@ -1,9 +1,9 @@
 package org.openeyes.api.controllers.workflow
 
-import org.json4s.DefaultFormats
+import org.json4s.{FullTypeHints, DefaultFormats}
 import org.json4s.mongo.ObjectIdSerializer
 import org.openeyes.api.forms.workflow.WorkflowForm
-import org.openeyes.api.models.workflow.Workflow
+import org.openeyes.api.models.workflow.{Workflow, Component}
 import org.openeyes.api.services.workflow.WorkflowService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
@@ -15,7 +15,11 @@ class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Workflow API."
 
-  protected implicit val jsonFormats = DefaultFormats + new ObjectIdSerializer
+  protected implicit val jsonFormats = new DefaultFormats {
+    override val typeHintFieldName = "type"
+    override val typeHints = FullTypeHints(List(classOf[Component]))
+  } + new ObjectIdSerializer
+
 
   before() {
     contentType = formats("json")
