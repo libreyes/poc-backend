@@ -32,6 +32,7 @@ object OpeneyesBuild extends Build {
       ),
       libraryDependencies ++= Seq(
         "com.novus" %% "salat" % "1.9.8",
+        "me.fhir" % "fhir" % "0.12.0-RELEASE",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
