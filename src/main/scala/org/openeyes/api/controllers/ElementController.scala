@@ -35,8 +35,7 @@ class ElementController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/", operation(list)) {
     val elementType = params.get("elementType")
-    val date = params.get("date")
-    val timestamp = (date match {
+    val timestamp = (params.get("date") match {
         case Some(d: String) => Some(d.toLong)
         case _ => None
       }
