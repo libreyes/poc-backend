@@ -7,21 +7,21 @@ import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
 
-case class Workflow(@Key("_id") _id: ObjectId, name: String, steps: List[Step])
+case class Workflow(@Key("_id") _id: ObjectId, name: String, site: String, steps: List[Step])
 
-case class Step(name: String, components: List[Component])
+case class Step(name: String, role: String, components: List[Component])
 
 @Salat
 abstract class Component {
+  def name: String
   def label: String
 }
 
-case class FormComponent(label: String, required: Boolean, hidden: Boolean) extends Component
+case class FormComponent(name: String, label: String, required: Boolean = true, hidden: Boolean = false) extends Component
 
-case class ViewComponent(label: String) extends Component
+case class ViewComponent(name: String, label: String) extends Component
 
 object Workflow extends ModelCompanion[Workflow, ObjectId] {
-
   val collection = MongoConnection()("openeyes")("workflows")
   val dao = new SalatDAO[Workflow, ObjectId](collection = collection) {}
 }
