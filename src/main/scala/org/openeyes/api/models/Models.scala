@@ -11,19 +11,15 @@ import org.bson.types.ObjectId
  * Created by dave on 19/08/14.
  */
 
-case class Address(addressLine1: Option[String], addressLine2: Option[String], city: Option[String],
-                   county: Option[String], postcode: Option[String])
+
 
 case class ApiError(message: String)
-
-case class ContactDetail(email: Option[String], telephone: Option[String])
 
 case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element])
 
 case class Episode(events: Option[List[LaserEvent]])
 
-case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
-                               address: Option[Address], practice: Option[Practice])
+
 
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
@@ -35,12 +31,7 @@ case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: Tre
 case class LaserOperator(id: String, firstName: String, surname: String)
 
 // NOTE: Added id to the Patient class so we can fake its persistence on the front end.
-case class Patient(@Key("_id") _id: ObjectId, id: String, firstName: String, surname: String, dob: String,
-                   gender: String, ethnicity: String, contactDetail: ContactDetail, address: Option[Address],
-                   nhsNumber: Option[String], nextOfKin: Option[String], generalPractitioner: GeneralPractitioner,
-                   hospitalNumber: String)
 
-case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 
 // NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)
@@ -74,21 +65,5 @@ object LaserEvent extends ModelCompanion[LaserEvent, ObjectId] {
   }
 }
 
-object Patient extends ModelCompanion[Patient, ObjectId] {
 
-  val collection = MongoConnection()("openeyes")("patients")
-  val dao = new SalatDAO[Patient, ObjectId](collection = collection) {}
-
-  def search(searchTerm: String): Seq[Patient] = {
-    val regex = MongoDBObject("$regex" -> searchTerm, "$options" -> "i")
-    find(
-      MongoDBObject("$or" -> List(
-        MongoDBObject("nhsNumber" -> searchTerm),
-        MongoDBObject("hospitalNumber" -> searchTerm),
-        MongoDBObject("firstName" -> regex),
-        MongoDBObject("surname" -> regex)
-      ))
-    ).toSeq
-  }
-}
 
