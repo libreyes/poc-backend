@@ -6,11 +6,13 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import org.openeyes.api.models.Patient
 
 /**
  * Created by stu on 23/09/2014.
  */
-case class Ticket(@Key("_id") _id: ObjectId, patientId: ObjectId, workflowId: ObjectId, step: Int, completed: Boolean, createdAt: Long)
+case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, step: Int, completed: Boolean,
+                  createdAt: Long)
 
 object Ticket extends ModelCompanion[Ticket, ObjectId] {
 
