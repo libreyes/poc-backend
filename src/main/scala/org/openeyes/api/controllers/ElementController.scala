@@ -43,9 +43,10 @@ class ElementController(implicit val swagger: Swagger) extends ApiStack {
       }
     )
 
+    // TODO: Confirm what status we want to throw if an expected param is missing
     params.get("patientId") match {
       case Some(patientId) => ElementService.findAllForPatient(patientId, elementType, timestamp)
-      case None => halt(500, ApiError("Patient ID not found"))
+      case None => halt(400, ApiError("Patient ID not found"))
     }
   }
 }
