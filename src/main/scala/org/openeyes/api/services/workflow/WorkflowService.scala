@@ -10,7 +10,7 @@ import org.openeyes.api.models.workflow.Workflow
 object WorkflowService {
 
   def create(form: WorkflowForm): Workflow = {
-    val workflow = Workflow(new ObjectId, form.name, form.steps)
+    val workflow = Workflow(new ObjectId, form.name, form.site, form.steps)
     Workflow.save(workflow)
     workflow
   }
