@@ -1,7 +1,7 @@
 import javax.servlet.ServletContext
 
 import org.openeyes.api.controllers._
-import org.openeyes.api.controllers.workflow.{WorkflowController, WorkflowQueueController}
+import org.openeyes.api.controllers.workflow._
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
@@ -10,6 +10,7 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext) {
     context.mount(new ResourcesApp, "/api-docs")
+    context.mount(new ElementController, "/Element", "Element")
     context.mount(new EncounterController, "/Encounter", "Encounter")
     context.mount(new LaserEventController, "/LaserEvent", "LaserEvent")
     context.mount(new LaserOperatorController, "/LaserOperator", "LaserOperator")

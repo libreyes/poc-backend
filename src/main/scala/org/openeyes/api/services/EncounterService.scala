@@ -1,7 +1,7 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
-import org.openeyes.api.Utilities._
+import org.openeyes.api.Utilities.Date._
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models._
 
