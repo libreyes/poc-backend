@@ -1,11 +1,10 @@
 package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
-import org.json4s.{FullTypeHints, DefaultFormats, Formats}
+import org.json4s.{FullTypeHints, DefaultFormats}
 import org.openeyes.api.models.{ApiError, Element}
 import org.openeyes.api.services.ElementService
 import org.openeyes.api.stacks.ApiStack
-import org.scalatra.HaltException
 import org.scalatra.swagger.Swagger
 
 /**
@@ -43,7 +42,6 @@ class ElementController(implicit val swagger: Swagger) extends ApiStack {
       }
     )
 
-    // TODO: Confirm what status we want to throw if an expected param is missing
     params.get("patientId") match {
       case Some(patientId) => ElementService.findAllForPatient(patientId, elementType, timestamp)
       case None => halt(400, ApiError("Patient ID not found"))
