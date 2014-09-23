@@ -26,23 +26,32 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
     notes "Lists Tickets for a given Workflow ID, with optional filtering for step and completed status"
     parameters (
     queryParam[String]("workflowId").description("A Workflow ID to filter the Tickets by").required,
-    queryParam[Int]("step").description("An optional step number to filter the Tickets by").optional,
-    queryParam[Boolean]("completed").description("An optional completed value to filter the Tickets by").optional
+    queryParam[Int]("stepIndex").description("An optional step number to filter the Tickets by").optional,
+    queryParam[Boolean]("includeCompleted").description("An optional completed value to filter the Tickets by").optional
     )
     summary "List Tickets"
     )
 
   get("/", operation(list)) {
+    val stepIndex = (params.get("stepIndex") match {
+      case Some(d: String) => Some(d.toInt)
+      case _ => None
+    })
+    val includeCompleted = (params.get("includeCompleted") match {
+      case Some(i: String) => i.toBoolean
+      case _ => false
+    })
     params.get("workflowId") match {
-      case Some(workflowId) => TicketService.findAllForWorkflow(workflowId)
+      case Some(workflowId) => TicketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
       case None => halt(400, ApiError("Workflow ID not found"))
     }
+
   }
 
   val post = (apiOperation[Ticket]("createTicket")
     notes "Create an Encounter"
     parameters(
-    bodyParam[TicketForm].description("The Ticket content").required
+     bodyParam[TicketForm].description("The Ticket content").required
     )
     summary "Create Ticket"
     )

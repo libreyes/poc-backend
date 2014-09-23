@@ -19,9 +19,11 @@ object Ticket extends ModelCompanion[Ticket, ObjectId] {
   val collection = MongoConnection()("openeyes")("tickets")
   val dao = new SalatDAO[Ticket, ObjectId](collection = collection) {}
 
-  def findAllForWorkflow(workflowId: String) = {
-    find(
-      MongoDBObject("workflowId" -> new ObjectId(workflowId))
-    ).toSeq
+  def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false) = {
+    val builder = MongoDBObject.newBuilder
+    builder += "workflowId" -> new ObjectId(workflowId)
+    if (stepIndex.isDefined) builder += "step" -> stepIndex.get
+    if (!includeCompleted) builder += "completed" -> true
+    find(builder.result).toSeq
   }
 }

@@ -18,7 +18,7 @@ object TicketService {
     ticket
   }
 
-  def findAllForWorkflow(workflowId: String): Seq[Ticket] = {
-    Ticket.findAllForWorkflow(workflowId)
+  def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false): Seq[Ticket] = {
+    Ticket.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
   }
 }
