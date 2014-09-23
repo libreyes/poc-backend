@@ -11,18 +11,12 @@ object ElementService {
 
   def findAllForPatient(patientId: String, elementType: Option[String], timestamp: Option[Long]): Seq[Element] = {
 
-    val encounters = timestamp match {
-      case Some(timestamp) => Encounter.findAllForPatient(patientId)
-        .filter(e => timestampToShortDate(e.createdAt) == timestampToShortDate(timestamp))
-      case None => Encounter.findAllForPatient(patientId)
-    }
-
-    val elements = elementType match {
-      case Some(elementType) => encounters.flatMap(e => e.elements)
-        .filter(e => getObjectClassName(e) == elementType)
-      case None => encounters.flatMap(e => e.elements)
-    }
+    val elements = Encounter.findAllForPatient(patientId)
+      .filter(en => (if (timestamp.isDefined) timestampToShortDate(en.createdAt) == timestampToShortDate(timestamp.get) else true))
+      .flatMap(en => en.elements)
+      .filter(el => (if (elementType.isDefined) getObjectClassName(el) == elementType.get else true))
 
     elements
   }
+
 }
