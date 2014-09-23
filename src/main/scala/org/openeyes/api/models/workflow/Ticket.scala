@@ -11,7 +11,7 @@ import org.openeyes.api.models.Patient
 /**
  * Created by stu on 23/09/2014.
  */
-case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, step: Int, completed: Boolean,
+case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, stepIndex: Int, completed: Boolean,
                   createdAt: Long)
 
 object Ticket extends ModelCompanion[Ticket, ObjectId] {
