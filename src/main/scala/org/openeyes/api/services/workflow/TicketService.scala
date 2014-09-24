@@ -13,7 +13,7 @@ object TicketService {
 
   def create(form: TicketForm) = {
     val patient = Patient.findOneById(new ObjectId(form.patientId))
-    val ticket = Ticket(new ObjectId, new ObjectId(form.workflowId), patient.get, 0, false, setTimestamp)
+    val ticket = Ticket(new ObjectId, new ObjectId(form.workflowId), patient.get, createdAt = setTimestamp)
     Ticket.save(ticket)
     ticket
   }
