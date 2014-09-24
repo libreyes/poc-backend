@@ -22,8 +22,8 @@ object Ticket extends ModelCompanion[Ticket, ObjectId] {
   def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false) = {
     val builder = MongoDBObject.newBuilder
     builder += "workflowId" -> new ObjectId(workflowId)
-    if (stepIndex.isDefined) builder += "step" -> stepIndex.get
-    if (!includeCompleted) builder += "completed" -> true
+    if (stepIndex.isDefined) builder += "stepIndex" -> stepIndex.get
+    if (!includeCompleted) builder += "completed" -> false
     find(builder.result).toSeq
   }
 }
