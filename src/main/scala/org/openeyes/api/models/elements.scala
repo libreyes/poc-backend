@@ -2,9 +2,6 @@ package org.openeyes.api.models
 
 import com.novus.salat.annotations._
 
-/**
- * Created by jamie on 17/09/2014.
- */
 @Salat
 trait Element
 
@@ -17,13 +14,38 @@ case class Allergies(allergies: List[Allergy]) extends Element
 case class Allergy(name: String, comment: Option[String])
 
 /**
+ * Anaesthetic
+ * @param leftEye
+ * @param rightEye
+ */
+case class Anaesthetic (leftEye: Option[AnaestheticSide], rightEye: Option[AnaestheticSide]) extends Element
+
+case class AnaestheticSide (anaestheticType: String, delivery: String, agent: String)
+
+/**
  * Anterior Segment
  * @param leftEye
  * @param rightEye
  */
 case class AnteriorSegment(leftEye: Option[AnteriorSegmentSide], rightEye: Option[AnteriorSegmentSide]) extends Element
 
-case class AnteriorSegmentSide(data: String)
+case class AnteriorSegmentSide(data: String, comments: Option[String])
+
+/**
+ * Clinical Management
+ * @param comments
+ */
+case class ClinicalManagement(comments: String) extends Element
+
+/**
+ * Clinic Outcome
+ * @param status
+ * @param quantity
+ * @param period
+ * @param communityPatient
+ * @param role
+ */
+case class ClinicOutcome(status: String, quantity: Int, period: String, communityPatient: Boolean, role: String) extends Element
 
 /**
  * Comorbidities
@@ -32,26 +54,37 @@ case class AnteriorSegmentSide(data: String)
 case class Comorbidities(comorbidities: List[String]) extends Element
 
 /**
+ * Complications
+ * @param leftEye
+ * @param rightEye
+ */
+case class Complications (leftEye: Option[ComplicationsSide], rightEye: Option[ComplicationsSide]) extends Element
+
+case class ComplicationsSide (complications: List[String])
+
+/**
+ * Dilation
+ */
+case class Dilation(leftEye: Option[DilationSide], rightEye: Option[DilationSide]) extends Element
+
+case class DilationSide(dilations: List[DilationRecord])
+
+case class DilationRecord(time: String, drug: String, drops: Int)
+
+/**
  * History
  * @param text
  */
 case class History(text: String) extends Element
 
-case class InjectionAnaesthetic (leftEye: Option[InjectionAnaestheticSide], rightEye: Option[InjectionAnaestheticSide]) extends Element
+/**
+ * Injection Site
+ * @param leftEye
+ * @param rightEye
+ */
+case class InjectionSite (leftEye: InjectionSiteSide, rightEye: Option[InjectionSiteSide]) extends Element
 
-case class InjectionAnaestheticSide (anaestheticType: String, delivery: String, agent: String)
-
-case class InjectionComplications (leftEye: Option[InjectionComplicationsSide], rightEye: Option[InjectionComplicationsSide]) extends Element
-
-case class InjectionComplicationsSide (complications: List[String])
-
-case class InjectionEyeDraw (leftEye: InjectionEyeDrawSide, rightEye: Option[InjectionEyeDrawSide]) extends Element
-
-case class InjectionEyeDrawSide (data: String, lensStatus: String)
-
-case class Injection (leftEye: Option[InjectionSide], rightEye: Option[InjectionSide]) extends Element
-
-case class InjectionSide (preAntiseptic: String, preSkinCleanser: String, preIopLoweringTherapy: Option[String], drug: String, sequenceNumber: Int, batchNumber: String, batchExpiryDate: String, givenByUserId: String, injectionTime: String, postIopLoweringTherapy: Option[String])
+case class InjectionSiteSide (data: String, lensStatus: String)
 
 /**
  * Injection Management
@@ -70,18 +103,41 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
  */
 case class PosteriorPole(leftEye: Option[AnteriorSegmentSide], rightEye: Option[AnteriorSegmentSide]) extends Element
 
-case class PosteriorPoleSide(data: String)
+case class PosteriorPoleSide(data: String, comments: Option[String])
 
+/**
+ * Post Injection Exam
+ * @param leftEye
+ * @param rightEye
+ */
 case class PostInjectionExam(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
 
 case class PostInjectionExamSide(countingFingers: Boolean, iop: Boolean, drops: String)
+
+/**
+ * Treatment
+ * @param leftEye
+ * @param rightEye
+ */
+case class Treatment(leftEye: Option[TreatmentSide], rightEye: Option[TreatmentSide]) extends Element
+
+case class TreatmentSide(batchNumber: String, batchExpiryDate: String, injectionGivenBy: String)
+
+/**
+ * Treatment Order
+ * @param leftEye
+ * @param rightEye
+ */
+case class TreatmentOrder(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
+
+case class TreatmentOrderSide(preAntiseptic: String, preSkinCleanser: String, preIopLoweringTherapy: List[String], drug: String,
+                              sequenceNumber: Int, injectionTime: String, postIopLoweringTherapy: List[String])
 
 /**
  * Visual Acutity
  * @param leftEye
  * @param rightEye
  */
-// TODO: Need to enforce at least one side
 case class VisualAcuity(leftEye: Option[VisualAcuitySide], rightEye: Option[VisualAcuitySide]) extends Element
 
 case class VisualAcuitySide(readings: List[VisualAcuityReading], comment: Option[String])
