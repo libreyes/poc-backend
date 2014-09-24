@@ -1,5 +1,6 @@
 package org.openeyes.api.models.workflow
 
+import com.mongodb.WriteConcern
 import com.mongodb.casbah.MongoConnection
 import com.mongodb.casbah.commons.MongoDBObject
 import com.novus.salat.annotations.raw.Key
@@ -11,8 +12,8 @@ import org.openeyes.api.models.Patient
 /**
  * Created by stu on 23/09/2014.
  */
-case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, stepIndex: Int = 0,
-                  completed: Boolean = false, createdAt: Long)
+case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, var stepIndex: Int = 0,
+                  var completed: Boolean = false, createdAt: Long)
 
 object Ticket extends ModelCompanion[Ticket, ObjectId] {
 
@@ -26,4 +27,9 @@ object Ticket extends ModelCompanion[Ticket, ObjectId] {
     if (!includeCompleted) builder += "completed" -> false
     find(builder.result).toSeq
   }
+
+  def update(ticket: Ticket) = {
+    dao.update(MongoDBObject("_id" -> ticket._id), ticket, false, false, new WriteConcern)
+  }
+
 }

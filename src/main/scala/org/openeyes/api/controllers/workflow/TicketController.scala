@@ -37,15 +37,16 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
       case Some(d: String) => Some(d.toInt)
       case _ => None
     })
+
     val includeCompleted = (params.get("includeCompleted") match {
       case Some(i: String) => i.toBoolean
       case _ => false
     })
+
     params.get("workflowId") match {
       case Some(workflowId) => TicketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
       case None => halt(400, ApiError("Workflow ID not found"))
     }
-
   }
 
   val post = (apiOperation[Ticket]("createTicket")
