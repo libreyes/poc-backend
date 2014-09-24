@@ -11,15 +11,12 @@ import org.bson.types.ObjectId
  * Created by dave on 19/08/14.
  */
 
-
-
 case class ApiError(message: String)
 
-case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element])
+case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element],
+                     ticketId: Option[ObjectId], stepIndex: Option[Int])
 
 case class Episode(events: Option[List[LaserEvent]])
-
-
 
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
 case class Laser(id: String, codeValue: String, label: String, systemId: String)
@@ -29,9 +26,6 @@ case class LaserEvent(@Key("_id") _id: ObjectId, patientId: String, leftEye: Tre
 
 // NOTE: Added id to the LaserOperator class so we can fake its persistence on the front end.
 case class LaserOperator(id: String, firstName: String, surname: String)
-
-// NOTE: Added id to the Patient class so we can fake its persistence on the front end.
-
 
 // NOTE: Added id to the Procedure class so we can fake its persistence on the front end.
 case class Procedure(id: String, codeValue: String, label: String, systemId: String)

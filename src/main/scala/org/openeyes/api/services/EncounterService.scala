@@ -11,7 +11,12 @@ import org.openeyes.api.models._
 object EncounterService {
 
   def create(form: EncounterForm): Encounter = {
-    val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements)
+    val ticketId = form.ticketId match {
+      case Some(ticketId:String) => Some(new ObjectId(ticketId))
+      case _ => None
+    }
+    val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
+      ticketId, form.stepIndex)
     Encounter.save(encounter)
     encounter
   }
