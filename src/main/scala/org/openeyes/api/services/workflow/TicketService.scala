@@ -18,6 +18,10 @@ object TicketService {
     ticket
   }
 
+  def find(id: String) = {
+    Ticket.findOneById(new ObjectId(id))
+  }
+
   def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false): Seq[Ticket] = {
     Ticket.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
   }
