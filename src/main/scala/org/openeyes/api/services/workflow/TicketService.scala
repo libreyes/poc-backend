@@ -22,8 +22,8 @@ object TicketService {
     Ticket.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
   }
 
-  def incrementStepOrComplete(ticketId: String) = {
-    val ticket = Ticket.findOneById(new ObjectId(ticketId)) match {
+  def updateStepIndexOrComplete(ticketId: ObjectId, currentStepIndex: Int) = {
+    val ticket = Ticket.findOneById(ticketId) match {
       case Some(ticket) => ticket
       case None => throw new RuntimeException("Ticket not found")
     }
@@ -33,9 +33,9 @@ object TicketService {
       case None => throw new RuntimeException("Workflow not found")
     }
 
-    if(ticket.stepIndex < workflowStepsCount){
+    if(currentStepIndex < workflowStepsCount){
       // Increment stepIndex to the next step
-      ticket.stepIndex = ticket.stepIndex + 1
+      ticket.stepIndex = currentStepIndex + 1
     }else{
       // Else set to completed as we have hit the steps limit
       ticket.completed = true
