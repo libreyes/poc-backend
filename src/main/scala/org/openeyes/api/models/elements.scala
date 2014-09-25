@@ -82,7 +82,7 @@ case class History(text: String) extends Element
  * @param leftEye
  * @param rightEye
  */
-case class InjectionSite (leftEye: InjectionSiteSide, rightEye: Option[InjectionSiteSide]) extends Element
+case class InjectionSite (leftEye: Option[InjectionSiteSide], rightEye: Option[InjectionSiteSide]) extends Element
 
 case class InjectionSiteSide (data: String, lensStatus: String)
 
