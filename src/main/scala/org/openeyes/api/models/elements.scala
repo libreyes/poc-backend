@@ -101,7 +101,7 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
  * @param leftEye
  * @param rightEye
  */
-case class PosteriorPole(leftEye: Option[AnteriorSegmentSide], rightEye: Option[AnteriorSegmentSide]) extends Element
+case class PosteriorPole(leftEye: Option[PosteriorPoleSide], rightEye: Option[PosteriorPoleSide]) extends Element
 
 case class PosteriorPoleSide(data: String, comments: Option[String])
 
