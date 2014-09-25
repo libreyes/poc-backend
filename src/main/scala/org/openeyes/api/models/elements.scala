@@ -128,7 +128,7 @@ case class TreatmentSide(batchNumber: String, batchExpiryDate: String, injection
  * @param leftEye
  * @param rightEye
  */
-case class TreatmentOrder(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
+case class TreatmentOrder(leftEye: Option[TreatmentOrderSide], rightEye: Option[TreatmentOrderSide]) extends Element
 
 case class TreatmentOrderSide(preAntiseptic: String, preSkinCleanser: String, preIopLoweringTherapy: List[String], drug: String,
                               sequenceNumber: Int, injectionTime: String, postIopLoweringTherapy: List[String])
