@@ -1,4 +1,4 @@
-package org.openeyes.api.services.commands
+package org.openeyes.api.commands
 
 import org.bson.types.ObjectId
 import org.openeyes.api.models.workflow.Ticket

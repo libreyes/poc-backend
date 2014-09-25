@@ -82,7 +82,7 @@ case class History(text: String) extends Element
  * @param leftEye
  * @param rightEye
  */
-case class InjectionSite (leftEye: InjectionSiteSide, rightEye: Option[InjectionSiteSide]) extends Element
+case class InjectionSite (leftEye: Option[InjectionSiteSide], rightEye: Option[InjectionSiteSide]) extends Element
 
 case class InjectionSiteSide (data: String, lensStatus: String)
 
@@ -101,7 +101,7 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
  * @param leftEye
  * @param rightEye
  */
-case class PosteriorPole(leftEye: Option[AnteriorSegmentSide], rightEye: Option[AnteriorSegmentSide]) extends Element
+case class PosteriorPole(leftEye: Option[PosteriorPoleSide], rightEye: Option[PosteriorPoleSide]) extends Element
 
 case class PosteriorPoleSide(data: String, comments: Option[String])
 
