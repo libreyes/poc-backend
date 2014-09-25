@@ -13,9 +13,10 @@ object EncounterService {
 
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
-      case Some(ticketId:String) => Some(new ObjectId(ticketId))
+      case Some(ticketId: String) => Some(new ObjectId(ticketId))
       case _ => None
     }
+
     val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
       ticketId, form.stepIndex)
     Encounter.save(encounter)

@@ -49,6 +49,19 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
     }
   }
 
+  val get = (apiOperation[Ticket]("getTicket")
+    notes "Get an Ticket by ID"
+    parameters(
+    pathParam[String]("id").description("The ID of the Ticket to retrieve").required
+    )
+    summary "Get Ticket"
+    )
+
+  get("/:id", operation(get)) {
+    val id = params("id")
+    TicketService.find(id)
+  }
+
   val post = (apiOperation[Ticket]("createTicket")
     notes "Create an Encounter"
     parameters(
