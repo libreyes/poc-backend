@@ -11,6 +11,11 @@ $ ./sbt
 
 If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
 
+To auto compile when anything is updated and saved also run this in the SBT console:
+
+```sh
+~ ;copy-resources;aux-compile
+```
 
 ## Dependencies ##
 
@@ -23,4 +28,3 @@ There are mongodb objects in the directory `docs/sample`. You can load them by r
 ```
 docs/sample/import.sh
 ```
-
