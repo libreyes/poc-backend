@@ -18,8 +18,8 @@ case class ContactDetail(email: Option[String], telephone: Option[String])
 case class GeneralPractitioner(firstName: Option[String], surname: Option[String], contactDetail: ContactDetail,
                                address: Option[Address], practice: Option[Practice])
 
-case class Patient(@Key("_id") _id: ObjectId, id: String, firstName: String, surname: String, dob: String,
-                   gender: String, ethnicity: String, contactDetail: ContactDetail, address: Option[Address],
+case class Patient(@Key("_id") _id: ObjectId, id: String, title: String, firstName: String, surname: String, dob: String,
+                   gender: String,ethnicity: String, contactDetail: ContactDetail, address: Option[Address],
                    nhsNumber: Option[String], nextOfKin: Option[String], generalPractitioner: GeneralPractitioner,
                    hospitalNumber: String)
 

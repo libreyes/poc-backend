@@ -7,10 +7,6 @@ import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
 
-
-
-
-
 case class Episode(events: Option[List[LaserEvent]])
 
 // NOTE: Added id to the Laser class so we can fake its persistence on the front end.
