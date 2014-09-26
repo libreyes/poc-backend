@@ -7,6 +7,7 @@ set :keep_releases, 3 # number of deployed releases to keep
 set :use_sudo, false
 default_run_options[:pty] = true
 set :deploy_via, :remote_cache
+set :current_version, "0.1.5"
 
 namespace :deploy do
   desc <<-DESC
@@ -57,8 +58,8 @@ namespace :deploy do
   Upload war to server.
     DESC
   task :upload_war do
-    top.upload("target/scala-2.11/openeyes_2.11-0.1.5.war",
-               "#{release_path}/openeyes_2.11-0.1.5.war")
+    top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war",
+               "#{release_path}/openeyes_2.11--#{current_version}.war")
   end
 
   desc <<-DESC
@@ -74,7 +75,7 @@ namespace :deploy do
     DESC
   task :deploy_app do
     puts "==================Deploy war to Tomcat======================" #Line 26
-    run "curl --upload-file #{current_path}/openeyes_2.11-0.1.5.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
+    run "curl --upload-file #{current_path}/openeyes_2.11--#{current_version}.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
 
   desc <<-DESC

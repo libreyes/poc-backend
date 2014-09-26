@@ -28,3 +28,11 @@ There are mongodb objects in the directory `docs/sample`. You can load them by r
 ```
 docs/sample/import.sh
 ```
+
+## Versioning ##
+
+IMPORTANT! 
+
+If you update the version number in build.scala you will also need to make sure that you update the current version in config/deploy.rb.
+
+This is because the deploy task needs to know the version of the WAR file it has to copy across. At some point this should be made better but for now it is what it is.
