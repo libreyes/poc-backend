@@ -25,8 +25,8 @@ To auto compile when anything is updated and saved also run this in the SBT cons
 
 There are mongodb objects in the directory `docs/sample`. You can load them by running:
 
-```
-docs/sample/import.sh
+```sh
+cd docs/sample/ && ./import.sh
 ```
 
 ## Versioning ##
