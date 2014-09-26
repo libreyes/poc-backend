@@ -45,7 +45,7 @@ case class ClinicalManagement(comments: String) extends Element
  * @param communityPatient
  * @param role
  */
-case class ClinicOutcome(status: String, quantity: Int, period: String, communityPatient: Boolean, role: String) extends Element
+case class ClinicOutcome(status: String, quantity: Option[Int], period: Option[String], communityPatient: option[Boolean], role: Option[String]) extends Element
 
 /**
  * Comorbidities
