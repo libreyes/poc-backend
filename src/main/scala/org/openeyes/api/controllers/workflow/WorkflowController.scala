@@ -1,9 +1,9 @@
 package org.openeyes.api.controllers.workflow
 
-import org.json4s.{FullTypeHints, DefaultFormats}
 import org.json4s.mongo.ObjectIdSerializer
+import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.forms.workflow.WorkflowForm
-import org.openeyes.api.models.workflow.{Workflow, Component}
+import org.openeyes.api.models.workflow.{Component, Workflow}
 import org.openeyes.api.services.workflow.WorkflowService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger

@@ -1,7 +1,5 @@
 package org.openeyes.api.controllers.workflow
 
-import org.json4s.mongo.ObjectIdSerializer
-import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.ApiError
 import org.openeyes.api.models.workflow.Ticket
