@@ -1,7 +1,7 @@
 package org.openeyes.api.controllers
 
 import org.json4s.mongo.ObjectIdSerializer
-import org.json4s.{FullTypeHints, DefaultFormats}
+import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.models.{ApiError, Element}
 import org.openeyes.api.services.ElementService
 import org.openeyes.api.stacks.ApiStack
