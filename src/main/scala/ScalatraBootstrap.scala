@@ -6,10 +6,10 @@ import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
 
-  implicit val swagger = new OpeneyesSwagger
+  implicit val swagger = new OpenEyesSwagger
 
   override def init(context: ServletContext) {
-    context.mount(new ResourcesApp, "/api-docs")
+    context.mount(new ApiDocsController, "/api-docs")
     context.mount(new ElementController, "/Element", "Element")
     context.mount(new EncounterController, "/Encounter", "Encounter")
     context.mount(new PatientController, "/Patient", "Patient")
