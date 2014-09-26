@@ -16,7 +16,7 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Encounter API."
 
-  protected implicit val jsonFormats = new DefaultFormats {
+  override protected implicit val jsonFormats = new DefaultFormats {
     // NOTE: Comment this in if you want/need to see why elements aren't saving correctly.
     //       It is currently commented out to avoid issues with the front end, for instance "lefteye": {} is posted then
     //       this will throw an exception. Once they have changed the front end to send "lefteye: null then we can
@@ -25,10 +25,6 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
     override val typeHintFieldName = "type"
     override val typeHints = FullTypeHints(List(classOf[Element]))
   } + new ObjectIdSerializer
-
-  before() {
-    contentType = formats("json")
-  }
 
   val list = (apiOperation[List[Encounter]]("listEncounters")
     notes "Lists all known Encounters"
