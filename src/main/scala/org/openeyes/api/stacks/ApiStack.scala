@@ -25,4 +25,7 @@ trait ApiStack extends ScalatraServlet with JacksonJsonSupport with I18nSupport 
     case e => halt(500, ApiError(e.getMessage))
   }
 
+  notFound {
+    halt(404, ApiError("Nothing found for resource"))
+  }
 }
