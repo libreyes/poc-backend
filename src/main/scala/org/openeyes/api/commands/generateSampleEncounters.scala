@@ -242,7 +242,7 @@ object generateSampleEncounters {
       ))
     })
     val allWorkflows = WorkflowService.findAll
-    PatientService.findAll map (p => (
+    PatientService.findAll.foreach (p => (
       generateBigEncounter(p, allWorkflows(rand.nextInt(allWorkflows.length)))
     ))
   }
