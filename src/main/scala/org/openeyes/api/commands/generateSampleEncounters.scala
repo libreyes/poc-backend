@@ -283,7 +283,7 @@ object generateSampleEncounters {
       case "Anaesthetic" => Anaesthetic.tupled(randPair(() => AnaestheticSide(randVal(anaestheticTypes), randVal(anaestheticDeliveries), randVal(anaestheticAgents))))
       case "AnteriorSegment" => AnteriorSegment.tupled(randPair(() => AnteriorSegmentSide(randVal(anteriorSegmentEyeDraws), randOptionVal(comments))))
       case "ClinicalManagement" => ClinicalManagement(randVal(comments))
-      case "ClinicOutcome" => ClinicOutcome(randVal(clinicOutcomeStatuses), rand.nextInt(12) + 1, randVal(clinicOutcomePeriods), rand.nextBoolean, randVal(clinicOutcomeRoles))
+      case "ClinicOutcome" => ClinicOutcome(randVal(clinicOutcomeStatuses), randOption(rand.nextInt(12) + 1), randOptionVal(clinicOutcomePeriods), randOption(rand.nextBoolean), randOptionVal(clinicOutcomeRoles))
       case "Comorbidities" => Comorbidities(randListVal(comorbidities))
       case "Complications" => Complications(randOption(ComplicationsSide(randListVal(complications))), randOption(ComplicationsSide(randListVal(complications))))
       case "Dilation" => Dilation.tupled(randPair(() => DilationSide(randList(() => DilationRecord(randTime, randVal(dilationDrugs), rand.nextInt(5))))))
