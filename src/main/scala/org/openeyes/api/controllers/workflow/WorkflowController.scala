@@ -15,15 +15,10 @@ class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Workflow API."
 
-  protected implicit val jsonFormats = new DefaultFormats {
+  override protected implicit val jsonFormats = new DefaultFormats {
     override val typeHintFieldName = "type"
     override val typeHints = FullTypeHints(List(classOf[Component]))
   } + new ObjectIdSerializer
-
-
-  before() {
-    contentType = formats("json")
-  }
 
   val list = (apiOperation[List[Workflow]]("listWorkflows")
     notes "Lists all known Workflows"

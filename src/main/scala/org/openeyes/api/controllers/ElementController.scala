@@ -14,14 +14,10 @@ class ElementController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Element API."
 
-  protected implicit val jsonFormats = new DefaultFormats {
+  override protected implicit val jsonFormats = new DefaultFormats {
     override val typeHintFieldName = "type"
     override val typeHints = FullTypeHints(List(classOf[Element]))
   } + new ObjectIdSerializer
-
-  before() {
-    contentType = formats("json")
-  }
 
   val list = (apiOperation[List[Element]]("listElements")
     notes "Lists Elements for a given Patient ID, with optional filtering for Element Type and Date "

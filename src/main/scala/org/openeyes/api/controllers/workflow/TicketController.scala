@@ -16,12 +16,6 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Ticket API"
 
-  protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
-
-  before() {
-    contentType = formats("json")
-  }
-
   val list = (apiOperation[List[Ticket]]("listTickets")
     notes "Lists Tickets for a given Workflow ID, with optional filtering for step and completed status"
     parameters (
