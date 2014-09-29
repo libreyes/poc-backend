@@ -4,6 +4,8 @@ import openeyesApi.BuildInfo
 import org.scalatra.ScalatraServlet
 import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
 
+class OpenEyesSwagger extends Swagger(Swagger.SpecVersion, BuildInfo.version, OpenEyesApiInfo)
+
 object OpenEyesApiInfo extends ApiInfo(
   "The Openeyes API",
   "Docs for the Openeyes REST API",
@@ -12,7 +14,4 @@ object OpenEyesApiInfo extends ApiInfo(
   "MIT",
   "http://opensource.org/licenses/MIT")
 
-
-class ResourcesApp(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
-
-class OpeneyesSwagger extends Swagger(Swagger.SpecVersion, BuildInfo.version, OpenEyesApiInfo)
+class ApiDocsController(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
