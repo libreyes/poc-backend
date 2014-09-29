@@ -1,8 +1,7 @@
 package org.openeyes.api.handlers.hl7
 
 import ca.uhn.hl7v2.model.Message
-import ca.uhn.hl7v2.model.v21.message._
-import ca.uhn.hl7v2.model.v21.segment._
+import ca.uhn.hl7v2.model.v26.message._
 import ca.uhn.hl7v2.protocol.ReceivingApplication
 import org.bson.types.ObjectId
 import org.openeyes.api.utils.Date._
@@ -16,25 +15,24 @@ class AddPatient extends ReceivingApplication {
     msg match {
       case m: ADT_A01 => {
         val pid = m.getPID
-        val name = pid.getPATIENTNAME
-        val addr = pid.getPATIENTADDRESS
+        val name = pid.getPatientName(0)
+        val addr = pid.getPatientAddress(0)
 
         PatientService.create(Patient(
           new ObjectId,
-          pid.getPATIENTIDINTERNALINTERNALID.getIDNumber.toString,
-          name.getPrefix.toString,
+          pid.getPatientIdentifierList(0).getIDNumber.toString,
+          name.getPrefixEgDR.toString,
           name.getGivenName.toString,
           name.getFamilyName.toString,
-          pid.getDATEOFBIRTH.toString,
-          pid.getSEX.toString,
-          pid.getETHNICGROUP.toString,
-          ContactDetail(None, Some(pid.getPHONENUMBERHOME(0).toString)),
+          pid.getDateTimeOfBirth.toString,
+          pid.getAdministrativeSex.toString,
+          pid.getEthnicGroup.toString,
+          ContactDetail(None, Some(pid.getPhoneNumberHome(0).toString)),
           Some(Address(
-            Some(addr.getStreetAddress.toString), Some(addr.getOtherDesignation.toString), Some(addr.getCity.toString), Some(addr.getStateOrProvince.toString), Some(addr.getZip.toString)
+            Some(addr.getStreetAddress.toString), Some(addr.getOtherDesignation.toString), Some(addr.getCity.toString), Some(addr.getStateOrProvince.toString), Some(addr.getZipOrPostalCode.toString)
           )),
-          Some(pid.getPATIENTIDEXTERNALEXTERNALID.getIDNumber.toString),
-          None, None,
-          pid.getPATIENTIDINTERNALINTERNALID.getIDNumber.toString
+          None, None, None,
+          pid.getPatientIdentifierList(0).getIDNumber.toString
         ));
       }
       case _ => {
