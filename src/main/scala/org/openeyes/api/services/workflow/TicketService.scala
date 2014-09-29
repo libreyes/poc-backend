@@ -1,7 +1,7 @@
 package org.openeyes.api.services.workflow
 
 import org.bson.types.ObjectId
-import org.openeyes.api.Utilities.Date._
+import org.openeyes.api.utils.Date._
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.Patient
 import org.openeyes.api.models.workflow.Ticket

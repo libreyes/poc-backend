@@ -1,4 +1,4 @@
-package org.openeyes.api.Utilities
+package org.openeyes.api.utils
 
 /**
  * Created by stu on 22/09/2014.

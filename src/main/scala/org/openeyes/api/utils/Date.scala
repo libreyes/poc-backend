@@ -1,4 +1,4 @@
-package org.openeyes.api.Utilities
+package org.openeyes.api.utils
 
 import java.text.SimpleDateFormat
 
