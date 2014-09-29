@@ -96,6 +96,13 @@ case class InjectionManagement(leftEye: Option[InjectionManagementSide], rightEy
 case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagnosisSecondaryTo: String, questions: List[String],
                                    intendedTreatment: String, risks: List[String], comment: Option[String])
 
+case class OctReport(
+  eye: String, comment: String,
+  colourFundusImage: String, redFreeImage: String, bscanXPlaneImage: String, bscanYPlaneImage: String,
+  crt: BigDecimal, sft: BigDecimal, totalVolume: BigDecimal,
+  etdrsMapImage: String, etdrsColourImage: String, shawowGramImage: String, surfaceDataImage: String, thicknessMapImage: String
+) extends Element
+
 /**
  * Posterior Pole
  * @param leftEye
