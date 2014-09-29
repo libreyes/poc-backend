@@ -1,8 +1,8 @@
 package org.openeyes.api.services
 
 import org.openeyes.api.models.{Encounter, Element}
-import org.openeyes.api.Utilities.Date._
-import org.openeyes.api.Utilities.String._
+import org.openeyes.api.utils.Date._
+import org.openeyes.api.utils.String._
 
 /**
  * Created by stu on 22/09/2014.
