@@ -4,7 +4,7 @@ import org.scalatra.sbt._
 import com.mojolly.scalate.ScalatePlugin._
 import sbtbuildinfo.Plugin._
 
-object OpeneyesBuild extends Build {
+object OpenEyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
   val Version = "0.1.5"
