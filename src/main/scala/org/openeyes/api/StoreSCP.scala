@@ -30,20 +30,22 @@ import org.dcm4che3.net.service.DicomServiceRegistry
 import org.dcm4che3.tool.common.CLIUtils
 import org.dcm4che3.util.AttributesFormat
 import org.dcm4che3.util.SafeClose
-import org.slf4j._
+import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions._
 
 /**
  * Created by stu on 29/09/2014.
  */
-class StoreSCP {
+
+class StoreSCP(storeEvent: File => Unit) {
 
   private val conn = new Connection()
   private val ae = new ApplicationEntity("*")
   private val device = new Device("storescp")
 
   private val PART_EXT = ".part"
+
   private val LOG = LoggerFactory.getLogger(StoreSCP.getClass)
 
   private val cstoreSCP = new BasicCStoreSCP("*") {
@@ -64,10 +66,13 @@ class StoreSCP {
         val fpf = if(filePathFormat == null){ iuid
         } else filePathFormat.format(parse(file))
 
-        renameTo(ass, file, new File(storageDir, fpf))
+        val destFile = new File(storageDir, fpf)
+        renameTo(ass, file, destFile)
+
+        storeEvent(destFile)
       } catch {
         case e: Exception => {
-          println("storescp: " + e.getMessage)
+          LOG.debug("BASIC SCP Exception: " + e.getMessage)
           deleteFile(ass, file)
           throw new DicomServiceException(Status.ProcessingFailure, e)
         }
@@ -80,18 +85,16 @@ class StoreSCP {
   var storageDir: File = null
   var filePathFormat: AttributesFormat = null
 
-  // TODO: This is private in the Java code but have had to make public as we are calling it in the main method, probable should be made private again
-  def createServiceRegistry: DicomServiceRegistry = {
+  private def createServiceRegistry: DicomServiceRegistry = {
     val serviceRegistry = new DicomServiceRegistry()
     serviceRegistry.addDicomService(new BasicCEchoSCP())
     serviceRegistry.addDicomService(cstoreSCP)
     serviceRegistry
   }
 
-  // TODO: This method is static in the Java class, should it be?
+  // TODO: This method is static in the Java class, should it be here?
   private def storeTo(ass: Association, fmi: Attributes, data: PDVInputStream, file: File) {
-    // TODO: Log not worky
-    // LOG.info("{}: M-WRITE {}", ass, file)
+    LOG.info("{}: M-WRITE {}", Array(ass, file))
 
     file.getParentFile.mkdirs()
     val out = new DicomOutputStream(file)
@@ -104,22 +107,21 @@ class StoreSCP {
     }
   }
 
-  // TODO: This method is static in the Java class, should it be?
+  // TODO: This method is static in the Java class, should it be here?
   private def renameTo(ass: Association, from: File, dest: File) {
-    // TODO: Log not worky
-    // LOG.info("{}: M-RENAME {}", new Object[]{ ass, from, dest })
-    dest.getParentFile().mkdirs()
+    LOG.info("{}: M-RENAME {}", Array(ass, from, dest))
+    dest.getParentFile.mkdirs()
 
     if (!from.renameTo(dest)) throw new IOException("Failed to rename " + from + " to " + dest)
   }
 
-  // TODO: This method is static in the Java class, should it be?
+  // TODO: This method is static in the Java class, should it be here?
   private def parse(file: File): Attributes = {
     val in = new DicomInputStream(file)
 
     try {
       in.setIncludeBulkData(IncludeBulkData.NO)
-      return in.readDataset(-1, Tag.PixelData)
+      in.readDataset(-1, Tag.PixelData)
     } finally {
       SafeClose.close(in)
     }
@@ -128,13 +130,9 @@ class StoreSCP {
   // TODO: This method is static in the Java class, should it be?
   private def deleteFile(ass: Association, file: File) {
     if (file.delete()){
-      println("Deleting file: " + file)
-      // TODO: Log not worky
-      // LOG.info("{}: M-DELETE {}", ass, file)
+      LOG.info("{}: M-DELETE {}", Array(ass, file))
     } else {
-      println("Deleting file: " + file)
-      // TODO: Log not worky
-      // LOG.warn("{}: M-DELETE {} failed!", ass, file)
+      LOG.warn("{}: M-DELETE {} failed!", Array(ass, file))
     }
   }
 
@@ -150,6 +148,13 @@ class StoreSCP {
   def setStorageFilePathFormat(pattern: String) {
     this.filePathFormat = new AttributesFormat(pattern)
   }
+
+  // TODO: These are in an init block in the Java code, need to figure out how to do the same in Scala
+  device.setDimseRQHandler(createServiceRegistry)
+  device.addConnection(conn)
+  device.addApplicationEntity(ae)
+  ae.setAssociationAcceptor(true)
+  ae.addConnection(conn)
 }
 
 object StoreSCP {
@@ -158,7 +163,6 @@ object StoreSCP {
 
   // TODO: In the Java code these are listed as static but won't work with the code if put here. Figure out if they do need to be static
   private val PART_EXT = ".part"
-  private val LOG = LoggerFactory.getLogger(StoreSCP.getClass)
 
   private def parseComandLine(args: Array[String]): CommandLine = {
     val opts = new Options()
@@ -217,17 +221,7 @@ object StoreSCP {
   }
 
   private def configureTransferCapability(ae: ApplicationEntity, cl: CommandLine) {
-    if (cl.hasOption("accept-unknown")) {
-      ae.addTransferCapability(new TransferCapability(null, "*", TransferCapability.Role.SCP, "*"))
-    } else {
-      val p = CLIUtils.loadProperties(cl.getOptionValue("sop-classes", "resource:sop-classes.properties"), null)
-
-      for (cuid <- p.stringPropertyNames()) {
-        val ts = p.getProperty(cuid)
-        val tc = new TransferCapability(null, CLIUtils.toUID(cuid), TransferCapability.Role.SCP, CLIUtils.toUIDs(ts): _*)
-        ae.addTransferCapability(tc)
-      }
-    }
+    ae.addTransferCapability(new TransferCapability(null, "*", TransferCapability.Role.SCP, "*"))
   }
 
   private def configureStorageDirectory(main: StoreSCP, cl: CommandLine) {
@@ -237,17 +231,11 @@ object StoreSCP {
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String], storeEvent: File => Unit) {
+    val main = new StoreSCP(storeEvent)
+
     try {
       val cl = parseComandLine(args)
-      val main = new StoreSCP()
-
-      // TODO: These are in an init block in the Java code, need to figure out how to do the same in Scala
-      main.device.setDimseRQHandler(main.createServiceRegistry)
-      main.device.addConnection(main.conn)
-      main.device.addApplicationEntity(main.ae)
-      main.ae.setAssociationAcceptor(true)
-      main.ae.addConnection(main.conn)
 
       CLIUtils.configureBindServer(main.conn, main.ae, cl)
       CLIUtils.configure(main.conn, cl)
@@ -264,15 +252,15 @@ object StoreSCP {
       main.device.setExecutor(executorService)
       main.device.bindConnections()
     }catch{
-      case pe: ParseException => {
-        println("storescp: " + pe.getMessage)
+      case pe: ParseException =>
+        println("SCP ParseException: " + pe.getMessage)
         println(rb.getString("try"))
+        main.device.unbindConnections()
         System.exit(2)
-      }
-      case e: Exception => {
-        println("storescp: " + e.getMessage)
+      case e: Exception =>
+        println("SCP Exception: " + e.getMessage)
+        main.device.unbindConnections()
         System.exit(2)
-      }
     }
   }
 }
