@@ -7,7 +7,7 @@ import scala.slick.driver.PostgresDriver.simple._
 
 class Patients(tag: Tag) extends Table[(Int,Patient)](tag, "patients") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-  def patient = column[Patient]("patient")(Types.json[Patient])
+  def patient = column[Patient]("patient", O.DBType("json"))(Types.json[Patient])
   def * = (id, patient)
 }
 
@@ -15,7 +15,7 @@ class Workflows(tag: Tag) extends Table[(Int,String,String,Seq[Step])](tag, "wor
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
   def site = column[String]("site")
-  def steps = column[Seq[Step]]("steps")(Types.json[Seq[Step]])
+  def steps = column[Seq[Step]]("steps", O.DBType("json"))(Types.json[Seq[Step]])
   def * = (id, name, site, steps)
 }
 
@@ -46,7 +46,7 @@ class Elements(tag: Tag) extends Table[(Int,Int,Element)](tag, "elements") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def encounterId = column[Int]("encounterId")
   def encounterFk = foreignKey("encounterFk", encounterId, TableQuery[Encounters])(_.id)
-  def element = column[Element]("element")(Types.json[Element])
+  def element = column[Element]("element", O.DBType("json"))(Types.json[Element])
   def * = (id, encounterId, element)
 }
 
