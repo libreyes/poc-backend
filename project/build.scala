@@ -30,6 +30,13 @@ object OpenEyesBuild extends Build {
       ),
       libraryDependencies ++= Seq(
         "ca.uhn.hapi" % "hapi-base" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v21" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v22" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v23" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v231" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v24" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v25" % "2.2",
+        "ca.uhn.hapi" % "hapi-structures-v251" % "2.2",
         "ca.uhn.hapi" % "hapi-structures-v26" % "2.2",
         "com.novus" %% "salat" % "1.9.8",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
