@@ -120,7 +120,7 @@ class StoreSCP(storeEvent: File => Unit) {
     val in = new DicomInputStream(file)
 
     try {
-      in.setIncludeBulkData(IncludeBulkData.NO)
+      in.setIncludeBulkData(IncludeBulkData.YES)
       in.readDataset(-1, Tag.PixelData)
     } finally {
       SafeClose.close(in)
@@ -256,11 +256,11 @@ object StoreSCP {
         println("SCP ParseException: " + pe.getMessage)
         println(rb.getString("try"))
         main.device.unbindConnections()
-        System.exit(2)
+//        System.exit(2)
       case e: Exception =>
         println("SCP Exception: " + e.getMessage)
         main.device.unbindConnections()
-        System.exit(2)
+//        System.exit(2)
     }
   }
 }
