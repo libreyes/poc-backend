@@ -33,6 +33,7 @@ object OpenEyesBuild extends Build {
         "com.typesafe.slick" %% "slick" % "2.1.0",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
+        "org.postgresql" % "postgresql" % "9.2-1004-jdbc41",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,

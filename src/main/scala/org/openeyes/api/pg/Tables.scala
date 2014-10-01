@@ -42,7 +42,7 @@ class Encounters(tag: Tag) extends Table[(Int,Int,DateTime,Option[Int],Option[In
   def * = (id, patientId, createdAt, ticketId, stepIndex)
 }
 
-class Elements(tag: Tag) extends Table[(Int,Int,Element)](tag, "patients") {
+class Elements(tag: Tag) extends Table[(Int,Int,Element)](tag, "elements") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def encounterId = column[Int]("encounterId")
   def encounterFk = foreignKey("encounterFk", encounterId, TableQuery[Encounters])(_.id)
@@ -50,11 +50,15 @@ class Elements(tag: Tag) extends Table[(Int,Int,Element)](tag, "patients") {
   def * = (id, encounterId, element)
 }
 
-object generateDdl {
-  def apply() = (TableQuery[Patients].ddl ++
-    TableQuery[Workflows].ddl ++
-    TableQuery[Tickets].ddl ++
-    TableQuery[Encounters].ddl ++
-    TableQuery[Elements].ddl
-  ).createStatements.foreach(println)
+object createTables {
+  def apply() = {
+    Database.forURL("jdbc:postgresql:openeyes", driver = "org.postgresql.Driver") withTransaction { implicit session =>
+      (TableQuery[Patients].ddl ++
+        TableQuery[Workflows].ddl ++
+        TableQuery[Tickets].ddl ++
+        TableQuery[Encounters].ddl ++
+        TableQuery[Elements].ddl
+      ).create
+    }
+  }
 }
