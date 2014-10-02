@@ -99,6 +99,31 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
                                    intendedTreatment: String, risks: List[String], comment: Option[String])
 
 /**
+ * OCT Scan
+ * @param eye
+ * @param sprite
+ */
+case class OCTScan(eye: String, sprite: Image) extends Element
+
+/**
+ * Posterior Pole
+ * @param leftEye
+ * @param rightEye
+ */
+case class PosteriorPole(leftEye: Option[PosteriorPoleSide], rightEye: Option[PosteriorPoleSide]) extends Element
+
+case class PosteriorPoleSide(data: String, comments: Option[String])
+
+/**
+ * Post Injection Exam
+ * @param leftEye
+ * @param rightEye
+ */
+case class PostInjectionExam(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
+
+case class PostInjectionExamSide(countingFingers: Boolean, iop: Boolean, drops: String)
+
+/**
  * Topcon Report
  * @param eye
  * @param comment
@@ -118,25 +143,7 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
 case class TopconReport(eye: String, comment: String, colourFundusImage: Image, redFreeImage: Image, bscanXPlaneImage: Image,
                         bscanYPlaneImage: Image, crt: BigDecimal, sft: BigDecimal, totalVolume: BigDecimal, etdrsMapImage: Image,
                         etdrsColourImage: Image, shawowGramImage: Image, surfaceDataImage: Image, thicknessMapImage: Image
-) extends Element
-
-/**
- * Posterior Pole
- * @param leftEye
- * @param rightEye
- */
-case class PosteriorPole(leftEye: Option[PosteriorPoleSide], rightEye: Option[PosteriorPoleSide]) extends Element
-
-case class PosteriorPoleSide(data: String, comments: Option[String])
-
-/**
- * Post Injection Exam
- * @param leftEye
- * @param rightEye
- */
-case class PostInjectionExam(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
-
-case class PostInjectionExamSide(countingFingers: Boolean, iop: Boolean, drops: String)
+                         ) extends Element
 
 /**
  * Treatment
