@@ -1,44 +1,35 @@
-package org.openeyes.api
+package org.openeyes.api.handlers
 
-import java.io.File
-import java.io.IOException
-import java.util.Properties
+import java.awt.image.BufferedImage
+import java.io.{FileInputStream, File, IOException}
 import java.util.ResourceBundle
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
+import javax.imageio.ImageIO
 
 import org.apache.commons.cli._
-import org.dcm4che3.data.Tag
-import org.dcm4che3.data.Attributes
-import org.dcm4che3.data.VR
-import org.dcm4che3.io.DicomInputStream
-import org.dcm4che3.io.DicomOutputStream
-import org.dcm4che3.io.DicomInputStream.IncludeBulkData
-import org.dcm4che3.net.ApplicationEntity
-import org.dcm4che3.net.Association
-import org.dcm4che3.net.Connection
-import org.dcm4che3.net.Device
-import org.dcm4che3.net.PDVInputStream
-import org.dcm4che3.net.Status
-import org.dcm4che3.net.TransferCapability
-import org.dcm4che3.net.pdu.PresentationContext
-import org.dcm4che3.net.service.BasicCEchoSCP
-import org.dcm4che3.net.service.BasicCStoreSCP
-import org.dcm4che3.net.service.DicomServiceException
-import org.dcm4che3.net.service.DicomServiceRegistry
-import org.dcm4che3.tool.common.CLIUtils
-import org.dcm4che3.util.AttributesFormat
-import org.dcm4che3.util.SafeClose
-import org.slf4j.LoggerFactory
+import org.apache.commons.io.FileUtils
+import org.apache.commons.codec.binary.Base64
 
-import scala.collection.JavaConversions._
+import org.dcm4che3.data.{Attributes, Tag, VR}
+import org.dcm4che3.imageio.plugins.dcm.DicomImageReadParam
+import org.dcm4che3.io.DicomInputStream.IncludeBulkData
+import org.dcm4che3.io.{DicomInputStream, DicomOutputStream}
+import org.dcm4che3.net.pdu.PresentationContext
+import org.dcm4che3.net.service.{BasicCEchoSCP, BasicCStoreSCP, DicomServiceException, DicomServiceRegistry}
+import org.dcm4che3.net.{ApplicationEntity, Association, Connection, Device, PDVInputStream, Status, TransferCapability}
+import org.dcm4che3.tool.common.CLIUtils
+import org.dcm4che3.util.{AttributesFormat, SafeClose}
+import org.im4java.core.{MontageCmd, ConvertCmd, IMOperation}
+import org.openeyes.api.forms.EncounterForm
+import org.openeyes.api.models.{Image, OCTScan}
+import org.openeyes.api.services.EncounterService
+import org.slf4j.LoggerFactory
 
 /**
  * Created by stu on 29/09/2014.
  */
 
-class StoreSCP(storeEvent: File => Unit) {
+class OctScan(recieveEvent: File => Unit) {
 
   private val conn = new Connection()
   private val ae = new ApplicationEntity("*")
@@ -46,7 +37,7 @@ class StoreSCP(storeEvent: File => Unit) {
 
   private val PART_EXT = ".part"
 
-  private val LOG = LoggerFactory.getLogger(StoreSCP.getClass)
+  private val LOG = LoggerFactory.getLogger(OctScan.getClass)
 
   private val cstoreSCP = new BasicCStoreSCP("*") {
 
@@ -69,7 +60,7 @@ class StoreSCP(storeEvent: File => Unit) {
         val destFile = new File(storageDir, fpf)
         renameTo(ass, file, destFile)
 
-        storeEvent(destFile)
+        recieveEvent(destFile)
       } catch {
         case e: Exception => {
           LOG.debug("BASIC SCP Exception: " + e.getMessage)
@@ -157,7 +148,7 @@ class StoreSCP(storeEvent: File => Unit) {
   ae.addConnection(conn)
 }
 
-object StoreSCP {
+object OctScan {
 
   private val rb = ResourceBundle.getBundle("org.dcm4che3.tool.storescp.messages")
 
@@ -175,7 +166,7 @@ object StoreSCP {
     addStorageDirectoryOptions(opts)
     addTransferCapabilityOptions(opts)
 
-    CLIUtils.parseComandLine(args, opts, rb, StoreSCP.getClass);
+    CLIUtils.parseComandLine(args, opts, rb, OctScan.getClass);
   }
 
   private def addStatusOption(opts: Options) {
@@ -224,7 +215,7 @@ object StoreSCP {
     ae.addTransferCapability(new TransferCapability(null, "*", TransferCapability.Role.SCP, "*"))
   }
 
-  private def configureStorageDirectory(main: StoreSCP, cl: CommandLine) {
+  private def configureStorageDirectory(main: OctScan, cl: CommandLine) {
     if (!cl.hasOption("ignore")) {
       main.setStorageDirectory(new File(cl.getOptionValue("directory", ".")))
       if (cl.hasOption("filepath")) main.setStorageFilePathFormat(cl.getOptionValue("filepath"))
@@ -232,7 +223,7 @@ object StoreSCP {
   }
 
   def main(args: Array[String], storeEvent: File => Unit) {
-    val main = new StoreSCP(storeEvent)
+    val main = new OctScan(storeEvent)
 
     try {
       val cl = parseComandLine(args)
@@ -260,7 +251,59 @@ object StoreSCP {
       case e: Exception =>
         println("SCP Exception: " + e.getMessage)
         main.device.unbindConnections()
-//        System.exit(2)
     }
+  }
+
+  def process(file: File) = {
+    val dis = new DicomInputStream(file)
+    val attr = new Attributes()
+    dis.readAttributes(attr, -1, -1)
+    val patientId = attr.getString(Tag.PatientID)
+    dis.close()
+
+    val reader = ImageIO.getImageReadersByFormatName("DICOM").next()
+    val param = reader.getDefaultReadParam().asInstanceOf[DicomImageReadParam]
+    val inputStream = ImageIO.createImageInputStream(file)
+    reader.setInput(inputStream)
+
+    val numberOfImages = reader.getNumImages(true)
+    val imgPath = "tmp/DICOMFiles"
+
+    for(i <- 0 until numberOfImages) {
+      val bufferedImg: BufferedImage = reader.read(i, param)
+      val outputFile = s"$imgPath/$i.jpg"
+
+      val op = new IMOperation()
+      op.addImage()
+      op.resize(588, 452, "!")
+      op.addImage()
+
+      val convert = new ConvertCmd()
+      convert.run(op, bufferedImg, outputFile)
+    }
+
+    val montageOp = new IMOperation()
+    montageOp.addImage(s"$imgPath/*.jpg")
+    montageOp.geometry(546, 400, 0, 0).border(0).background("none").mode("Concatenate").tile("20x")
+    montageOp.addImage(s"$imgPath/$patientId.jpg")
+    val montage = new MontageCmd()
+    montage.run(montageOp)
+
+    val qualityOp = new IMOperation()
+    qualityOp.addImage(s"$imgPath/$patientId.jpg")
+    qualityOp.strip.interlace("Plane").gaussianBlur(0.05).quality(75.0)
+    qualityOp.addImage(s"$imgPath/$patientId.jpg")
+
+    val convert = new ConvertCmd()
+    convert.run(qualityOp)
+
+    inputStream.close()
+
+    val octImg: Array[Byte] = FileUtils.readFileToByteArray(new File(s"$imgPath/$patientId.jpg"))
+    val encodedImage = Base64.encodeBase64String(octImg)
+    val image = Image(encodedImage, "image/jpeg")
+    val element = OCTScan("right", image)
+    val form = EncounterForm(patientId, List(element), None, None)
+    EncounterService.create(form)
   }
 }
