@@ -5,6 +5,8 @@ import com.novus.salat.annotations._
 @Salat
 trait Element
 
+case class Image(data: String, mimeType: String)
+
 /**
  * Allergies
  * @param allergies
@@ -97,6 +99,13 @@ case class InjectionManagementSide(treatment: Boolean, diagnosis: String, diagno
                                    intendedTreatment: String, risks: List[String], comment: Option[String])
 
 /**
+ * OCT Scan
+ * @param eye
+ * @param sprite
+ */
+case class OCTScan(eye: String, sprite: Image) extends Element
+
+/**
  * Posterior Pole
  * @param leftEye
  * @param rightEye
@@ -113,6 +122,28 @@ case class PosteriorPoleSide(data: String, comments: Option[String])
 case class PostInjectionExam(leftEye: Option[PostInjectionExamSide], rightEye: Option[PostInjectionExamSide]) extends Element
 
 case class PostInjectionExamSide(countingFingers: Boolean, iop: Boolean, drops: String)
+
+/**
+ * Topcon Report
+ * @param eye
+ * @param comment
+ * @param colourFundusImage
+ * @param redFreeImage
+ * @param bscanXPlaneImage
+ * @param bscanYPlaneImage
+ * @param crt
+ * @param sft
+ * @param totalVolume
+ * @param etdrsMapImage
+ * @param etdrsColourImage
+ * @param shawowGramImage
+ * @param surfaceDataImage
+ * @param thicknessMapImage
+ */
+case class TopconReport(eye: String, comment: String, colourFundusImage: Image, redFreeImage: Image, bscanXPlaneImage: Image,
+                        bscanYPlaneImage: Image, crt: BigDecimal, sft: BigDecimal, totalVolume: BigDecimal, etdrsMapImage: Image,
+                        etdrsColourImage: Image, shawowGramImage: Image, surfaceDataImage: Image, thicknessMapImage: Image
+                         ) extends Element
 
 /**
  * Treatment

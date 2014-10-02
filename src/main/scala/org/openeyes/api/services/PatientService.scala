@@ -20,4 +20,7 @@ object PatientService {
     Patient.search(searchTerm)
   }
 
+  def create(patient: Patient) {
+    Patient.save(patient)
+  }
 }
