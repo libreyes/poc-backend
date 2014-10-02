@@ -39,6 +39,8 @@ object OpenEyesBuild extends Build {
         "ca.uhn.hapi" % "hapi-structures-v251" % "2.2",
         "ca.uhn.hapi" % "hapi-structures-v26" % "2.2",
         "com.novus" %% "salat" % "1.9.8",
+        "commons-codec" % "commons-codec" % "1.9",
+        "commons-io" % "commons-io" % "2.0.1",
         "org.im4java" % "im4java" % "1.4.0",
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
