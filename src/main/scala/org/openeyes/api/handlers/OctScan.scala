@@ -275,7 +275,7 @@ object OctScan {
 
       val op = new IMOperation()
       op.addImage()
-      op.resize(588, 452, "!")
+      op.resize(546, 400, "!")
       op.addImage()
 
       val convert = new ConvertCmd()
