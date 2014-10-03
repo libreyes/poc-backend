@@ -31,3 +31,9 @@ These can be imported by running the import script:
 ```
 docs/sample/import.sh
 ```
+
+## DICOM
+
+```
+./storescu -c OPENEYES@localhost:11112 ~/docs/dicom-files/54229a9f6c5873493a28b3b8.dcm -b HELLO
+```
