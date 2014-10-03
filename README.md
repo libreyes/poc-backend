@@ -2,7 +2,7 @@
 
 ## Build & Run ##
 
-```sh
+```
 $ cd Openeyes
 $ ./sbt
 > container:start
@@ -13,17 +13,20 @@ If `browse` doesn't launch your browser, manually open [http://localhost:8080/](
 
 To auto compile when anything is updated and saved also run this in the SBT console:
 
-```sh
+```
 ~ ;copy-resources;aux-compile
 ```
 
 ## Dependencies ##
 
-* mongodb
+* Mongo DB
+* ImageMagick
 
 ## Sample Data ##
 
-There are mongodb objects in the directory `docs/sample`. You can load them by running:
+There is some sample Mongo DB data that can be found at `docs/sample`. 
+
+These can be imported by running the import script:
 
 ```
 docs/sample/import.sh
