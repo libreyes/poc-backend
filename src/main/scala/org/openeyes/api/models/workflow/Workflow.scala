@@ -21,7 +21,7 @@ case class FormComponent(name: String, label: String, required: Boolean = true, 
 
 case class ViewComponent(name: String, label: String) extends Component
 
-object Workflow extends ModelCompanion[Workflow, ObjectId] {
+trait WorkflowDao extends ModelCompanion[Workflow, ObjectId] {
   val collection = MongoConnection()("openeyes")("workflows")
   val dao = new SalatDAO[Workflow, ObjectId](collection = collection) {}
 }

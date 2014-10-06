@@ -3,7 +3,6 @@ package org.openeyes.api.controllers.workflow
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.ApiError
 import org.openeyes.api.models.workflow.Ticket
-import org.openeyes.api.services.workflow.TicketService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
 
@@ -36,7 +35,7 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
     })
 
     params.get("workflowId") match {
-      case Some(workflowId) => TicketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
+      case Some(workflowId) => env.ticketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
       case None => halt(400, ApiError("workflowId is required"))
     }
   }
@@ -51,7 +50,7 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    TicketService.find(id)
+    env.ticketService.find(id)
   }
 
   val post = (apiOperation[Ticket]("createTicket")
@@ -64,6 +63,6 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   post("/", operation(post)) {
     val form = parsedBody.extract[TicketForm]
-    TicketService.create(form)
+    env.ticketService.create(form)
   }
 }

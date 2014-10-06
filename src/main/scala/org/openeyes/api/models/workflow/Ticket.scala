@@ -15,7 +15,7 @@ import org.openeyes.api.models.Patient
 case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Patient, var stepIndex: Int = 0,
                   var completed: Boolean = false, createdAt: Long)
 
-object Ticket extends ModelCompanion[Ticket, ObjectId] {
+trait TicketDao extends ModelCompanion[Ticket, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("tickets")
   val dao = new SalatDAO[Ticket, ObjectId](collection = collection) {}

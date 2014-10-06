@@ -4,7 +4,6 @@ import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models.{Element, Encounter}
-import org.openeyes.api.services.EncounterService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
 
@@ -36,8 +35,8 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/", operation(list)) {
     params.get("patientId") match {
-      case Some(patientId: String) => EncounterService.findAllForPatient(patientId)
-      case _ => EncounterService.findAll
+      case Some(patientId: String) => env.encounterService.findAllForPatient(patientId)
+      case _ => env.encounterService.findAll
     }
   }
 
@@ -51,7 +50,7 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    EncounterService.find(id)
+    env.encounterService.find(id)
   }
 
   val post = (apiOperation[Encounter]("createEncounter")
@@ -64,7 +63,6 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   post("/", operation(post)) {
     val resource = parsedBody.extract[EncounterForm]
-    EncounterService.create(resource)
+    env.encounterService.create(resource)
   }
-
 }
