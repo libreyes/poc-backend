@@ -9,7 +9,10 @@ import org.openeyes.api.services.workflow.TicketService
 /**
  * Created by stu on 02/09/2014.
  */
-object EncounterService {
+trait EncounterService {
+  protected val ticketService: TicketService
+
+  protected val encounterDao: EncounterDao
 
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
@@ -19,25 +22,25 @@ object EncounterService {
 
     val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
       ticketId, form.stepIndex)
-    Encounter.save(encounter)
+    encounterDao.save(encounter)
 
     if(ticketId.isDefined && form.stepIndex.isDefined){
-      TicketService.updateStepIndexOrComplete(ticketId.get, form.stepIndex.get)
+      ticketService.updateStepIndexOrComplete(ticketId.get, form.stepIndex.get)
     }
 
     encounter
   }
 
   def find(id: String) = {
-    Encounter.findOneById(new ObjectId(id))
+    encounterDao.findOneById(new ObjectId(id))
   }
 
   def findAll = {
-    Encounter.findAll().toSeq
+    encounterDao.findAll().toSeq
   }
 
   def findAllForPatient(patientId: String): Seq[Encounter] = {
-    Encounter.findAllForPatient(patientId)
+    encounterDao.findAllForPatient(patientId)
   }
 
 }

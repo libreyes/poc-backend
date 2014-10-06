@@ -3,7 +3,6 @@ package org.openeyes.api.controllers
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.models.{ApiError, Element}
-import org.openeyes.api.services.ElementService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
 
@@ -38,7 +37,7 @@ class ElementController(implicit val swagger: Swagger) extends ApiStack {
     )
 
     params.get("patientId") match {
-      case Some(patientId) => ElementService.findAllForPatient(patientId, elementType, timestamp)
+      case Some(patientId) => env.elementService.findAllForPatient(patientId, elementType, timestamp)
       case None => halt(400, ApiError("Patient ID not found"))
     }
   }

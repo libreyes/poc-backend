@@ -1,26 +1,27 @@
 package org.openeyes.api.services.workflow
 
 import org.bson.types.ObjectId
-import org.openeyes.api.forms.workflow.WorkflowForm
 import org.openeyes.api.models.workflow.Workflow
+import org.openeyes.api.models.workflow.WorkflowDao
+import org.openeyes.api.forms.workflow.WorkflowForm
 
 /**
  * Created by stu on 02/09/2014.
  */
-object WorkflowService {
+trait WorkflowService {
+  protected val workflowDao: WorkflowDao
 
   def create(form: WorkflowForm): Workflow = {
     val workflow = Workflow(new ObjectId, form.name, form.site, form.steps)
-    Workflow.save(workflow)
+    workflowDao.save(workflow)
     workflow
   }
 
   def find(id: String) = {
-    Workflow.findOneById(new ObjectId(id))
+    workflowDao.findOneById(new ObjectId(id))
   }
 
   def findAll = {
-    Workflow.findAll().toSeq
+    workflowDao.findAll().toSeq
   }
-
 }

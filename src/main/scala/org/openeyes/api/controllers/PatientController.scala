@@ -3,7 +3,6 @@ package org.openeyes.api.controllers
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.models.{ApiError, Patient}
-import org.openeyes.api.services.PatientService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.{DataType, ParamType, Parameter, Swagger}
 import org.scalatra.{NotFound, Ok}
@@ -27,8 +26,8 @@ class PatientController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/", operation(list)) {
     params.get("searchTerm") match {
-      case Some(searchTerm) => PatientService.search(searchTerm)
-      case None => PatientService.findAll
+      case Some(searchTerm) => env.patientService.search(searchTerm)
+      case None => env.patientService.findAll
     }
   }
 
@@ -42,7 +41,7 @@ class PatientController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    PatientService.find(id) match {
+    env.patientService.find(id) match {
       case Some(patient) => Ok(patient)
       case None => NotFound(ApiError("No patient found for id '" + id + "'."))
     }

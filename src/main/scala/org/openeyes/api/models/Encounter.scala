@@ -13,7 +13,7 @@ import org.bson.types.ObjectId
 case class Encounter(@Key("_id") _id: ObjectId, patientId: ObjectId, createdAt: Long, elements: List[Element],
                      ticketId: Option[ObjectId], stepIndex: Option[Int])
 
-object Encounter extends ModelCompanion[Encounter, ObjectId] {
+trait EncounterDao extends ModelCompanion[Encounter, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("encounters")
   val dao = new SalatDAO[Encounter, ObjectId](collection = collection) {}

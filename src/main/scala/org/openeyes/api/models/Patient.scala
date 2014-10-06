@@ -25,7 +25,7 @@ case class Patient(@Key("_id") _id: ObjectId, id: String, title: String, firstNa
 
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 
-object Patient extends ModelCompanion[Patient, ObjectId] {
+trait PatientDao extends ModelCompanion[Patient, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("patients")
   val dao = new SalatDAO[Patient, ObjectId](collection = collection) {}

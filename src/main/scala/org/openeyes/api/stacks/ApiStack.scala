@@ -2,6 +2,7 @@ package org.openeyes.api.stacks
 
 import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{MappingException, DefaultFormats, Formats}
+import org.openeyes.api.di.ProductionEnvironment
 import org.openeyes.api.models.ApiError
 import org.openeyes.api.stacks.com.constructiveproof.remotable.stacks.LoggerStack
 import org.scalatra.ScalatraServlet
@@ -13,6 +14,8 @@ import org.scalatra.swagger.SwaggerSupport
  * Created by dave on 19/08/2014.
  */
 trait ApiStack extends ScalatraServlet with JacksonJsonSupport with I18nSupport with SwaggerSupport with LoggerStack {
+
+  protected val env = ProductionEnvironment
 
   protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
 

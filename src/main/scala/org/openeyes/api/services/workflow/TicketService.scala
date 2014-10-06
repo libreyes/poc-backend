@@ -3,36 +3,40 @@ package org.openeyes.api.services.workflow
 import org.bson.types.ObjectId
 import org.openeyes.api.utils.Date._
 import org.openeyes.api.forms.workflow.TicketForm
-import org.openeyes.api.models.Patient
-import org.openeyes.api.models.workflow.Ticket
+import org.openeyes.api.models.workflow.{Ticket,TicketDao}
+import org.openeyes.api.services.PatientService
 
 /**
  * Created by stu on 23/09/2014.
  */
-object TicketService {
+trait TicketService {
+  protected val patientService: PatientService
+  protected val workflowService: WorkflowService
+
+  protected val ticketDao: TicketDao
 
   def create(form: TicketForm) = {
-    val patient = Patient.findOneById(new ObjectId(form.patientId))
+    val patient = patientService.find(form.patientId)
     val ticket = Ticket(new ObjectId, new ObjectId(form.workflowId), patient.get, createdAt = setTimestamp)
-    Ticket.save(ticket)
+    ticketDao.save(ticket)
     ticket
   }
 
   def find(id: String) = {
-    Ticket.findOneById(new ObjectId(id))
+    ticketDao.findOneById(new ObjectId(id))
   }
 
   def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false): Seq[Ticket] = {
-    Ticket.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
+    ticketDao.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
   }
 
   def updateStepIndexOrComplete(ticketId: ObjectId, currentStepIndex: Int) = {
-    val ticket = Ticket.findOneById(ticketId) match {
+    val ticket = ticketDao.findOneById(ticketId) match {
       case Some(ticket) => ticket
       case None => throw new RuntimeException("Ticket not found")
     }
 
-    val workflowStepsCount = WorkflowService.find(ticket.workflowId.toString) match {
+    val workflowStepsCount = workflowService.find(ticket.workflowId.toString) match {
       case Some(workflow) => (workflow.steps.length - 1)
       case None => throw new RuntimeException("Workflow not found")
     }
@@ -45,7 +49,7 @@ object TicketService {
       ticket.completed = true
     }
 
-    Ticket.update(ticket)
+    ticketDao.update(ticket)
     // Return the ticket in case its needed
     ticket
   }

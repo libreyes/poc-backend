@@ -6,21 +6,22 @@ import org.openeyes.api.models._
 /**
  * Created by stu on 02/09/2014.
  */
-object PatientService {
+trait PatientService {
+  protected val patientDao: PatientDao
 
   def find(id: String): Option[Patient] = {
-    Patient.findOneById(new ObjectId(id))
+    patientDao.findOneById(new ObjectId(id))
   }
 
   def findAll = {
-    Patient.findAll().toSeq
+    patientDao.findAll().toSeq
   }
 
   def search(searchTerm: String) = {
-    Patient.search(searchTerm)
+    patientDao.search(searchTerm)
   }
 
   def create(patient: Patient) {
-    Patient.save(patient)
+    patientDao.save(patient)
   }
 }
