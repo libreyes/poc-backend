@@ -1,8 +1,6 @@
 #/bin/sh
-mongoimport --db openeyes --collection lasers --file lasers.json
+mongo openeyes --eval "db.dropDatabase();"
+mongoimport --db openeyes --collection encounters --file encounters.json
 mongoimport --db openeyes --collection patients --file patients.json
-mongoimport --db openeyes --collection procedures --file procedures.json
-mongoimport --db openeyes --collection sites --file sites.json
-mongoimport --db openeyes --collection siteslasers --file siteslasers.json
+mongoimport --db openeyes --collection tickets --file tickets.json
 mongoimport --db openeyes --collection workflows --file workflows.json
-
