@@ -2,7 +2,7 @@
 
 ## Build & Run ##
 
-```sh
+```
 $ cd Openeyes
 $ ./sbt
 > container:start
@@ -13,7 +13,7 @@ If `browse` doesn't launch your browser, manually open [http://localhost:8080/](
 
 To auto compile when anything is updated and saved also run this in the SBT console:
 
-```sh
+```
 ~ ;copy-resources;aux-compile
 ```
 
@@ -25,13 +25,13 @@ To auto compile when anything is updated and saved also run this in the SBT cons
 
 There are mongodb objects in the directory `docs/sample`. You can load them by running:
 
-```sh
+```
 cd docs/sample/ && ./import.sh
 ```
 
 To update the data remotely run:
 
-```sh
+```
 ssh openeyes@178.79.188.31 "cd /home/openeyes/public_html/dev/api/current/docs/sample/ && ./import.sh"
 ```
 
@@ -41,7 +41,7 @@ This will require having a public key installed on the remote server.
 
 In case you need to restart the Tomcat server remotely run:
 
-```sh
+```
 ssh tomcat@178.79.188.31 "cd /home/tomcat/apache-tomcat-7.0.55/bin && ./shutdown.sh ; ./startup.sh"
 ```
 
