@@ -92,6 +92,6 @@ namespace :deploy do
   end
 
   def getVersionFromFile
-    File.open("../version").readlines.first
+    File.open("#{File.expand_path File.dirname(__FILE__)}/../version").readlines.first
   end
 end
