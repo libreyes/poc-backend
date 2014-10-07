@@ -7,7 +7,6 @@ set :keep_releases, 3 # number of deployed releases to keep
 set :use_sudo, false
 default_run_options[:pty] = true
 set :deploy_via, :remote_cache
-set :current_version, "0.1.5"
 
 namespace :deploy do
   desc <<-DESC
@@ -36,7 +35,7 @@ namespace :deploy do
 
   desc <<-DESC
   Removes the cached-copy folder.
-    DESC
+  DESC
   task :remove_cached_copy do
     run("rm -rf #{deploy_to}/shared/cached-copy")
     # run("mkdir #{deploy_to}/shared/cached-copy")
@@ -58,15 +57,15 @@ namespace :deploy do
   Upload war to server.
     DESC
   task :upload_war do
-    top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war",
-               "#{release_path}/openeyes_2.11--#{current_version}.war")
+    current_version = getVersionFromFile
+    top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war", "#{release_path}/openeyes_2.11--#{current_version}.war")
   end
 
   desc <<-DESC
   Upload war to server.
     DESC
   task :undeploy_app do
-    puts "==================Undeploy war======================"#Line 24
+    puts "==================Undeploy war======================"
     run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/undeploy?path=/"
   end
 
@@ -74,7 +73,8 @@ namespace :deploy do
   Upload war to server.
     DESC
   task :deploy_app do
-    puts "==================Deploy war to Tomcat======================" #Line 26
+    current_version = getVersionFromFile
+    puts "==================Deploy war to Tomcat======================"
     run "curl --upload-file #{current_path}/openeyes_2.11--#{current_version}.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
 
@@ -89,5 +89,9 @@ namespace :deploy do
       tag = default_tag if tag.empty?
       tag
     end
+  end
+
+  def getVersionFromFile
+    File.open("../version").readlines.first
   end
 end

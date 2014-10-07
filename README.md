@@ -19,11 +19,14 @@ To auto compile when anything is updated and saved also run this in the SBT cons
 
 ## Dependencies ##
 
-* mongodb
+* Mongo DB
+* ImageMagick
 
 ## Sample Data ##
 
-There are mongodb objects in the directory `docs/sample`. You can load them by running:
+There is some sample Mongo DB data that can be found at `docs/sample`. 
+
+These can be imported by running the import script:
 
 ```
 cd docs/sample/ && ./import.sh
@@ -54,3 +57,11 @@ IMPORTANT!
 If you update the version number in build.scala you will also need to make sure that you update the current version in config/deploy.rb.
 
 This is because the deploy task needs to know the version of the WAR file it has to copy across. At some point this should be made better but for now it is what it is.
+
+## DICOM
+
+TODO: Write more docs...
+
+```
+./storescu -c OPENEYES@localhost:11112 ~/docs/dicom-files/54229a9f6c5873493a28b3b8.dcm -b HELLO
+```

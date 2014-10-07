@@ -1,7 +1,5 @@
 package org.openeyes.api.controllers.workflow
 
-import org.json4s.mongo.ObjectIdSerializer
-import org.json4s.{DefaultFormats, Formats}
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.ApiError
 import org.openeyes.api.models.workflow.Ticket
@@ -15,12 +13,6 @@ import org.scalatra.swagger.Swagger
 class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Ticket API"
-
-  protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
-
-  before() {
-    contentType = formats("json")
-  }
 
   val list = (apiOperation[List[Ticket]]("listTickets")
     notes "Lists Tickets for a given Workflow ID, with optional filtering for step and completed status"

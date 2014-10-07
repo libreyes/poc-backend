@@ -15,11 +15,7 @@ class PatientController(implicit val swagger: Swagger) extends ApiStack {
 
   protected val applicationDescription = "The Patient API"
 
-  protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
-
-  before() {
-    contentType = formats("json")
-  }
+  override protected implicit val jsonFormats: Formats = DefaultFormats + new ObjectIdSerializer
 
   val list = (apiOperation[List[Patient]]("listPatients")
     notes "Lists all known Patients"
