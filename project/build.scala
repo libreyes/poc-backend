@@ -3,11 +3,12 @@ import Keys._
 import org.scalatra.sbt._
 import com.mojolly.scalate.ScalatePlugin._
 import sbtbuildinfo.Plugin._
+import scala.io.Source
 
 object OpenEyesBuild extends Build {
   val Organization = "org.openeyes"
   val Name = "Openeyes"
-  val Version = "0.5.0"
+  val Version = getVersionFromFile
   val ScalaVersion = "2.11.1"
   val ScalatraVersion = "2.3.0"
 
@@ -55,4 +56,8 @@ object OpenEyesBuild extends Build {
       )
     )
   )
+
+  private def getVersionFromFile: String = {
+    Source.fromFile("version").getLines.next()
+  }
 }
