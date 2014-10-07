@@ -25,7 +25,7 @@ object Ticket extends ModelCompanion[Ticket, ObjectId] {
     builder += "workflowId" -> new ObjectId(workflowId)
     if (stepIndex.isDefined) builder += "stepIndex" -> stepIndex.get
     if (!includeCompleted) builder += "completed" -> false
-    find(builder.result).toSeq
+    find(builder.result()).toSeq
   }
 
   def update(ticket: Ticket) = {
