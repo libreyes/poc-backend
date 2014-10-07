@@ -52,11 +52,11 @@ This will require having a public key installed on the remote server.
 
 ## Versioning ##
 
-IMPORTANT! 
+**IMPORTANT!** 
 
-If you update the version number in build.scala you will also need to make sure that you update the current version in config/deploy.rb.
+The version number is now pulled from the file `version` found in the root project, and should be set to the latest tag number.
 
-This is because the deploy task needs to know the version of the WAR file it has to copy across. At some point this should be made better but for now it is what it is.
+This file is used in both the `build.scala` file and the `config/deploy.rb`.
 
 ## DICOM
 
