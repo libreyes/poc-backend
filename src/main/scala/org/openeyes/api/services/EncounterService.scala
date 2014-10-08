@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 class EncounterService @Autowired() (encounterDao: EncounterDao, ticketService: TicketService) {
+
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
       case Some(ticketId: String) => Some(new ObjectId(ticketId))
@@ -21,6 +22,7 @@ class EncounterService @Autowired() (encounterDao: EncounterDao, ticketService: 
 
     val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
       ticketId, form.stepIndex)
+
     encounterDao.save(encounter)
 
     if(ticketId.isDefined && form.stepIndex.isDefined){

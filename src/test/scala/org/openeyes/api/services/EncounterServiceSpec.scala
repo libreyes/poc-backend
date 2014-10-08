@@ -1,25 +1,47 @@
 package org.openeyes.api.services
 
 import org.bson.types.ObjectId
-import org.scalamock.scalatest.MockFactory
-import org.scalatest.FlatSpec
+import org.mockito.Mockito._
 import org.openeyes.api.forms.EncounterForm
-import org.openeyes.api.models.EncounterDao
+import org.openeyes.api.models.{Encounter, EncounterDao}
+import org.scalatest.WordSpec
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Matchers._
 
-class EncounterServiceSpec extends FlatSpec with MockFactory {
-  private class Fixture {
-    val mockEncounterDao = stub[EncounterDao]
-    val mockTicketService = mock[workflow.TicketService]
+class EncounterServiceSpec extends WordSpec with MockitoSugar {
 
-    val encounterService = new EncounterService(mockEncounterDao, mockTicketService)
-  }
+  "Create method" when {
+    def fixture = new {
+      val mockEncounterDao = mock[EncounterDao]
+      val mockTicketService = mock[workflow.TicketService]
+      val encounterService = new EncounterService(mockEncounterDao, mockTicketService)
+    }
 
-  "The Encounter Service" should "update the ticket step when creating an encounter associated with a ticket" in new Fixture {
-    val patientId = new ObjectId
-    val ticketId = new ObjectId
+    "not associated with a ticket" should {
+      "only save the Encounter" in {
+        val f = fixture
+        val patientId = new ObjectId
+        val form = EncounterForm(patientId.toString, Nil, None, None)
 
-    (mockTicketService.updateStepIndexOrComplete _).expects(ticketId, 42)
+        f.encounterService.create(form)
 
-    encounterService.create(EncounterForm(patientId.toString, Nil, Some(ticketId.toString), Some(42)))
+        verify(f.mockEncounterDao).save(any(Encounter.getClass).asInstanceOf[Encounter])
+        verifyZeroInteractions(f.mockTicketService)
+      }
+    }
+
+    "when associated to a ticket" should {
+      "save the Encounter and update the step index when associated with a ticket" in {
+        val f = fixture
+        val patientId = new ObjectId
+        val ticketId = new ObjectId
+        val form = EncounterForm(patientId.toString, Nil, Some(ticketId.toString), Some(42))
+
+        f.encounterService.create(form)
+
+        verify(f.mockEncounterDao).save(any(Encounter.getClass).asInstanceOf[Encounter])
+        verify(f.mockTicketService).updateStepIndexOrComplete(ticketId, 42)
+      }
+    }
   }
 }
