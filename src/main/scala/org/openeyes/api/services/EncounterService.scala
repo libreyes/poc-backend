@@ -10,9 +10,9 @@ import org.openeyes.api.services.workflow.TicketService
  * Created by stu on 02/09/2014.
  */
 trait EncounterService {
-  protected val ticketService: TicketService
 
   protected val encounterDao: EncounterDao
+  protected val ticketService: TicketService
 
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
@@ -22,6 +22,7 @@ trait EncounterService {
 
     val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
       ticketId, form.stepIndex)
+
     encounterDao.save(encounter)
 
     if(ticketId.isDefined && form.stepIndex.isDefined){
