@@ -8,9 +8,7 @@ import org.openeyes.api.forms.workflow.WorkflowForm
 /**
  * Created by stu on 02/09/2014.
  */
-trait WorkflowService {
-  protected val workflowDao: WorkflowDao
-
+class WorkflowService(workflowDao: WorkflowDao) {
   def create(form: WorkflowForm): Workflow = {
     val workflow = Workflow(new ObjectId, form.name, form.site, form.steps)
     workflowDao.save(workflow)

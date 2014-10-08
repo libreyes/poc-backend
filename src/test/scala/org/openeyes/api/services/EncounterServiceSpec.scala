@@ -8,13 +8,10 @@ import org.openeyes.api.models.EncounterDao
 
 class EncounterServiceSpec extends FlatSpec with MockFactory {
   private class Fixture {
-    val mockTicketService = mock[workflow.TicketService]
     val mockEncounterDao = stub[EncounterDao]
+    val mockTicketService = mock[workflow.TicketService]
 
-    object TestEncounterService extends EncounterService {
-      protected val ticketService = mockTicketService
-      protected val encounterDao = mockEncounterDao
-    }
+    val encounterService = new EncounterService(mockEncounterDao, mockTicketService)
   }
 
   "The Encounter Service" should "update the ticket step when creating an encounter associated with a ticket" in new Fixture {
@@ -23,6 +20,6 @@ class EncounterServiceSpec extends FlatSpec with MockFactory {
 
     (mockTicketService.updateStepIndexOrComplete _).expects(ticketId, 42)
 
-    TestEncounterService.create(EncounterForm(patientId.toString, Nil, Some(ticketId.toString), Some(42)))
+    encounterService.create(EncounterForm(patientId.toString, Nil, Some(ticketId.toString), Some(42)))
   }
 }

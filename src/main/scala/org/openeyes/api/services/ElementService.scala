@@ -7,9 +7,7 @@ import org.openeyes.api.utils.String._
 /**
  * Created by stu on 22/09/2014.
  */
-trait ElementService {
-  protected val encounterDao: EncounterDao
-
+class ElementService(encounterDao: EncounterDao) {
   def findAllForPatient(patientId: String, elementType: Option[String], timestamp: Option[Long]) = {
 
     val elements = encounterDao.findAllForPatient(patientId)
@@ -19,5 +17,4 @@ trait ElementService {
 
     elements
   }
-
 }

@@ -14,28 +14,11 @@ trait Environment {
 }
 
 object ProductionEnvironment {
-  object elementService extends ElementService {
-    lazy protected val encounterDao = ProductionEnvironment.encounterDao
-  }
-
-  object encounterService extends EncounterService {
-    lazy protected val ticketService = ProductionEnvironment.ticketService
-    lazy protected val encounterDao = ProductionEnvironment.encounterDao
-  }
-
-  object patientService extends PatientService {
-    lazy protected val patientDao = ProductionEnvironment.patientDao
-  }
-
-  object ticketService extends TicketService {
-    lazy protected val patientService = ProductionEnvironment.patientService
-    lazy protected val workflowService = ProductionEnvironment.workflowService
-    lazy protected val ticketDao = ProductionEnvironment.ticketDao
-  }
-
-  object workflowService extends WorkflowService {
-    lazy protected val workflowDao = ProductionEnvironment.workflowDao
-  }
+  lazy val elementService = new ElementService(encounterDao);
+  lazy val encounterService = new EncounterService(encounterDao, ticketService);
+  lazy val patientService = new PatientService(patientDao);
+  lazy val ticketService = new TicketService(ticketDao, patientService, workflowService);
+  lazy val workflowService = new WorkflowService(workflowDao);
 
   protected object encounterDao extends EncounterDao
   protected object patientDao extends PatientDao
