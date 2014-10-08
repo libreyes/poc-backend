@@ -9,11 +9,7 @@ import org.openeyes.api.services.workflow.TicketService
 /**
  * Created by stu on 02/09/2014.
  */
-trait EncounterService {
-  protected val ticketService: TicketService
-
-  protected val encounterDao: EncounterDao
-
+class EncounterService(encounterDao: EncounterDao, ticketService: TicketService) {
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
       case Some(ticketId: String) => Some(new ObjectId(ticketId))

@@ -9,12 +9,7 @@ import org.openeyes.api.services.PatientService
 /**
  * Created by stu on 23/09/2014.
  */
-trait TicketService {
-  protected val patientService: PatientService
-  protected val workflowService: WorkflowService
-
-  protected val ticketDao: TicketDao
-
+class TicketService(ticketDao: TicketDao, patientService: PatientService, workflowService: WorkflowService) {
   def create(form: TicketForm) = {
     val patient = patientService.find(form.patientId)
     val ticket = Ticket(new ObjectId, new ObjectId(form.workflowId), patient.get, createdAt = setTimestamp)

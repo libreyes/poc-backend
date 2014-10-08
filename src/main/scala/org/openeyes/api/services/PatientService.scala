@@ -6,9 +6,7 @@ import org.openeyes.api.models._
 /**
  * Created by stu on 02/09/2014.
  */
-trait PatientService {
-  protected val patientDao: PatientDao
-
+class PatientService(patientDao: PatientDao) {
   def find(id: String): Option[Patient] = {
     patientDao.findOneById(new ObjectId(id))
   }
