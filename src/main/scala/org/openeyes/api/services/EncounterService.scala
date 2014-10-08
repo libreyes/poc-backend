@@ -5,11 +5,14 @@ import org.openeyes.api.utils.Date._
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models._
 import org.openeyes.api.services.workflow.TicketService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * Created by stu on 02/09/2014.
  */
-class EncounterService(encounterDao: EncounterDao, ticketService: TicketService) {
+@Service
+class EncounterService @Autowired() (encounterDao: EncounterDao, ticketService: TicketService) {
   def create(form: EncounterForm): Encounter = {
     val ticketId = form.ticketId match {
       case Some(ticketId: String) => Some(new ObjectId(ticketId))

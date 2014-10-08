@@ -6,8 +6,11 @@ import ca.uhn.hl7v2.app.ConnectionListener
 import ca.uhn.hl7v2.parser.CanonicalModelClassFactory
 import ca.uhn.hl7v2.protocol.ReceivingApplicationExceptionHandler
 import org.openeyes.api.handlers.hl7._
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
-object hl7Listener {
+@Component
+class hl7Listener @Autowired() (addPatient: AddPatient) {
   def apply() = {
     val context = new DefaultHapiContext
 
@@ -15,7 +18,7 @@ object hl7Listener {
     context.setValidationContext("ca.uhn.hl7v2.validation.impl.NoValidation")
 
     val server = context.newServer(10110, false)
-    server.registerApplication("ADT", "A01", new AddPatient)
+    server.registerApplication("ADT", "A01", addPatient)
     server.startAndWait
   }
 }

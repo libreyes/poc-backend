@@ -3,11 +3,14 @@ package org.openeyes.api.services
 import org.openeyes.api.models.EncounterDao
 import org.openeyes.api.utils.Date._
 import org.openeyes.api.utils.String._
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * Created by stu on 22/09/2014.
  */
-class ElementService(encounterDao: EncounterDao) {
+@Service
+class ElementService @Autowired() (encounterDao: EncounterDao) {
   def findAllForPatient(patientId: String, elementType: Option[String], timestamp: Option[Long]) = {
 
     val elements = encounterDao.findAllForPatient(patientId)

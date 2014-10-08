@@ -20,10 +20,11 @@ import org.dcm4che3.net.{ApplicationEntity, Association, Connection, Device, PDV
 import org.dcm4che3.tool.common.CLIUtils
 import org.dcm4che3.util.{AttributesFormat, SafeClose}
 import org.im4java.core.{MontageCmd, ConvertCmd, IMOperation}
-import org.openeyes.api.di.ProductionEnvironment
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models.{Image, OCTScan}
+import org.openeyes.api.services.EncounterService
 import org.slf4j.LoggerFactory
+import scala.beans.BeanProperty
 
 /**
  * Created by stu on 29/09/2014.
@@ -149,7 +150,7 @@ class OctScan(recieveEvent: File => Unit) {
 }
 
 object OctScan {
-  private val env = ProductionEnvironment
+  @BeanProperty var encounterService: EncounterService = null
 
   private val rb = ResourceBundle.getBundle("org.dcm4che3.tool.storescp.messages")
 
@@ -305,6 +306,6 @@ object OctScan {
     val image = Image(encodedImage, "image/jpeg")
     val element = OCTScan("right", image)
     val form = EncounterForm(patientId, List(element), None, None)
-    env.encounterService.create(form)
+    encounterService.create(form)
   }
 }

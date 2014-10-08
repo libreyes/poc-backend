@@ -3,7 +3,9 @@ package org.openeyes.api.controllers
 import openeyesApi.BuildInfo
 import org.scalatra.ScalatraServlet
 import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
+import org.springframework.stereotype.Component
 
+@Component
 class OpenEyesSwagger extends Swagger(Swagger.SpecVersion, BuildInfo.version, OpenEyesApiInfo)
 
 object OpenEyesApiInfo extends ApiInfo(

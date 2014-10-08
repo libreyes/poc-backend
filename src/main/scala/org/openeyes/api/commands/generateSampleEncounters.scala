@@ -1,17 +1,18 @@
 package org.openeyes.api.commands
 
-import org.openeyes.api.di.ProductionEnvironment
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models._
 import org.openeyes.api.models.workflow._
+import org.openeyes.api.services.{EncounterService,PatientService}
+import org.openeyes.api.services.workflow.WorkflowService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import scala.reflect.runtime.universe._
 import scala.reflect.api
 import scala.util.Random
 
-object generateSampleEncounters {
-  private val env = ProductionEnvironment
-
-  private object ticketDao extends TicketDao
+@Component
+class generateSampleEncounters @Autowired() (workflowService: WorkflowService, patientService: PatientService, encounterService: EncounterService, ticketDao: TicketDao) {
 
   val rand = new Random
 
@@ -239,19 +240,19 @@ object generateSampleEncounters {
 
   def apply() = {
     ticketDao.findAll.filter(_.stepIndex > 0).foreach (t => {
-      env.workflowService.find(t.workflowId.toString) map (wf => (
+      workflowService.find(t.workflowId.toString) map (wf => (
         generateBigEncounter(t.patient, wf, Some(t))
       ))
     })
-    val allWorkflows = env.workflowService.findAll
-    env.patientService.findAll.foreach (p => (
+    val allWorkflows = workflowService.findAll
+    patientService.findAll.foreach (p => (
       generateBigEncounter(p, allWorkflows(rand.nextInt(allWorkflows.length)))
     ))
   }
 
   def generateBigEncounter(patient: Patient, workflow: Workflow, ticket: Option[Ticket] = None) = {
     for (step <- 0 until (ticket match {case Some(t) => t.stepIndex case None => workflow.steps.length})) {
-      env.encounterService.create(EncounterForm(
+      encounterService.create(EncounterForm(
         patient._id.toString,
         for (component <- workflow.steps(step).components if (component.isInstanceOf[FormComponent])) yield generateElement(component.name),
         ticket map (_._id.toString),
