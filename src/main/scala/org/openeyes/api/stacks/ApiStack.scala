@@ -4,7 +4,6 @@ import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{MappingException, DefaultFormats, Formats}
 import org.openeyes.api.di.ProductionEnvironment
 import org.openeyes.api.models.ApiError
-import org.openeyes.api.stacks.com.constructiveproof.remotable.stacks.LoggerStack
 import org.scalatra.ScalatraServlet
 import org.scalatra.i18n.I18nSupport
 import org.scalatra.json.JacksonJsonSupport
