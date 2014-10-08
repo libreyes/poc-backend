@@ -4,13 +4,17 @@ import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.forms.workflow.WorkflowForm
 import org.openeyes.api.models.workflow.{Component, Workflow}
+import org.openeyes.api.services.workflow.WorkflowService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
 
 /**
  * Created by jamie on 15/09/2014.
  */
-class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
+@Controller
+class WorkflowController @Autowired() (val swagger: Swagger, workflowService: WorkflowService) extends ApiStack {
 
   protected val applicationDescription = "The Workflow API."
 
@@ -27,7 +31,7 @@ class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
     )
 
   get("/", operation(list)) {
-    env.workflowService.findAll
+    workflowService.findAll
   }
 
   val get = (apiOperation[Workflow]("getWorkflow")
@@ -40,7 +44,7 @@ class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    env.workflowService.find(id)
+    workflowService.find(id)
   }
 
   val post = (apiOperation[Workflow]("createWorkflow")
@@ -53,6 +57,6 @@ class WorkflowController(implicit val swagger: Swagger) extends ApiStack {
 
   post("/", operation(post)) {
     val resource = parsedBody.extract[WorkflowForm]
-    env.workflowService.create(resource)
+    workflowService.create(resource)
   }
 }

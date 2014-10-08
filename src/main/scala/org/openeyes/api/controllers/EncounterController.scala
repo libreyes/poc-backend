@@ -4,14 +4,18 @@ import org.json4s.mongo.ObjectIdSerializer
 import org.json4s.{DefaultFormats, FullTypeHints}
 import org.openeyes.api.forms.EncounterForm
 import org.openeyes.api.models.{Element, Encounter}
+import org.openeyes.api.services.EncounterService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
 
 
 /**
  * Created by jamie on 15/09/2014.
  */
-class EncounterController(implicit val swagger: Swagger) extends ApiStack {
+@Controller
+class EncounterController @Autowired() (val swagger: Swagger, encounterService: EncounterService) extends ApiStack {
 
   protected val applicationDescription = "The Encounter API."
 
@@ -35,8 +39,8 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/", operation(list)) {
     params.get("patientId") match {
-      case Some(patientId: String) => env.encounterService.findAllForPatient(patientId)
-      case _ => env.encounterService.findAll
+      case Some(patientId: String) => encounterService.findAllForPatient(patientId)
+      case _ => encounterService.findAll
     }
   }
 
@@ -50,7 +54,7 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    env.encounterService.find(id)
+    encounterService.find(id)
   }
 
   val post = (apiOperation[Encounter]("createEncounter")
@@ -63,6 +67,6 @@ class EncounterController(implicit val swagger: Swagger) extends ApiStack {
 
   post("/", operation(post)) {
     val resource = parsedBody.extract[EncounterForm]
-    env.encounterService.create(resource)
+    encounterService.create(resource)
   }
 }

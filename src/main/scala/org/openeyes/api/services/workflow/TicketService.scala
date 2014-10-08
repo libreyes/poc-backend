@@ -5,11 +5,14 @@ import org.openeyes.api.utils.Date._
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.workflow.{Ticket,TicketDao}
 import org.openeyes.api.services.PatientService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 /**
  * Created by stu on 23/09/2014.
  */
-class TicketService(ticketDao: TicketDao, patientService: PatientService, workflowService: WorkflowService) {
+@Service
+class TicketService @Autowired() (ticketDao: TicketDao, patientService: PatientService, workflowService: WorkflowService) {
   def create(form: TicketForm) = {
     val patient = patientService.find(form.patientId)
     val ticket = Ticket(new ObjectId, new ObjectId(form.workflowId), patient.get, createdAt = setTimestamp)

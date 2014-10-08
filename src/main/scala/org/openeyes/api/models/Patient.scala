@@ -6,6 +6,7 @@ import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import com.novus.salat.global._
 import org.bson.types.ObjectId
+import org.springframework.stereotype.Repository
 
 /**
  * Created by stu on 23/09/2014.
@@ -25,7 +26,8 @@ case class Patient(@Key("_id") _id: ObjectId, id: String, title: String, firstNa
 
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 
-trait PatientDao extends ModelCompanion[Patient, ObjectId] {
+@Repository
+class PatientDao extends ModelCompanion[Patient, ObjectId] {
 
   val collection = MongoConnection()("openeyes")("patients")
   val dao = new SalatDAO[Patient, ObjectId](collection = collection) {}

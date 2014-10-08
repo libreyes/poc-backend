@@ -3,13 +3,17 @@ package org.openeyes.api.controllers.workflow
 import org.openeyes.api.forms.workflow.TicketForm
 import org.openeyes.api.models.ApiError
 import org.openeyes.api.models.workflow.Ticket
+import org.openeyes.api.services.workflow.TicketService
 import org.openeyes.api.stacks.ApiStack
 import org.scalatra.swagger.Swagger
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
 
 /**
  * Created by stu on 23/09/2014.
  */
-class TicketController(implicit val swagger: Swagger) extends ApiStack {
+@Controller
+class TicketController @Autowired() (val swagger: Swagger, ticketService: TicketService) extends ApiStack {
 
   protected val applicationDescription = "The Ticket API"
 
@@ -35,7 +39,7 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
     })
 
     params.get("workflowId") match {
-      case Some(workflowId) => env.ticketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
+      case Some(workflowId) => ticketService.findAllForWorkflow(workflowId, stepIndex, includeCompleted)
       case None => halt(400, ApiError("workflowId is required"))
     }
   }
@@ -50,7 +54,7 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   get("/:id", operation(get)) {
     val id = params("id")
-    env.ticketService.find(id)
+    ticketService.find(id)
   }
 
   val post = (apiOperation[Ticket]("createTicket")
@@ -63,6 +67,6 @@ class TicketController(implicit val swagger: Swagger) extends ApiStack {
 
   post("/", operation(post)) {
     val form = parsedBody.extract[TicketForm]
-    env.ticketService.create(form)
+    ticketService.create(form)
   }
 }
