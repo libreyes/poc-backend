@@ -22,4 +22,6 @@ apt-get install -y imagemagick
 
 # Run the import script
 su -c "cd /app/docs/sample && ./import.sh" vagrant
+
+# Run sbt update
 su -c "cd /app && ./sbt update" vagrant
