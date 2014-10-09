@@ -35,7 +35,7 @@ namespace :deploy do
 
   desc <<-DESC
   Removes the cached-copy folder.
-    DESC
+  DESC
   task :remove_cached_copy do
     run("rm -rf #{deploy_to}/shared/cached-copy")
     # run("mkdir #{deploy_to}/shared/cached-copy")
@@ -57,29 +57,30 @@ namespace :deploy do
   Upload war to server.
     DESC
   task :upload_war do
-    top.upload("target/scala-2.11/openeyes_2.11-0.1.5.war",
-               "#{release_path}/openeyes_2.11-0.1.5.war")
+    current_version = getVersionFromFile
+    top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war", "#{release_path}/openeyes_2.11--#{current_version}.war")
   end
 
   desc <<-DESC
   Upload war to server.
     DESC
   task :undeploy_app do
-    puts "==================Undeploy war======================"#Line 24
+    puts "==================Undeploy war======================"
     run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/undeploy?path=/"
   end
 
   desc <<-DESC
   Upload war to server.
-    DESC
+  DESC
   task :deploy_app do
-    puts "==================Deploy war to Tomcat======================" #Line 26
-    run "curl --upload-file #{current_path}/openeyes_2.11-0.1.5.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
+    current_version = getVersionFromFile
+    puts "==================Deploy war to Tomcat======================"
+    run "curl --upload-file #{current_path}/openeyes_2.11--#{current_version}.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
 
   desc <<-DESC
   Set the tag for a deploy.
-    DESC
+  DESC
   task :set_tag do
     set :branch do
       default_tag = `git tag`.split("\n").last
@@ -89,4 +90,19 @@ namespace :deploy do
       tag
     end
   end
+
+  def getVersionFromFile
+    File.open("#{File.expand_path File.dirname(__FILE__)}/../version").readlines.first
+  end
+end
+
+namespace :db do
+
+  desc <<-DESC
+  Run the import data script to reset the Mongo DB.
+  DESC
+  task :import_data do
+    run "cd #{current_path}/docs/sample && ./import.sh"
+  end
+
 end
