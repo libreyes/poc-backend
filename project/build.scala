@@ -45,6 +45,7 @@ object OpenEyesBuild extends Build {
         "org.json4s"   %% "json4s-jackson" % "3.2.9",
         "org.json4s" %% "json4s-mongo" % "3.2.9",
         "org.mockito" % "mockito-all" % "1.10.5" % "test",
+        "org.scalacheck" % "scalacheck_2.11" % "1.11.6",
         "org.scalatest" % "scalatest_2.11" % "2.2.2" % "test",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
