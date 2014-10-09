@@ -3,7 +3,8 @@ package org.openeyes.api.controllers
 import openeyesApi.BuildInfo
 import org.scalatra.ScalatraServlet
 import org.scalatra.swagger.{ApiInfo, JacksonSwaggerBase, Swagger}
-import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.{Component,Controller}
 
 @Component
 class OpenEyesSwagger extends Swagger(Swagger.SpecVersion, BuildInfo.version, OpenEyesApiInfo)
@@ -16,4 +17,5 @@ object OpenEyesApiInfo extends ApiInfo(
   "MIT",
   "http://opensource.org/licenses/MIT")
 
-class ApiDocsController(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
+@Controller
+class ApiDocsController @Autowired() (val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase

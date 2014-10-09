@@ -13,11 +13,10 @@ class ScalatraBootstrap extends LifeCycle {
 
   val appContext = new AnnotationConfigApplicationContext("org.openeyes.api.controllers", "org.openeyes.api.models", "org.openeyes.api.services")
 
-  implicit val swagger = new OpenEyesSwagger
   val pool: ExecutorService = Executors.newFixedThreadPool(5)
 
   override def init(context: ServletContext) {
-    context.mount(new ApiDocsController, "/api-docs")
+    context.mount(appContext.getBean(classOf[ApiDocsController]), "/api-docs")
     context.mount(appContext.getBean(classOf[ElementController]), "/Element", "Element")
     context.mount(appContext.getBean(classOf[EncounterController]), "/Encounter", "Encounter")
     context.mount(appContext.getBean(classOf[PatientController]), "/Patient", "Patient")
