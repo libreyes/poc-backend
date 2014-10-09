@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 class ScalatraBootstrap extends LifeCycle {
 
-  val appContext = new AnnotationConfigApplicationContext("org.openeyes.api.controllers", "org.openeyes.api.models", "org.openeyes.api.services")
+  val appContext = new AnnotationConfigApplicationContext("org.openeyes.api")
 
   val pool: ExecutorService = Executors.newFixedThreadPool(5)
 

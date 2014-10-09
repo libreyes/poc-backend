@@ -2,9 +2,9 @@ package org.openeyes.api.services
 
 import org.bson.types.ObjectId
 import org.openeyes.api.utils.Date._
+import org.openeyes.api.cqrs._
 import org.openeyes.api.forms.EncounterForm
-import org.openeyes.api.models._
-import org.openeyes.api.services.workflow.TicketService
+import org.openeyes.api.models.Encounter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -12,36 +12,32 @@ import org.springframework.stereotype.Service
  * Created by stu on 02/09/2014.
  */
 @Service
-class EncounterService @Autowired() (encounterDao: EncounterDao, ticketService: TicketService) {
+class EncounterService @Autowired() (commandDispatcher: CommandDispatcher, readDispatcher: ReadDispatcher, finder: finders.Encounter) {
 
-  def create(form: EncounterForm): Encounter = {
-    val ticketId = form.ticketId match {
-      case Some(ticketId: String) => Some(new ObjectId(ticketId))
-      case _ => None
-    }
+  def create(form: EncounterForm) = {
+    val encounter = Encounter(
+      new ObjectId,
+      new ObjectId(form.patientId),
+      setTimestamp,
+      form.elements,
+      form.ticketId map (new ObjectId(_)),
+      form.stepIndex
+    )
 
-    val encounter = Encounter(new ObjectId, new ObjectId(form.patientId), setTimestamp, form.elements,
-      ticketId, form.stepIndex)
-
-    encounterDao.save(encounter)
-
-    if(ticketId.isDefined && form.stepIndex.isDefined){
-      ticketService.updateStepIndexOrComplete(ticketId.get, form.stepIndex.get)
-    }
+    commandDispatcher.dispatch(commands.CreateEncounter(encounter))
 
     encounter
   }
 
   def find(id: String) = {
-    encounterDao.findOneById(new ObjectId(id))
+    readDispatcher.dispatch(ReadRequest[Encounter, ObjectId](new ObjectId(id)))
   }
 
-  def findAll = {
-    encounterDao.findAll().toSeq
+  def findAll() = {
+    finder.find(new Query)
   }
 
   def findAllForPatient(patientId: String): Seq[Encounter] = {
-    encounterDao.findAllForPatient(patientId)
+    finder.find(new Query(Map(patientId -> new ObjectId(patientId))))
   }
-
 }
