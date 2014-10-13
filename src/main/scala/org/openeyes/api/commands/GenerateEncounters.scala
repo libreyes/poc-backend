@@ -10,7 +10,7 @@ import scala.reflect.runtime.universe._
 import scala.reflect.api
 import scala.util.Random
 
-object generateSampleEncounters {
+object GenerateEncounters {
   val rand = new Random
 
   val allergies = Seq(
@@ -235,16 +235,18 @@ object generateSampleEncounters {
     "G. Chloramphenicol 0.5% once only"
   )
 
-  def apply = {
-    Ticket.findAll.filter(_.stepIndex > 0).foreach (t => {
-      WorkflowService.find(t.workflowId.toString) map (wf => (
+  def apply() = {
+    Ticket.findAll().filter(_.stepIndex > 0).foreach (t => {
+      WorkflowService.find(t.workflowId.toString) map (wf =>
         generateBigEncounter(t.patient, wf, Some(t))
-      ))
+      )
     })
+
     val allWorkflows = WorkflowService.findAll
-    PatientService.findAll.foreach (p => (
+
+    PatientService.findAll.foreach (p =>
       generateBigEncounter(p, allWorkflows(rand.nextInt(allWorkflows.length)))
-    ))
+    )
   }
 
   def generateBigEncounter(patient: Patient, workflow: Workflow, ticket: Option[Ticket] = None) = {
