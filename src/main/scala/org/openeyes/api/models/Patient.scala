@@ -19,9 +19,9 @@ case class GeneralPractitioner(firstName: Option[String], surname: Option[String
                                address: Option[Address], practice: Option[Practice])
 
 case class Patient(@Key("_id") _id: ObjectId, id: String, title: String, firstName: String, surname: String, dob: String,
-                   gender: String,ethnicity: String, contactDetail: ContactDetail, address: Option[Address],
+                   gender: String, ethnicity: String, contactDetail: ContactDetail, address: Option[Address],
                    nhsNumber: Option[String], nextOfKin: Option[String], generalPractitioner: Option[GeneralPractitioner],
-                   hospitalNumber: String)
+                   hospitalNumber: String, avatarUrl: Option[String] = None)
 
 case class Practice(name: String, contactDetail: ContactDetail, address: Address)
 

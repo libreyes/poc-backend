@@ -11,7 +11,8 @@ set :deploy_via, :remote_cache
 namespace :deploy do
   desc <<-DESC
   Does a full deploy using the tasks specified.
-    DESC
+  DESC
+
   task :full do
     transaction do
       remove_cached_copy
@@ -49,7 +50,7 @@ namespace :deploy do
   end
 
   task :build do
-    puts "==================Building with SBT======================" # Line 22
+    puts "==================Building with SBT======================"
     `./sbt clean package`
   end
 
@@ -57,7 +58,7 @@ namespace :deploy do
   Upload war to server.
     DESC
   task :upload_war do
-    current_version = getVersionFromFile
+    current_version = get_version_from_file
     top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war", "#{release_path}/openeyes_2.11--#{current_version}.war")
   end
 
@@ -73,7 +74,7 @@ namespace :deploy do
   Upload war to server.
   DESC
   task :deploy_app do
-    current_version = getVersionFromFile
+    current_version = get_version_from_file
     puts "==================Deploy war to Tomcat======================"
     run "curl --upload-file #{current_path}/openeyes_2.11--#{current_version}.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
@@ -91,7 +92,7 @@ namespace :deploy do
     end
   end
 
-  def getVersionFromFile
+  def get_version_from_file
     File.open("#{File.expand_path File.dirname(__FILE__)}/../version").readlines.first
   end
 end
