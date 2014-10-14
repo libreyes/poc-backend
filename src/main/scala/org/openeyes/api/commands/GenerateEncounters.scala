@@ -333,16 +333,4 @@ object GenerateEncounters {
       }): _*
     )
   }
-
-  def exportEncountersFromTemplateJson() = {
-    val patients = PatientService.findAll
-    val ids = patients.map(_._id.toString).toArray
-    val template = Source.fromFile("docs/sample/encounter-template.json").mkString
-
-    for(i <- 0 to ids.length - 1) {
-      val id = ids(i)
-      val contents = template.replaceAll("\\{PATIENT_ID\\}", id)
-      Files.write(Paths.get(s"docs/sample/encounters/$id.json"), contents.getBytes(StandardCharsets.UTF_8))
-    }
-  }
 }
