@@ -6,7 +6,9 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{ModelCompanion, SalatDAO}
 import com.novus.salat.global._
+import com.typesafe.config.ConfigFactory
 import org.bson.types.ObjectId
+import org.openeyes.api.config.AppConfig
 import org.openeyes.api.models.Patient
 
 /**
@@ -17,7 +19,8 @@ case class Ticket(@Key("_id") _id: ObjectId, workflowId: ObjectId, patient: Pati
 
 object Ticket extends ModelCompanion[Ticket, ObjectId] {
 
-  val collection = MongoConnection()("openeyes")("tickets")
+  val config = new AppConfig(ConfigFactory.load())
+  val collection = MongoConnection()(config.database)("tickets")
   val dao = new SalatDAO[Ticket, ObjectId](collection = collection) {}
 
   def findAllForWorkflow(workflowId: String, stepIndex: Option[Int], includeCompleted: Boolean = false) = {

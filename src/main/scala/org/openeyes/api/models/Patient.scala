@@ -5,7 +5,9 @@ import com.mongodb.casbah.commons.MongoDBObject
 import com.novus.salat.annotations.raw.Key
 import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 import com.novus.salat.global._
+import com.typesafe.config.ConfigFactory
 import org.bson.types.ObjectId
+import org.openeyes.api.config.AppConfig
 
 /**
  * Created by stu on 23/09/2014.
@@ -27,7 +29,8 @@ case class Practice(name: String, contactDetail: ContactDetail, address: Address
 
 object Patient extends ModelCompanion[Patient, ObjectId] {
 
-  val collection = MongoConnection()("openeyes")("patients")
+  val config = new AppConfig(ConfigFactory.load())
+  val collection = MongoConnection()(config.database)("patients")
   val dao = new SalatDAO[Patient, ObjectId](collection = collection) {}
 
   def search(searchTerm: String): Seq[Patient] = {
