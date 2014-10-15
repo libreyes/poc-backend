@@ -18,7 +18,10 @@ namespace :deploy do
       remove_cached_copy
       update_code
       #clean_release
+      backup_dev_app_conf
+      copy_env_app_conf
       build
+      revert_dev_app_conf
       upload_war
       create_symlink
     end
@@ -49,9 +52,36 @@ namespace :deploy do
     run("rm -rf #{release_path}/*")
   end
 
+  desc <<-DESC
+  Backup the existing application.conf file in the resources folder.
+  DESC
+  task :backup_dev_app_conf do
+    conf = get_application_conf
+    `mv #{conf} #{conf}.bak`
+  end
+
+  desc <<-DESC
+  Get the application.conf file for the specific env and copy to the resource
+  folder.
+  DESC
+  task :copy_env_app_conf do
+    conf = get_env_application_conf
+    dest = get_resources_folder
+    `cp #{conf} #{dest}`
+  end
+
   task :build do
     puts "==================Building with SBT======================"
     `./sbt clean package`
+  end
+
+  desc <<-DESC
+  Revert the application.conf file from the backup in the resources folder.
+  DESC
+  task :revert_dev_app_conf do
+    conf = get_application_conf
+    `rm #{conf}`
+    `mv #{conf}.bak #{conf}`
   end
 
   desc <<-DESC
@@ -64,7 +94,7 @@ namespace :deploy do
 
   desc <<-DESC
   Upload war to server.
-    DESC
+  DESC
   task :undeploy_app do
     puts "==================Undeploy war======================"
     run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/undeploy?path=/"
@@ -95,6 +125,18 @@ namespace :deploy do
   def get_version_from_file
     File.open("#{File.expand_path File.dirname(__FILE__)}/../version").readlines.first
   end
+
+  def get_resources_folder
+    "#{File.expand_path(File.dirname(__FILE__))}/../src/main/resources"
+  end
+
+  def get_application_conf
+    "#{get_resources_folder}/application.conf"
+  end
+
+  def get_env_application_conf
+    "#{File.expand_path(File.dirname(__FILE__))}/#{environment}/application.conf"
+  end
 end
 
 namespace :db do
@@ -103,7 +145,7 @@ namespace :db do
   Run the import data script to reset the Mongo DB.
   DESC
   task :import_data do
-    run "cd #{current_path}/docs/sample && ./import.sh"
+    run "cd #{current_path}/docs/sample && ./import.sh -d #{environment}"
   end
 
 end
