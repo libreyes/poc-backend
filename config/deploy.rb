@@ -42,7 +42,6 @@ namespace :deploy do
   DESC
   task :remove_cached_copy do
     run("rm -rf #{deploy_to}/shared/cached-copy")
-    # run("mkdir #{deploy_to}/shared/cached-copy")
   end
 
   desc <<-DESC
@@ -70,8 +69,10 @@ namespace :deploy do
     `cp #{conf} #{dest}`
   end
 
+  desc <<-DESC
+  Clean and package up the project locally
+  DESC
   task :build do
-    puts "==================Building with SBT======================"
     `./sbt clean package`
   end
 
@@ -86,7 +87,7 @@ namespace :deploy do
 
   desc <<-DESC
   Upload war to server.
-    DESC
+  DESC
   task :upload_war do
     current_version = get_version_from_file
     top.upload("target/scala-2.11/openeyes_2.11-#{current_version}.war", "#{release_path}/openeyes_2.11--#{current_version}.war")
@@ -96,7 +97,6 @@ namespace :deploy do
   Upload war to server.
   DESC
   task :undeploy_app do
-    puts "==================Undeploy war======================"
     run "curl --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/undeploy?path=/"
   end
 
@@ -105,7 +105,6 @@ namespace :deploy do
   DESC
   task :deploy_app do
     current_version = get_version_from_file
-    puts "==================Deploy war to Tomcat======================"
     run "curl --upload-file #{current_path}/openeyes_2.11--#{current_version}.war --user #{tomcat_manager}:#{tomcat_manager_password} http://#{hostname}:8080/manager/text/deploy?path=/ROOT"
   end
 
@@ -145,7 +144,7 @@ namespace :db do
   Run the import data script to reset the Mongo DB.
   DESC
   task :import_data do
-    run "cd #{current_path}/docs/sample && ./import.sh -d #{environment}"
+    run "cd #{current_path}/docs/sample && ./import.sh -d openeyes-#{environment}"
   end
 
 end
