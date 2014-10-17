@@ -2,6 +2,8 @@ package org.openeyes.api.handlers
 
 import java.awt.image.BufferedImage
 import java.io.{FileInputStream, File, IOException}
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Paths, Files}
 import java.util.ResourceBundle
 import java.util.concurrent.Executors
 import javax.imageio.ImageIO
@@ -262,7 +264,7 @@ object OctScan {
     dis.close()
 
     val reader = ImageIO.getImageReadersByFormatName("DICOM").next()
-    val param = reader.getDefaultReadParam().asInstanceOf[DicomImageReadParam]
+    val param = reader.getDefaultReadParam.asInstanceOf[DicomImageReadParam]
     val inputStream = ImageIO.createImageInputStream(file)
     reader.setInput(inputStream)
 
@@ -271,7 +273,8 @@ object OctScan {
 
     for(i <- 0 until numberOfImages) {
       val bufferedImg: BufferedImage = reader.read(i, param)
-      val outputFile = s"$imgPath/$i.jpg"
+      val fileName = "%03d".format(i)
+      val outputFile = s"$imgPath/$fileName.jpg"
 
       val op = new IMOperation()
       op.addImage()

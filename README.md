@@ -62,6 +62,8 @@ This file is used in both the `build.scala` file and the `config/deploy.rb`.
 
 TODO: Write more docs...
 
+Command to send DICOM file to the server:
+
 ```
 ./storescu -c OPENEYES@localhost:11112 ~/docs/dicom-files/54229a9f6c5873493a28b3b8.dcm -b HELLO
 ```
