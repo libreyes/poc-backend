@@ -22,13 +22,15 @@ done
 echo "Dropping existing Mongo database"
 mongo $database --eval "db.dropDatabase();"
 
-encounters=encounters/*
+# encounters=encounters/*
+# for encounter in $encounters
+# do
+#   echo "Importing encounters for $encounter"
+#   mongoimport --db $database --collection encounters --file $encounter
+# done
 
-for encounter in $encounters
-do
-  echo "Importing encounters for $encounter"
-  mongoimport --db $database --collection encounters --file $encounter
-done
+echo "Importing encounters"
+mongoimport --db $database --collection encounters --file encounters.json
 
 echo "Importing patients"
 mongoimport --db $database --collection patients --file patients.json
