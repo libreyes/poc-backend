@@ -5,6 +5,17 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  # The hostname the machine should have. Defaults to nil. If nil, Vagrant won't
+  # manage the hostname. If set to a string, the hostname will be set on boot.
+  #
+  config.vm.hostname = "openeyes-vagrant"
+
+  # A message to show after vagrant up. This will be shown to the user and is
+  # useful for containing instructions such as how to access various components
+  # of the development environment.
+  #
+  config.vm.post_up_message = "Up completed. Now ssh on and run sbt container:start"
+
 	# All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -23,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # accessing "localhost:8080" will access port 8080 on the guest machine.
   #
   config.vm.network :forwarded_port, host: 8080, guest: 8080
+  config.vm.network :forwarded_port, host: 11112, guest: 11112
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

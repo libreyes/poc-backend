@@ -1,6 +1,6 @@
-# Openeyes #
+# Openeyes
 
-## Build & Run ##
+## Build & Run
 
 ```
 $ cd Openeyes
@@ -17,12 +17,12 @@ To auto compile when anything is updated and saved also run this in the SBT cons
 ~ ;copy-resources;aux-compile
 ```
 
-## Dependencies ##
+## Dependencies
 
 * Mongo DB
 * ImageMagick
 
-## Sample Data ##
+## Sample Data
 
 There is some sample Mongo DB data that can be found at `docs/sample`.
 
@@ -40,7 +40,7 @@ cap dev db:import_data
 
 NOTE: dev and uat are currently using the same Mongo DB instance so running `cap dev` or `cap uat` will re-import that same DB.
 
-## Tomcat ##
+## Tomcat
 
 In case you need to restart the Tomcat server remotely run:
 
@@ -50,7 +50,7 @@ ssh tomcat@178.79.188.31 "cd /home/tomcat/apache-tomcat-7.0.55/bin && ./shutdown
 
 This will require having a public key installed on the remote server.
 
-## Versioning ##
+## Versioning
 
 **IMPORTANT!**
 
