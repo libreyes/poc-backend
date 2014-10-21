@@ -1,0 +1,4 @@
+encounters.json has been split into separate 10M pieces to avoid problems with github file size. To recombine:
+
+cat encounters.json.* > encounters.json
+
